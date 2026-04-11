@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --white-color: oklch(1 0 0);
+  --black-color: oklch(0 0 0);
+  --primary-color: oklch(0.6248 0.1384 38.91);
+  --secondary-color: oklch(0.3848 0.0425 165.11);
+  --tertiary-color: oklch(0.8921 0.0315 75.2);
+  --neutral-color: oklch(0.9756 0.035 92.82);
+  --default-max-width: 68rem;
+}
+
+body {
+  background-color: oklch(0.982 0.0041 91.45);
+  max-inline-size: var(--default-max-width);
+  margin-inline: auto;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}

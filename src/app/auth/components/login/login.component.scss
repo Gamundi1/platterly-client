@@ -1,0 +1,43 @@
+dialog {
+
+  --container-border-radius: 0.5rem;
+
+  container-type: inline-size;
+  inline-size: 90%;
+  max-inline-size: 55rem;
+  block-size: 32rem;
+  border-radius: var(--container-border-radius);
+  padding: 0;
+  display: flex;
+  border: none;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  padding-inline: 3rem;
+  padding-block: 2rem;
+  inline-size: 50cqi;
+}
+
+img {
+  inline-size: 50cqi;
+  object-fit: cover;
+  border-top-left-radius: var(--container-border-radius);
+  border-bottom-left-radius: var(--container-border-radius);
+  filter: sepia(1) hue-rotate(-20deg) saturate(300%) blur(1px);
+}
+
+label {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+input {
+  padding-block: 0.7rem;
+  padding-inline: 1rem;
+  border-radius: 0.25rem;
+  border: none;
+  background-color: oklch(from var(--white-color) 0.95 c h);
+  margin-block-end: 2rem;
+}
