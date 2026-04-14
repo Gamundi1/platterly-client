@@ -2,12 +2,13 @@ import { Component, inject, output, signal } from '@angular/core';
 import { LoginData } from '../../interfaces/login-data.interface';
 import { email, form, FormField, required } from '@angular/forms/signals';
 import { AuthService } from '../../services/auth.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports: [FormField],
+  imports: [FormField, ReactiveFormsModule],
 })
 export class LoginComponent {
   private readonly authService = inject(AuthService);

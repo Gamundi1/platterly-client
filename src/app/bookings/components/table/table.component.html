@@ -1,0 +1,27 @@
+<section>
+  <div class="top-layer">
+    <span class="restaurant-constant">Baño</span>
+    <span class="restaurant-constant">cocina</span>
+  </div>
+  <div
+    class="table-map"
+    aria-label="Mapa de mesas en el restaurante"
+    [style.--inline-tracks]="inlineTrackCount()"
+    [style.--block-tracks]="blockTrackCount()"
+  >
+    @for (table of tables(); track table.number) {
+      <button
+        class="table"
+        type="button"
+        [style.grid-column]="getInlineTrack(table)"
+        [style.grid-row]="getBlockTrack(table)"
+        [attr.aria-label]="'Mesa ' + table.number + ', capacidad ' + table.capacity"
+        [attr.aria-selected]="table.number === selectedTableNumber()"
+        (click)="onTableClick(table)"
+      >
+        T{{ table.number }} ({{ table.capacity }})
+      </button>
+    }
+  </div>
+  <span class="restaurant-constant">entrada</span>
+</section>

@@ -1,0 +1,59 @@
+<article class="new-booking-container">
+  <h1>Reserva tu mesa</h1>
+  <h3>
+    Por favor, completa la información para poder comenzar tu proceso de reserva en nuestras
+    instalaciones
+  </h3>
+
+  <section class="booking-details">
+    <form class="booking-information" (submit)="onSubmitForm($event)">
+      <fieldset>
+        <legend>Grupo y horario</legend>
+        <div class="date-guest-selector">
+          <span>Número de asistentes</span>
+          <div id="guests-selector">
+            @for (guest of guests | keyvalue; track guest.key) {
+              <label for="guests-{{ guest.key }}">
+                <input
+                  id="guests-{{ guest.key }}"
+                  class="guest-selector"
+                  type="radio"
+                  value="{{ guest.key }}"
+                  [attr.aria-selected]="guest.key === bookingForm().value().guests"
+                  [formField]="bookingForm.guests"
+                />
+                <span class="guest-value">{{ guest.value }}</span>
+              </label>
+            }
+          </div>
+          <span>Día seleccionado</span>
+          <input class="date-selector" type="date" [formField]="bookingForm.date" />
+        </div>
+        @let availableHours = availableHours$ | async;
+        @for (availableHour of availableHours; track availableHour.id; let i = $index) {
+          <label for="hour-{{ i }}">
+            <input
+              id="hour-{{ i }}"
+              class="guest-selector"
+              type="radio"
+              value="{{ availableHour.id }}"
+              [formField]="bookingForm.interval"
+            />
+            <span>{{ availableHour.interval }}</span>
+          </label>
+        }
+      </fieldset>
+      <fieldset>
+        <legend>Mapa del restaurante</legend>
+        <span>Selecciona una mesa disponible</span>
+        <booking-table
+          [tables]="availableTables()"
+          (selectedTable)="onTableSelected($event)"
+        ></booking-table>
+      </fieldset>
+      <button type="submit">Reservar mesa</button>
+    </form>
+    <img src="" alt="" />
+    <section class="booking-summary"></section>
+  </section>
+</article>

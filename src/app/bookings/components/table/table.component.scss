@@ -1,0 +1,76 @@
+:host {
+  display: block;
+}
+
+section {
+  --table-map-border-radius: 0.25rem;
+  background: var(--white-color);
+  border-radius: var(--table-map-border-radius);
+  inline-size: fit-content;
+  padding: 1rem;
+}
+
+.table-map {
+  --cell-size: clamp(3rem, 8cqi, 4.5rem);
+
+  display: grid;
+  grid-template-columns: repeat(var(--inline-tracks), minmax(var(--cell-size), 1fr));
+  grid-template-rows: repeat(var(--block-tracks), minmax(var(--cell-size), 1fr));
+  gap: 0.2rem;
+  padding-block: 1rem;
+}
+
+.table {
+  --table-size: 2.5rem;
+
+  font-size: 0.5rem;
+
+  inline-size: var(--table-size);
+  block-size: var(--table-size);
+  background-color: oklch(from var(--tertiary-color) 0.7 c h);
+  color: var(--white-color);
+  border-radius: var(--table-map-border-radius);
+  border: none;
+
+  &[aria-selected='true'] {
+    background-color: var(--secondary-color);
+  }
+}
+
+.top-layer {
+  display: flex;
+  gap: 0.2rem;
+  inline-size: 100%;
+  border-bottom: 0.15rem solid var(--black-color);
+}
+
+.restaurant-constant {
+  background-color: oklch(from var(--secondary-color) 0.7 c h);
+  color: var(--white-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 0.5rem;
+  padding-block: 0.25rem;
+
+  &:first-child {
+    border-top-left-radius: var(--table-map-border-radius);
+  }
+
+  &:nth-child(2) {
+    flex: 1;
+    border-top-right-radius: var(--table-map-border-radius);
+  }
+
+  &:nth-child(3) {
+    border-bottom-left-radius: var(--table-map-border-radius);
+    border-bottom-right-radius: var(--table-map-border-radius);
+    border-top: 0.15rem solid var(--black-color);
+  }
+}
+
+.empty-state {
+  margin: 0;
+  padding: 0.75rem 0;
+  color: oklch(45% 0.05 70);
+}

@@ -14,6 +14,12 @@ export class HttpHandlerService {
     return this.http.post<T>(url, body);
   }
 
+  getRequest<T>(templateUrl: string, urlParams?: Record<string, PrimitiveParam>) {
+    const url = this.resolveTemplateUrl(templateUrl, urlParams);
+
+    return this.http.get<T>(url);
+  }
+
   private resolveTemplateUrl(template: string, params?: Record<string, PrimitiveParam>): string {
     const url = UrlProvider.baseUrl + template;
 
