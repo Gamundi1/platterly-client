@@ -1,16 +1,33 @@
-import { Component, computed, input, output, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  OnChanges,
+  output,
+  signal,
+  SimpleChanges,
+} from '@angular/core';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { faKitchenSet, faToilet, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Table } from '../../interfaces/table.interface';
 
 @Component({
   selector: 'booking-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
+  imports: [FaIconComponent],
 })
-export class TableComponent {
+export class TableComponent implements OnChanges {
   public tables = input.required<Table[]>();
+  public guests = input.required<number>();
+  public selectedHour = input.required<string>();
   public selectedTable = output<number>();
 
-  selectedTableNumber = signal(0);
+  currentSelectedTable = signal<Table | null>(null);
+
+  protected faToilet = faToilet;
+  protected faKitchen = faKitchenSet;
+  protected faUser = faUser;
 
   protected readonly minInlinePosition = computed(() => {
     const tables = this.tables();
@@ -52,8 +69,19 @@ export class TableComponent {
     return table.blockPosition - this.minBlockPosition() + 1;
   }
 
+  protected isTableAvailable(table: Table): boolean {
+    return table.capacity >= this.guests() && table.availableHours.includes(this.selectedHour());
+  }
+
   protected onTableClick(table: Table): void {
-    this.selectedTableNumber.set(table.number);
+    this.currentSelectedTable.set(table);
     this.selectedTable.emit(table.number);
+  }
+
+  ngOnChanges(): void {
+    if (this.currentSelectedTable() && !this.isTableAvailable(this.currentSelectedTable()!)) {
+      this.currentSelectedTable.set(null);
+      this.selectedTable.emit(0);
+    }
   }
 }

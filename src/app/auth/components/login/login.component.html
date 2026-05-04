@@ -1,14 +1,22 @@
 <dialog open>
-  <img src="images/login-table.webp" alt="" />
+  <img src="images/login/login-table.webp" alt="" />
   <form action="" (submit)="submitLogin($event)">
-    <button type="button" (click)="closeDialog.emit()">Cerrar</button>
-    <h2>Bienvenido de nuevo</h2>
-    <h3>Inicia sesión con tu cuenta</h3>
-    <label for="email">Correo electrónico</label>
-    <input type="email" id="email" [formField]="loginForm.email" />
-    <label for="password">Contraseña</label>
-    <input type="password" id="password" [formField]="loginForm.password" />
-    <button type="submit">Iniciar sesión</button>
+    <button type="button" class="close-button" (click)="closeDialog.emit()">
+      <fa-icon [icon]="faXMark"></fa-icon>
+    </button>
+    <div class="title">
+      <h2>Bienvenido de nuevo</h2>
+      <span>Inicia sesión con tu cuenta</span>
+    </div>
+    <div class="input-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" [formField]="loginForm.email" />
+    </div>
+    <div class="input-group">
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" [formField]="loginForm.password" />
+    </div>
+    <button class="submit-button" type="submit">Acceder</button>
     <p>No tienes una cuenta? <a href="/register">Regístrate aquí</a></p>
   </form>
 </dialog>

@@ -8,9 +8,9 @@
   <section class="booking-details">
     <form class="booking-information" (submit)="onSubmitForm($event)">
       <fieldset>
-        <legend>Grupo y horario</legend>
+        <legend><fa-icon [icon]="faUsers"></fa-icon> Grupo y horario</legend>
         <div class="date-guest-selector">
-          <span>Número de asistentes</span>
+          <span class="title">Número de asistentes</span>
           <div id="guests-selector">
             @for (guest of guests | keyvalue; track guest.key) {
               <label for="guests-{{ guest.key }}">
@@ -26,34 +26,86 @@
               </label>
             }
           </div>
-          <span>Día seleccionado</span>
+          <span class="title">Fecha seleccionada</span>
           <input class="date-selector" type="date" [formField]="bookingForm.date" />
         </div>
-        @let availableHours = availableHours$ | async;
-        @for (availableHour of availableHours; track availableHour.id; let i = $index) {
-          <label for="hour-{{ i }}">
-            <input
-              id="hour-{{ i }}"
-              class="guest-selector"
-              type="radio"
-              value="{{ availableHour.id }}"
-              [formField]="bookingForm.interval"
-            />
-            <span>{{ availableHour.interval }}</span>
-          </label>
-        }
+        <div class="hour-guest-selector">
+          <span class="title">Horarios disponibles</span>
+          @let availableHours = availableHours$ | async;
+          <div>
+            @for (availableHour of availableHours; track availableHour.id; let i = $index) {
+              <label for="hour-{{ i }}" class="hour">
+                <input
+                  id="hour-{{ i }}"
+                  class="hour-selector"
+                  type="radio"
+                  value="{{ availableHour.id }}"
+                  [attr.aria-selected]="availableHour.id === bookingForm().value().availableHoursId"
+                  [formField]="bookingForm.availableHoursId"
+                />
+                <span>{{ availableHour.interval }}</span>
+              </label>
+            }
+          </div>
+          <div class="duration-info">
+            <fa-icon [icon]="faClock"></fa-icon>
+            <span>Las reservas tienen una duración máxima de 1:30h</span>
+          </div>
+        </div>
       </fieldset>
       <fieldset>
-        <legend>Mapa del restaurante</legend>
-        <span>Selecciona una mesa disponible</span>
+        <legend><fa-icon [icon]="faMap"></fa-icon> Mapa del restaurante</legend>
         <booking-table
           [tables]="availableTables()"
+          [guests]="+bookingForm().value().guests"
+          [selectedHour]="bookingForm().value().availableHoursId"
           (selectedTable)="onTableSelected($event)"
         ></booking-table>
       </fieldset>
-      <button type="submit">Reservar mesa</button>
+      <div class="submit-section">
+        <p>
+          Al confirmar la reserva aceptas nuestra politica de cancelación con 24 horas de
+          antelación
+        </p>
+        <button [disabled]="!bookingForm().valid()" type="submit">
+          Confirmar reserva <fa-icon [icon]="faUtensils"></fa-icon>
+        </button>
+      </div>
     </form>
-    <img src="" alt="" />
+    <div class="image-container">
+      <img priority fill ngSrc="images/new-booking/booking-incentive.webp" alt="" />
+    </div>
     <section class="booking-summary"></section>
   </section>
 </article>
+
+<ng-template #successfulBooking>
+  <!-- <dialog open class="ok-response">
+    <h2>Reserva confirmada</h2>
+    <div class="booking-summary">
+      <strong>Fecha:</strong> {{ bookingForm().value().date | date: "d 'de' MMMM 'de' y" }}
+      <strong>Hora:</strong> {{ getSelectedHourInterval() }} <strong>Mesa asignada:</strong>
+      {{ bookingForm().value().tableNumber }}
+    </div>
+    <div class="link-generator">
+
+    </div>
+    <a routerLink="/">Inicio</a>
+    <a routerLink="bookings/user">Mis Reservas</a>
+  </dialog> -->
+
+  <dialog open class="ok-response">
+    <h2>Reserva confirmada</h2>
+    <div class="booking-summary">
+      <div><fa-icon [icon]="faCalendar"></fa-icon> <span> 4 de mayo de 2026 </span></div>
+      <div><fa-icon [icon]="faClock"></fa-icon> <span> 09:00h </span></div>
+      <div class="table-selected">
+        <strong>Mesa</strong>
+        <span> 12 </span>
+      </div>
+    </div>
+    <div class="link-generator"></div>
+    <a routerLink="/">Inicio</a>
+    <a routerLink="bookings/user">Mis Reservas</a>
+  </dialog>
+</ng-template>

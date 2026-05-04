@@ -1,17 +1,19 @@
 import { Injectable, signal } from '@angular/core';
-import { HttpHandlerService } from '../../shared/services/http-handler.service';
+import { take, tap } from 'rxjs';
 import { UrlProvider } from '../../shared/enums/url-provider.enum';
-import { catchError, take, tap } from 'rxjs';
+import { HttpHandlerService } from '../../shared/services/http-handler.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   constructor(private readonly httpHandlerService: HttpHandlerService) {}
 
-  private user = signal<string | null>(null);
+  private user = signal<{ 'access-token': string } | null>(null);
+  private showLogin = signal(false);
+  public readonly loginModalOpen = this.showLogin.asReadonly();
 
   login(email: string, password: string) {
     return this.httpHandlerService
-      .postRequest<string>(UrlProvider.login, undefined, {
+      .postRequest<{ 'access-token': string }>(UrlProvider.login, undefined, {
         email,
         password,
       })
@@ -19,5 +21,16 @@ export class AuthService {
         take(1),
         tap((response) => this.user.set(response)),
       );
+  }
+
+  public getUserDetails() {
+    return this.user();
+  }
+
+  public showLoginModal() {
+    this.showLogin.set(true);
+  }
+  public closeLoginModal() {
+    this.showLogin.set(false);
   }
 }

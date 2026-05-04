@@ -1,7 +1,18 @@
 <section>
+  <div class="legend">
+    <div class="legend-color" [style.--legend-option-color]="'var(--secondary-color)'"></div>
+    <span class="legend-text">No Disponible</span>
+    <div
+      class="legend-color"
+      [style.--legend-option-color]="'oklch(from var(--secondary-color) 0.6 c h)'"
+    ></div>
+    <span class="legend-text">Disponible</span>
+    <div class="legend-color"></div>
+    <span class="legend-text">Seleccionada</span>
+  </div>
   <div class="top-layer">
-    <span class="restaurant-constant">Baño</span>
-    <span class="restaurant-constant">cocina</span>
+    <span class="restaurant-constant"><fa-icon [icon]="faToilet"></fa-icon></span>
+    <span class="restaurant-constant"><fa-icon [icon]="faKitchen"></fa-icon></span>
   </div>
   <div
     class="table-map"
@@ -16,12 +27,21 @@
         [style.grid-column]="getInlineTrack(table)"
         [style.grid-row]="getBlockTrack(table)"
         [attr.aria-label]="'Mesa ' + table.number + ', capacidad ' + table.capacity"
-        [attr.aria-selected]="table.number === selectedTableNumber()"
+        [attr.aria-selected]="table.number === currentSelectedTable()?.number"
+        [disabled]="!isTableAvailable(table)"
         (click)="onTableClick(table)"
       >
-        T{{ table.number }} ({{ table.capacity }})
+        <fa-icon [icon]="faUser"></fa-icon>
+        <span>
+          {{ table.capacity }}
+        </span>
       </button>
     }
   </div>
   <span class="restaurant-constant">entrada</span>
+  @if (!selectedHour()) {
+    <div class="overlay">
+      <span>Selecciona un horario para ver las mesas disponibles</span>
+    </div>
+  }
 </section>

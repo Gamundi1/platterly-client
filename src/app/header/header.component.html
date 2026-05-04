@@ -3,15 +3,10 @@
 
   <nav>
     <li class="active"><a href="#"></a>Inicio</li>
-    <li><a href="#"></a>Cartas</li>
-    <li><a href="#"></a>Reservas</li>
-    <li><a href="#"></a>Sobre nosotros</li>
+    <li><a href="#"></a>Nuestras Cartas</li>
+    <li><a routerLink="/bookings"></a>Reservar Mesa</li>
   </nav>
 
   <button>Registrate</button>
   <button class="sign-in" (click)="showLoginModal()">Inicia sesión</button>
 </header>
-
-@if (showLogin()) {
-  <app-login (closeDialog)="showLogin.set(false)"></app-login>
-}

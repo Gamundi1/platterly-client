@@ -8,4 +8,9 @@ export const BOOKING_ROUTES: Routes = [
         (m) => m.NewBookingPageComponent,
       ),
   },
+  {
+    path: 'invitation',
+    loadComponent: () =>
+      import('./pages/invitation/invitation-page.component').then((m) => m.InvitationPageComponent),
+  },
 ];

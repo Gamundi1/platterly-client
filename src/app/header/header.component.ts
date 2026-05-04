@@ -1,16 +1,17 @@
-import { Component, signal } from '@angular/core';
-import { LoginComponent } from '../auth/components/login/login.component';
+import { Component, inject } from '@angular/core';
+import { AuthService } from '../auth/services/auth.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
-  imports: [LoginComponent],
+  imports: [RouterLink],
 })
 export class HeaderComponent {
-  protected showLogin = signal(false);
+  private readonly authService = inject(AuthService);
 
-  showLoginModal() {
-    this.showLogin.set(true);
+  protected showLoginModal() {
+    this.authService.showLoginModal();
   }
 }
