@@ -1,0 +1,79 @@
+<article class="new-booking-container">
+  <h1>Reserva tu mesa</h1>
+  <h3>
+    Por favor, completa la información para poder comenzar tu proceso de reserva en nuestras
+    instalaciones
+  </h3>
+
+  <section class="booking-details">
+    <form class="booking-information" (submit)="onSubmitForm($event)">
+      <fieldset>
+        <legend><fa-icon [icon]="faUsers"></fa-icon> Grupo y horario</legend>
+        <div class="date-guest-selector">
+          <span class="title">Número de asistentes</span>
+          <div id="guests-selector">
+            @for (guest of guests | keyvalue; track guest.key) {
+              <label for="guests-{{ guest.key }}">
+                <input
+                  id="guests-{{ guest.key }}"
+                  class="guest-selector"
+                  type="radio"
+                  value="{{ guest.key }}"
+                  [attr.aria-selected]="guest.key === bookingForm().value().guests"
+                  [formField]="bookingForm.guests"
+                />
+                <span class="guest-value">{{ guest.value }}</span>
+              </label>
+            }
+          </div>
+          <span class="title">Fecha seleccionada</span>
+          <input class="date-selector" type="date" [formField]="bookingForm.date" />
+        </div>
+        <div class="hour-guest-selector">
+          <span class="title">Horarios disponibles</span>
+          @let availableHours = availableHours$ | async;
+          <div>
+            @for (availableHour of availableHours; track availableHour.id; let i = $index) {
+              <label for="hour-{{ i }}" class="hour">
+                <input
+                  id="hour-{{ i }}"
+                  class="hour-selector"
+                  type="radio"
+                  value="{{ availableHour.id }}"
+                  [attr.aria-selected]="availableHour.id === bookingForm().value().availableHoursId"
+                  [formField]="bookingForm.availableHoursId"
+                />
+                <span>{{ availableHour.interval }}</span>
+              </label>
+            }
+          </div>
+          <div class="duration-info">
+            <fa-icon [icon]="faClock"></fa-icon>
+            <span>Las reservas tienen una duración máxima de 1:30h</span>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend><fa-icon [icon]="faMap"></fa-icon> Mapa del restaurante</legend>
+        <booking-table
+          [tables]="availableTables()"
+          [guests]="+bookingForm().value().guests"
+          [selectedHour]="bookingForm().value().availableHoursId"
+          (selectedTable)="onTableSelected($event)"
+        ></booking-table>
+      </fieldset>
+      <div class="submit-section">
+        <p>
+          Al confirmar la reserva aceptas nuestra politica de cancelación con 24 horas de antelación
+        </p>
+        <button [disabled]="!bookingForm().valid()" type="submit">
+          Confirmar reserva <fa-icon [icon]="faUtensils"></fa-icon>
+        </button>
+      </div>
+    </form>
+    <div class="image-container">
+      <img priority fill ngSrc="images/new-booking/booking-incentive.webp" alt="" />
+    </div>
+    <section class="booking-summary"></section>
+  </section>
+</article>

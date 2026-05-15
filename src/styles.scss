@@ -1,3 +1,37 @@
+@use '@angular/material' as mat;
+@import 'assets/_fonts.scss';
+
+html {
+  height: 100%;
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: 'Noto Serif',
+      density: 0,
+    )
+  );
+}
+
+body {
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: light;
+
+  // Set a default background, font and text colors for the application using
+  // Angular Material's system-level CSS variables. Learn more about these
+  // variables at https://material.angular.dev/guide/system-variables
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+
+  // Reset the user agent margin.
+  margin: 0;
+  height: 100%;
+}
 :root {
   --white-color: oklch(1 0 0);
   --black-color: oklch(0 0 0);
@@ -6,7 +40,9 @@
   --tertiary-color: oklch(0.8921 0.0315 75.2);
   --neutral-color: oklch(0.9756 0.035 92.82);
 
-  --font-primary-color: #56423C;
+  --font-primary-color: #56423c;
+  --font-error-color: #ba1a1a;
+
   --default-max-width: 68rem;
 }
 
@@ -14,5 +50,5 @@ body {
   background-color: oklch(0.982 0.0041 91.45);
   max-inline-size: var(--default-max-width);
   margin-inline: auto;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: 'Noto Serif', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }

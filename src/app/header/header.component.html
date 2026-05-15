@@ -2,11 +2,20 @@
   <h1>Platterly</h1>
 
   <nav>
-    <li class="active"><a href="#"></a>Inicio</li>
-    <li><a href="#"></a>Nuestras Cartas</li>
-    <li><a routerLink="/bookings"></a>Reservar Mesa</li>
+    <li><a routerLink="/home" [routerLinkActive]="'active'">Inicio</a></li>
+    <li><a routerLink="/menu" [routerLinkActive]="'active'">Nuestras Cartas</a></li>
+    <li>
+      <a routerLink="/bookings" [routerLinkActive]="'active'">Reservar Mesa</a>
+    </li>
+    @if (userDetails()) {
+      <li><a routerLink="/my-bookings" [routerLinkActive]="'active'">Mis Reservas</a></li>
+    }
   </nav>
 
-  <button>Registrate</button>
-  <button class="sign-in" (click)="showLoginModal()">Inicia sesión</button>
+  @if (!userDetails()) {
+    <a>Registrate</a>
+    <button class="sign-in" (click)="showLoginModal()">Inicia sesión</button>
+  } @else {
+    <p>Hola, {{ userDetails()?.name }}!</p>
+  }
 </header>

@@ -1,0 +1,122 @@
+:host {
+  display: block;
+}
+
+section {
+  --table-map-border-radius: 0.5rem;
+  background: var(--white-color);
+  border-radius: var(--table-map-border-radius);
+  inline-size: fit-content;
+  min-inline-size: 30rem;
+  padding: 1rem;
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: not-allowed;
+
+  & span {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    border-radius: 0.25rem;
+  }
+}
+
+.table-map {
+  --cell-size: clamp(3rem, 8cqi, 4.5rem);
+
+  display: grid;
+  grid-template-columns: repeat(var(--inline-tracks), minmax(var(--cell-size), 1fr));
+  grid-template-rows: repeat(var(--block-tracks), minmax(var(--cell-size), 1fr));
+  gap: 0.2rem;
+  padding-block: 1rem;
+}
+
+.table {
+  --table-size: 2.5rem;
+
+  font-size: 1rem;
+
+  display: flex;
+  align-items: center;
+  inline-size: var(--table-size);
+  block-size: 1.8rem;
+  background-color: oklch(from var(--secondary-color) 0.7 c h);
+  border-radius: 0.25rem;
+  border: none;
+  transition: color and background-color 0.1s ease-in-out;
+  cursor: pointer;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  &[aria-selected='true'] {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+  }
+
+  &[disabled] {
+    background-color: var(--secondary-color);
+    cursor: not-allowed;
+  }
+}
+
+.top-layer {
+  display: flex;
+  gap: 1rem;
+  inline-size: 100%;
+}
+
+.restaurant-constant {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 0.5rem;
+  min-inline-size: 4rem;
+  min-block-size: 2rem;
+
+  border: 1px solid var(--black-color);
+  border-radius: var(--table-map-border-radius);
+
+  &.kitchen {
+    flex: 1;
+  }
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  margin-block-end: 1rem;
+  gap: 2rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  & span {
+    font-size: 0.875rem;
+  }
+}
+
+.legend-color {
+  --legend-option-color: var(--primary-color);
+
+  inline-size: 0.6rem;
+  block-size: 0.6rem;
+  border-radius: 50%;
+  background-color: var(--legend-option-color);
+}

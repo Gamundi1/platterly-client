@@ -1,0 +1,28 @@
+<section open class="ok-response">
+  <div class="icon-container">
+    <fa-icon [icon]="faCircleCheck"></fa-icon>
+  </div>
+  <h2>Reserva confirmada</h2>
+  <div class="booking-summary">
+    <div>
+      <fa-icon [icon]="faCalendar"></fa-icon>
+      <span> {{ data.booking.date | date: "d 'de' MMMM 'de' y" }} </span>
+    </div>
+    <div>
+      <fa-icon [icon]="faClock"></fa-icon>
+      <span> {{ data.booking.hour.interval }} </span>
+    </div>
+    <div class="table-selected">
+      <span class="table-label">Mesa</span>
+      <span class="table-number"> {{ data.booking.table.tableNumber }} </span>
+    </div>
+  </div>
+  <div class="link-generator">
+    <span>Invita a tus amigos</span>
+    <span class="share-link-incentive">Comparte el enlace</span>
+
+    <invitation-button [booking]="data.booking"></invitation-button>
+  </div>
+  <a class="booking" routerLink="/my-bookings">Mis Reservas</a>
+  <a class="home" routerLink="/">Página principal</a>
+</section>

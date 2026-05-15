@@ -1,0 +1,59 @@
+<section>
+  <h3 class="host-prefix">Administrar restaurante</h3>
+  <h1 class="host-title">Próximas reservas</h1>
+
+  <mat-tab-group (selectedTabChange)="onTabChange($event.index)">
+    @for (dayOffset of dayOffsets; track $index; let i = $index) {
+      <mat-tab [label]="dayLabels[i]">
+        <ng-template matTabContent>
+          <div class="booking-day-content">
+            @let bookings = bookingsByDay[dayOffset] | async;
+            @if (bookings) {
+              <div class="ocuppation">
+                <p>Reservas totales</p>
+                <span>{{ bookings.length }}</span>
+              </div>
+              <div class="bookings-container">
+                @for (booking of bookings; track booking.id) {
+                  <ng-container
+                    [ngTemplateOutlet]="bookingCard"
+                    [ngTemplateOutletContext]="{ $implicit: booking }"
+                  ></ng-container>
+                } @empty {
+                  No hay reservas para este día
+                }
+              </div>
+            } @else {
+              Cargando...
+            }
+          </div>
+        </ng-template>
+      </mat-tab>
+    }
+  </mat-tab-group>
+</section>
+
+<ng-template #bookingCard let-booking>
+  <div class="booking-card">
+    <span class="booking-hour">{{ booking.hour.interval }}</span>
+    <div class="booking-info">
+      <div class="name-status">
+        <span class="name">{{ booking.users[0].name }}</span>
+        <div class="status" [ngClass]="getBookingColor(booking)">
+          {{ getBookingText(booking) }}
+        </div>
+      </div>
+      <div class="table-guests">
+        <span>{{ booking.guests }} Invitados</span>
+        <div class="dot"></div>
+        <div>
+          <span>Mesa {{ booking.table.number }}, </span>
+          <span>{{ getTableText(booking) }}</span>
+        </div>
+      </div>
+    </div>
+    @if (booking.status === bookingStatus.CONFIRMED) {
+      <button (click)="updateBookingStatus(booking)">Marcar llegada</button>
+    }
+  </div>
+</ng-template>

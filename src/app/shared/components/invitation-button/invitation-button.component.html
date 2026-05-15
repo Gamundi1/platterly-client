@@ -1,0 +1,10 @@
+<div class="link">
+  <span>{{ invitationLink() }}</span>
+</div>
+<button (click)="copyLink()">
+  @if (!linkCopied()) {
+    <fa-icon [icon]="faCopy"></fa-icon><span>Copiar enlace</span>
+  } @else {
+    <fa-icon [icon]="faCheck"></fa-icon><span>Copiado</span>
+  }
+</button>

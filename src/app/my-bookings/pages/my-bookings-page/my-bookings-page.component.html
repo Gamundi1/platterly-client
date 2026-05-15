@@ -1,0 +1,110 @@
+<section class="my-bookings-header">
+  <div class="header-text">
+    <p>Explora tus reservas actuales y pasadas</p>
+    <h2>Mis reservas</h2>
+  </div>
+  <img src="images/my-bookings/header.png" alt="" width="192" height="192" />
+</section>
+<section class="my-bookings-content">
+  <p>PRÓXIMAS</p>
+  @for (booking of userComingBookings | async; track $index) {
+    <ng-container *ngTemplateOutlet="comingBooking; context: { $implicit: booking }"></ng-container>
+  } @empty {
+    <div class="empty-bookings">
+      <p>No tienes próximas reservas</p>
+      <a href="/bookings">Crear reserva</a>
+    </div>
+  }
+  @let pastBookings = userPastBookings | async;
+  @if (pastBookings && pastBookings.length > 0) {
+    <p>PASADAS</p>
+    @for (booking of pastBookings; track $index) {
+      <ng-container *ngTemplateOutlet="pastBooking; context: { $implicit: booking }"></ng-container>
+    }
+  }
+</section>
+
+<ng-template #comingBooking let-booking>
+  <section class="my-coming-booking-content">
+    <div class="booking-info">
+      <div>
+        <p class="date">{{ booking.date | date: "d 'de' MMMM 'de' y" }}</p>
+        <p class="interval-guests">
+          <span>{{ booking.hour.interval }}</span>
+          <span class="dot"></span>
+          <span>{{ booking.guests }} Invitados</span>
+        </p>
+      </div>
+      <div class="location">
+        <span class="location-title">Ubicación</span>
+        <span class="table-number"
+          ><fa-icon [icon]="faChair"></fa-icon> Mesa {{ booking.table.number }}</span
+        >
+      </div>
+      <div class="status-container">
+        <div class="status" [ngClass]="getBookingColor(booking)">
+          {{ getBookingStatus(booking) }}
+        </div>
+      </div>
+    </div>
+    <div class="booking-actions">
+      @if (booking.status !== bookingStatus.ACTIVE) {
+        <button class="cancel-button" (click)="cancelBooking(booking)">
+          <fa-icon [icon]="faCircleXMark"></fa-icon> Cancelar reserva
+        </button>
+      } @else {
+        <a href="/booking/{{ booking.id }}">Ir a la reserva</a>
+      }
+    </div>
+    <div class="booking-guests">
+      <p class="guests-title">Invitados</p>
+      <div class="guests-list">
+        @for (guest of getGuestSlots(booking); track $index) {
+          <div class="guest">
+            <div class="dot"></div>
+            <span>{{ guest }}</span>
+          </div>
+        }
+        @if (getRemainingSlots(booking) > 0) {
+          <button (click)="openInvitationModal(booking)" class="invitation-button">
+            <fa-icon [icon]="faUserPlus"></fa-icon>
+            <span>Invitar amigos</span>
+          </button>
+        }
+      </div>
+    </div>
+  </section>
+</ng-template>
+
+<ng-template #pastBooking let-booking>
+  <section class="my-past-booking">
+    <div class="my-past-booking-content">
+      <div>
+        <p class="date">{{ booking.date | date: "d 'de' MMMM 'de' y" }}</p>
+        <p class="interval-guests">
+          <span>{{ booking.hour.interval }}</span>
+          <span class="dot"></span>
+          <span>{{ booking.guests }} {{ booking.guests > 1 ? 'invitados' : 'invitado' }}</span>
+        </p>
+      </div>
+      <div class="status" [ngClass]="getBookingColor(booking)">
+        {{ getBookingStatus(booking) }}
+      </div>
+    </div>
+  </section>
+</ng-template>
+
+<ng-template #invitationModal let-booking>
+  <section class="invitation-modal">
+    <div class="invitation-header">
+      <h3>Invita a tus amigos</h3>
+      <button mat-dialog-close>
+        <fa-icon [icon]="faClose"></fa-icon>
+      </button>
+    </div>
+    <h4>Comparte el siguiente enlace:</h4>
+    <div>
+      <invitation-button [booking]="booking"></invitation-button>
+    </div>
+  </section>
+</ng-template>

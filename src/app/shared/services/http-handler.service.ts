@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { UrlProvider } from '../enums/url-provider.enum';
+import { take } from 'rxjs';
 
 type PrimitiveParam = string | number | boolean;
 
@@ -11,13 +12,19 @@ export class HttpHandlerService {
   postRequest<T>(templateUrl: string, urlParams?: Record<string, PrimitiveParam>, body?: unknown) {
     const url = this.resolveTemplateUrl(templateUrl, urlParams);
 
-    return this.http.post<T>(url, body);
+    return this.http.post<T>(url, body).pipe(take(1));
+  }
+
+  putRequest<T>(templateUrl: string, urlParams?: Record<string, PrimitiveParam>, body?: unknown) {
+    const url = this.resolveTemplateUrl(templateUrl, urlParams);
+
+    return this.http.put<T>(url, body).pipe(take(1));
   }
 
   getRequest<T>(templateUrl: string, urlParams?: Record<string, PrimitiveParam>) {
     const url = this.resolveTemplateUrl(templateUrl, urlParams);
 
-    return this.http.get<T>(url);
+    return this.http.get<T>(url).pipe(take(1));
   }
 
   private resolveTemplateUrl(template: string, params?: Record<string, PrimitiveParam>): string {

@@ -1,15 +1,41 @@
-import { Injectable, signal } from '@angular/core';
-import { take, tap } from 'rxjs';
+import { effect, inject, Injectable, signal } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { tap } from 'rxjs';
 import { UrlProvider } from '../../shared/enums/url-provider.enum';
+import { DEFAULT_LOGIN_CONFIG, LoginConfig } from '../../shared/interfaces/login-config.interface';
 import { HttpHandlerService } from '../../shared/services/http-handler.service';
+import { LoginComponent } from '../components/login/login.component';
+import { JwtTokens } from '../interfaces/jwt-tokens.interface';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor(private readonly httpHandlerService: HttpHandlerService) {}
+  private jwtTokens = signal<JwtTokens | null>(null);
+  private loginConfig = signal<LoginConfig>(DEFAULT_LOGIN_CONFIG);
+  private userDetails = signal<any | null>(null);
+  public readonly loginConfiguration = this.loginConfig.asReadonly();
 
-  private user = signal<{ 'access-token': string } | null>(null);
-  private showLogin = signal(false);
-  public readonly loginModalOpen = this.showLogin.asReadonly();
+  private readonly httpHandlerService = inject(HttpHandlerService);
+  private readonly matDialog = inject(MatDialog);
+
+  private loginComponentRef: MatDialogRef<LoginComponent> | null = null;
+
+  constructor() {
+    effect(() => {
+      if (this.jwtTokens()) {
+        this.httpHandlerService.getRequest(UrlProvider.user).subscribe((user) => {
+          this.userDetails.set(user);
+        });
+      }
+    });
+
+    const accessToken = localStorage.getItem('access-token');
+
+    if (accessToken) {
+      this.jwtTokens.set({
+        accessToken,
+      });
+    }
+  }
 
   login(email: string, password: string) {
     return this.httpHandlerService
@@ -18,19 +44,55 @@ export class AuthService {
         password,
       })
       .pipe(
-        take(1),
-        tap((response) => this.user.set(response)),
+        tap((response) => {
+          this.saveTokens(response);
+        }),
       );
   }
 
+  register(name: string) {
+    return this.httpHandlerService
+      .postRequest<{ 'access-token': string }>(UrlProvider.register, undefined, {
+        name,
+      })
+      .pipe(
+        tap((response) => {
+          this.saveTokens(response);
+        }),
+      );
+  }
+
+  public getAccessToken() {
+    return this.jwtTokens()?.accessToken;
+  }
+
   public getUserDetails() {
-    return this.user();
+    return this.userDetails();
   }
 
   public showLoginModal() {
-    this.showLogin.set(true);
+    this.loginComponentRef = this.matDialog.open(LoginComponent, {
+      data: { configuration: this.loginConfiguration() },
+      width: '46rem',
+      maxWidth: '90vw',
+      height: '32rem',
+    });
   }
+
   public closeLoginModal() {
-    this.showLogin.set(false);
+    if (this.loginComponentRef) {
+      this.loginComponentRef.close();
+    }
+  }
+
+  public modifyLoginConfig(configuration: LoginConfig) {
+    this.loginConfig.set({ ...this.loginConfig(), ...configuration });
+  }
+
+  private saveTokens(tokens: { 'access-token': string }) {
+    this.jwtTokens.set({
+      accessToken: tokens['access-token'],
+    });
+    localStorage.setItem('access-token', tokens['access-token']);
   }
 }

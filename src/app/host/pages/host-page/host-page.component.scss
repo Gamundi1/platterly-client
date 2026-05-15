@@ -1,0 +1,114 @@
+:host {
+  padding-inline: 2rem;
+  display: block;
+}
+
+mat-tab-header {
+  margin-block-end: 1rem;
+}
+
+.booking-day-content {
+  display: grid;
+  grid-template-columns: 15rem auto;
+  gap: 1rem;
+}
+
+.ocuppation {
+  padding-inline: 2rem;
+  padding-block: 2rem;
+
+  span {
+    color: #9a4022;
+    font-size: 1.5rem;
+  }
+}
+
+.host-prefix {
+  font-family: 'Manrope';
+  color: var(--font-primary-color);
+  text-transform: uppercase;
+  font-weight: 400;
+  margin-block-start: 5rem;
+}
+
+.host-title {
+  font-size: 3.5rem;
+  font-weight: 400;
+}
+
+.booking-card {
+  display: flex;
+  gap: 2rem;
+  padding-inline: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  block-size: 7.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e0e0e0;
+  border-left: 4px solid #9a4022;
+
+  & .booking-hour {
+    font-size: 1.5rem;
+    color: #9a4022;
+  }
+
+  & .booking-info {
+    flex: 1;
+
+    & .name-status {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      & .name {
+        font-size: 1.2rem;
+      }
+
+      .status {
+        --booking-status-background-color: var(--white-color);
+        --booking-status-text-color: var(--black-color);
+
+        background-color: var(--booking-status-background-color);
+        color: var(--booking-status-text-color);
+
+        text-transform: uppercase;
+        padding-inline: 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.75rem;
+        inline-size: min-content;
+
+        &.confirmed {
+          --booking-status-background-color: #c5e7d6;
+          --booking-status-text-color: #4a695b;
+        }
+
+        &.cancelled {
+          --booking-status-background-color: #f4c6c3;
+          --booking-status-text-color: #7a4a48;
+        }
+
+        &.active {
+          --booking-status-background-color: oklch(from var(--secondary-color) .5 c h);
+          --booking-status-text-color: var(--white-color);
+        }
+      }
+    }
+
+    & .table-guests {
+      --table-guests-color: var(--font-primary-color);
+      --table-guests-dot-size: 0.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      margin-block: 0;
+      font-family: 'Manrope';
+
+      & .dot {
+        border-radius: 50%;
+        display: inline-block;
+        inline-size: var(--table-guests-dot-size);
+        block-size: var(--table-guests-dot-size);
+        background-color: var(--table-guests-color);
+      }
+    }
+  }
+}

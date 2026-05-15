@@ -1,0 +1,264 @@
+:host {
+  display: block;
+  padding-inline: 4rem;
+  margin-block-start: 3rem;
+}
+
+.my-bookings-header {
+  display: flex;
+  justify-content: space-between;
+
+  & .header-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: space-around;
+
+    & p {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      color: var(--primary-color);
+    }
+
+    & h2 {
+      font-family: 'Noto Serif';
+      font-size: 3rem;
+      font-weight: 600;
+    }
+  }
+}
+
+.empty-bookings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #efeeeb;
+  border-radius: 0.5rem;
+  padding-block: 2rem;
+
+  & a {
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    line-height: 2.4;
+    inline-size: 8rem;
+    text-align: center;
+    border-radius: 1rem;
+    text-decoration: none;
+  }
+}
+
+.my-coming-booking-content {
+  --interval-guests-color: var(--primary-color);
+  --interval-guests-dot-size: 0.2rem;
+  --date-text-color: var(--black-color);
+  --guests-bg-color: var(--white-color);
+
+  padding-inline: 2rem;
+  padding-block: 2rem;
+  background-color: #f4f3f1;
+  border-radius: 0.5rem;
+  margin-block-end: 0.6rem;
+
+  .booking-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5rem;
+
+    & .location {
+      display: flex;
+      flex-direction: column;
+
+      & .location-title {
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        color: var(--font-primary-color);
+        font-family: 'Manrope';
+        font-weight: bold;
+      }
+
+      & .table-number {
+        font-size: 1.2rem;
+
+        & fa-icon {
+          font-size: 0.8rem;
+        }
+      }
+    }
+
+    & .status-container {
+      flex-grow: 1;
+
+      .status {
+        margin-inline: auto 0;
+      }
+    }
+  }
+
+  .booking-actions {
+    margin-block-start: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+
+    & .cancel-button {
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+      color: var(--font-error-color);
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 0.75rem;
+    }
+  }
+
+  & .invitation-button {
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    font-family: 'Manrope';
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.06rem;
+    font-size: 0.75rem;
+
+    & span {
+      margin-inline-start: 0.5rem;
+    }
+  }
+}
+
+.my-past-booking {
+  --interval-guests-color: var(--font-primary-color);
+  --interval-guests-dot-size: 0.2rem;
+  --date-text-color: rgb(0, 0, 0, 0.6);
+  --guests-bg-color: #f4f3f1;
+
+  padding-inline: 2rem;
+}
+
+.my-past-booking-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-block-end: 3rem;
+}
+
+.interval-guests {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--interval-guests-color);
+  margin-block: 0;
+  font-family: 'Manrope';
+  font-weight: 600;
+
+  & .dot {
+    display: inline-block;
+    inline-size: var(--interval-guests-dot-size);
+    block-size: var(--interval-guests-dot-size);
+    background-color: var(--interval-guests-color);
+  }
+}
+
+.date {
+  font-size: 1.2rem;
+  color: var(--date-text-color);
+  margin-block-start: 0;
+  margin-block-end: 0.5rem;
+}
+
+.status {
+  --booking-status-background-color: var(--white-color);
+  --booking-status-text-color: var(--black-color);
+
+  background-color: var(--booking-status-background-color);
+
+  text-transform: uppercase;
+  padding-inline: 1.5rem;
+  padding-block: 0.25rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  inline-size: min-content;
+
+  &.confirmed {
+    --booking-status-background-color: #c5e7d6;
+    --booking-status-text-color: #4a695b;
+  }
+
+  &.cancelled {
+    --booking-status-background-color: #f4c6c3;
+    --booking-status-text-color: #7a4a48;
+  }
+}
+
+.guests-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  & .guest {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: var(--guests-bg-color);
+    padding-inline: 1rem;
+    border-radius: 1.5rem;
+    font-size: 0.875rem;
+    inline-size: 6rem;
+    block-size: 2.8rem;
+
+    span {
+      font-family: 'Manrope';
+      font-weight: 600;
+      font-size: 0.75rem;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      overflow: hidden;
+      max-inline-size: 5rem;
+      line-height: 1.1;
+    }
+
+    .dot {
+      inline-size: 0.4rem;
+      block-size: 0.4rem;
+      background-color: var(--primary-color);
+      border-radius: 50%;
+    }
+  }
+}
+
+.invitation-modal {
+  display: flex;
+  flex-direction: column;
+  padding-inline: 1.5rem;
+  padding-block: 1rem;
+
+  & .invitation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & h3 {
+      font-family: 'Noto Serif';
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    & button {
+      background-color: transparent;
+      font-size: 1.2rem;
+      color: var(--font-primary-color);
+      border: none;
+      cursor: pointer;
+    }
+  }
+
+  & h4 {
+    font-family: 'Manrope';
+    font-size: 0.75rem;
+    color: var(--font-primary-color);
+  }
+}

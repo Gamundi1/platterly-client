@@ -16,9 +16,16 @@ header {
       cursor: pointer;
     }
 
+    a {
+      text-decoration: none;
+      color: inherit;
+      font-size: 0.875rem;
+    }
+
     .active {
       color: var(--primary-color);
       font-weight: bold;
+      border-bottom: 3px solid var(--primary-color);
     }
   }
 

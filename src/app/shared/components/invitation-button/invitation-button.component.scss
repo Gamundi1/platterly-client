@@ -1,0 +1,51 @@
+:host {
+  --invitation-button-inline-size: 10rem;
+  --invitation-button-flex-direction: row;
+
+  container-type: inline-size;
+  display: flex;
+  flex-direction: var(--invitation-button-flex-direction);
+  gap: 0.5rem;
+}
+
+.link {
+  max-inline-size: var(--invitation-button-inline-size);
+  background-color: #f4f3f1;
+  padding-inline: 0.8rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+
+  & span {
+    font-size: 0.7rem;
+    color: var(--font-primary-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  border: none;
+  min-inline-size: 6.5rem;
+  max-inline-size: 7.5rem;
+  min-block-size: 2rem;
+  padding-inline: 1.3rem;
+  border-radius: 1rem;
+
+  & span {
+    font-size: 0.6rem;
+    line-height: 0.8rem;
+    text-wrap: wrap;
+  }
+
+  & fa-icon {
+    font-size: 0.5rem;
+  }
+}
