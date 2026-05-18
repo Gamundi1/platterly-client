@@ -1,0 +1,29 @@
+<aside>
+  @for (menuAvailable of menuAvailables(); track menuAvailable.id) {
+    <button
+      [aria-selected]="selectedMenuId() === menuAvailable.id"
+      (click)="getMenuItems(menuAvailable.id)"
+    >
+      {{ menuAvailable.name }}
+    </button>
+  }
+</aside>
+
+<section>
+  @let currentMenu = menus[selectedMenuId() || ''];
+  @if (currentMenu) {
+    <h2>{{ currentMenu.name }}</h2>
+    <div class="dishes-container">
+      @for (dish of currentMenu.products.dishes; track dish.id) {
+        <div class="dish-card">
+          <div class="image-container">
+            <img [ngSrc]="dish.images[0]" alt="" width="80" height="70" />
+          </div>
+          <div class="dish-description">
+            <h3>{{ dish.name }}</h3>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</section>

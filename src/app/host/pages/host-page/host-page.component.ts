@@ -60,12 +60,12 @@ export class HostPageComponent implements OnInit {
       );
   }
 
-  protected updateBookingStatus(booking: Booking) {
+  protected updateBookingStatus(booking: Booking, status: BookingStatus) {
     this.httpHandlerService
       .putRequest(
         UrlProvider.updateBookingStatus,
         { bookingId: booking.id },
-        { status: BookingStatus.ACTIVE },
+        { status: status },
       )
       .subscribe();
   }

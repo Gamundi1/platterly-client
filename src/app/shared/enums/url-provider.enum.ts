@@ -11,4 +11,6 @@ export const UrlProvider = {
   getBooking: '/v1/booking/get/${bookingId}',
   getUserBookings: '/v1/booking/my-bookings',
   joinBooking: '/v1/booking/join',
+  getAllMenus: '/v1/menu/available',
+  getMenu: '/v1/menu/${menuId}',
 } as const;

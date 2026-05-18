@@ -20,6 +20,10 @@ export const routes: Routes = [
     loadChildren: () => import('./host/host.routes').then((m) => m.HOST_ROUTES),
   },
   {
+    path: 'menu',
+    loadChildren: () => import('./menu/menu.routes').then((m) => m.MENU_ROUTES),
+  },
+  {
     path: '**',
     redirectTo: 'home',
   },

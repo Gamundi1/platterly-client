@@ -2,7 +2,7 @@
   <h3 class="host-prefix">Administrar restaurante</h3>
   <h1 class="host-title">Próximas reservas</h1>
 
-  <mat-tab-group (selectedTabChange)="onTabChange($event.index)">
+  <mat-tab-group (selectedTabChange)="onTabChange($event.index)" class="booking-tabs">
     @for (dayOffset of dayOffsets; track $index; let i = $index) {
       <mat-tab [label]="dayLabels[i]">
         <ng-template matTabContent>
@@ -53,7 +53,9 @@
       </div>
     </div>
     @if (booking.status === bookingStatus.CONFIRMED) {
-      <button (click)="updateBookingStatus(booking)">Marcar llegada</button>
+      <button (click)="updateBookingStatus(booking, bookingStatus.ACTIVE)">Marcar llegada</button>
+    } @else if (booking.status === bookingStatus.ACTIVE) {
+      <button (click)="updateBookingStatus(booking, bookingStatus.COMPLETED)">Liberar mesa</button>
     }
   </div>
 </ng-template>

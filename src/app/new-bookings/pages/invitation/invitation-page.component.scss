@@ -108,7 +108,25 @@ p {
   font-size: 0.9rem;
 }
 
-.error-modal {
+form {
+  margin-block-start: 1.5rem;
+  display: flex;
+  flex-direction: column;
+
+  & input {
+    padding: 0.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  & .login {
+    margin-block-end: 2rem;
+  }
+}
+
+.error-modal,
+.successful-modal {
   container-type: inline-size;
   padding-inline: 1rem;
   padding-block: 2rem;
@@ -119,7 +137,6 @@ p {
 
   fa-icon {
     font-size: 3rem;
-    color: var(--font-error-color);
   }
 
   a {
@@ -132,3 +149,17 @@ p {
     line-height: 2rem;
   }
 }
+
+.error-modal {
+  fa-icon {
+    color: var(--font-error-color);
+  }
+}
+
+.successful-modal {
+  fa-icon {
+    color: var(--font-success-color);
+  }
+}
+
+

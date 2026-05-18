@@ -3,23 +3,54 @@
   display: block;
 }
 
-mat-tab-header {
-  margin-block-end: 1rem;
+::ng-deep .booking-tabs {
+  .mat-mdc-tab-header {
+    border-bottom: none;
+    margin-block-end: 1.5rem;
+  }
+
+  .mat-mdc-tab {
+    margin-inline-end: 0.5rem;
+    border-radius: 1.5rem;
+    background-color: transparent;
+    transition: all 0.2s ease;
+  }
+
+  .mat-mdc-tab.mdc-tab--active {
+    background-color: #9a4022;
+
+    & .mdc-tab__text-label {
+      color: var(--white-color);
+      
+      &:hover {
+        color: var(--white-color);
+      }
+    }
+  }
+
+  .mdc-tab-indicator {
+    display: none;
+  }
 }
 
 .booking-day-content {
   display: grid;
-  grid-template-columns: 15rem auto;
-  gap: 1rem;
+  grid-template-columns: 18rem auto;
+  gap: 3rem;
 }
 
 .ocuppation {
+  background-color: var(--white-color);
   padding-inline: 2rem;
-  padding-block: 2rem;
-
+  padding-block: 0.5rem;
+  block-size: 7rem;
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
   span {
     color: #9a4022;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
   }
 }
 
@@ -42,10 +73,12 @@ mat-tab-header {
   padding-inline: 1rem;
   justify-content: space-between;
   align-items: center;
-  block-size: 7.5rem;
+  block-size: 7rem;
   border-radius: 0.5rem;
   border: 1px solid #e0e0e0;
   border-left: 4px solid #9a4022;
+  background-color: var(--white-color);
+  margin-block-end: 1.5rem;
 
   & .booking-hour {
     font-size: 1.5rem;
@@ -54,6 +87,9 @@ mat-tab-header {
 
   & .booking-info {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 
     & .name-status {
       display: flex;
@@ -87,7 +123,7 @@ mat-tab-header {
         }
 
         &.active {
-          --booking-status-background-color: oklch(from var(--secondary-color) .5 c h);
+          --booking-status-background-color: oklch(from var(--secondary-color) 0.5 c h);
           --booking-status-text-color: var(--white-color);
         }
       }

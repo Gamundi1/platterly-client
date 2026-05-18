@@ -28,9 +28,17 @@
     } @else {
       <form (submit)="joinTable($event)">
         <input type="text" placeholder="Nombre de usuario" [formField]="bookingForm.name" />
-        <button type="submit">Unirse a la mesa</button>
+        <button class="login" type="submit">Unirse a la mesa</button>
       </form>
     }
+  </section>
+</ng-template>
+
+<ng-template #successfulModal>
+  <section class="successful-modal">
+    <fa-icon [icon]="faCheck"></fa-icon>
+    <h4 class="successful-title">¡Te has unido a la reserva!</h4>
+    <a routerLink="/my-bookings">Ver mis reservas</a>
   </section>
 </ng-template>
 

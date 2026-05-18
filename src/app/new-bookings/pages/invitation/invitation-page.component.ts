@@ -10,6 +10,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { UrlProvider } from '../../../shared/enums/url-provider.enum';
 import { HttpHandlerService } from '../../../shared/services/http-handler.service';
 import { Booking } from '../../interfaces/booking.interface';
+import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   imports: [ReactiveFormsModule, FormField, FaIconComponent, MatDialogClose, RouterLink],
@@ -22,11 +23,13 @@ export class InvitationPageComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly invitationModal = viewChild<TemplateRef<unknown>>('invitationModal');
   private readonly errorModal = viewChild<TemplateRef<unknown>>('errorModal');
+  private readonly successfulModal = viewChild<TemplateRef<unknown>>('successfulModal');
   private readonly activatedRoute = inject(ActivatedRoute);
   protected tryToLogIn = signal(true);
   protected booking: Booking | null = null;
   protected faXMark = faXmark;
   protected faTriangleExclamation = faTriangleExclamation;
+  protected faCheck = faCheckCircle;
 
   private bookingModel = signal({
     name: '',
@@ -108,6 +111,8 @@ export class InvitationPageComponent implements OnInit {
           throw error;
         }),
       )
-      .subscribe();
+      .subscribe(() => {
+        this.matDialog.open(this.successfulModal()!);
+      });
   }
 }
