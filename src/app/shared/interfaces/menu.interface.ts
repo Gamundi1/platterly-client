@@ -16,6 +16,7 @@ export interface Dish {
   priceUnits: string;
   cookTime: number;
   images: string[];
+  ingredients: string[];
   allergens: Allergen[];
 }
 

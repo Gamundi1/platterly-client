@@ -1,4 +1,5 @@
 <aside>
+  <h3>Categorías de menús</h3>
   @for (menuAvailable of menuAvailables(); track menuAvailable.id) {
     <button
       [aria-selected]="selectedMenuId() === menuAvailable.id"
@@ -10,17 +11,33 @@
 </aside>
 
 <section>
+  <p class="ingredients-incentive">Con los mejores ingredientes</p>
   @let currentMenu = menus[selectedMenuId() || ''];
   @if (currentMenu) {
     <h2>{{ currentMenu.name }}</h2>
+    <p class="menu-subtitle">
+      Todos nuestros platos se hacen bajo demanda para evitar desperdicios, garantizando la frescura
+      y calidad.
+    </p>
     <div class="dishes-container">
       @for (dish of currentMenu.products.dishes; track dish.id) {
         <div class="dish-card">
           <div class="image-container">
-            <img [ngSrc]="dish.images[0]" alt="" width="80" height="70" />
+            <span>{{ dish.price | currency: dish.priceUnits }}</span>
+            <img [ngSrc]="dish.images[0]" alt="" fill />
           </div>
           <div class="dish-description">
             <h3>{{ dish.name }}</h3>
+            <p class="dish-ingredients">
+              {{ dish.ingredients.join(', ') }}
+            </p>
+          </div>
+          <div class="dish-footer">
+            <div class="allergens-container">
+              @for (allergen of dish.allergens; track $index) {
+                <allergen-icon [allergen]="allergen"></allergen-icon>
+              }
+            </div>
           </div>
         </div>
       }

@@ -1,0 +1,11 @@
+@let iconPath = getIconPath();
+@if (iconPath) {
+  <img
+    [src]="iconPath"
+    alt="Allergen icon"
+    width="15"
+    height="15"
+    [matTooltip]="'Contiene ' + allergen().name"
+    matTooltipPosition="above"
+  />
+}

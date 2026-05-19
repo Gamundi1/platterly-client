@@ -35,7 +35,7 @@ body {
 :root {
   --white-color: oklch(1 0 0);
   --black-color: oklch(0 0 0);
-  --primary-color: oklch(0.6248 0.1384 38.91);
+  --primary-color: #9a4022;
   --secondary-color: oklch(0.3848 0.0425 165.11);
   --tertiary-color: oklch(0.8921 0.0315 75.2);
   --neutral-color: oklch(0.9756 0.035 92.82);
@@ -44,7 +44,9 @@ body {
   --font-error-color: #ba1a1a;
   --font-success-color: #21b821;
 
-  --default-max-width: 68rem;
+  --small-box-shadow: 0 20px 40px -14px oklch(from black l c h / 25%);
+
+  --default-max-width: 64rem;
 }
 
 body {

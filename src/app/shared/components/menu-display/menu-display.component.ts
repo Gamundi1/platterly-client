@@ -2,8 +2,9 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { UrlProvider } from '../../enums/url-provider.enum';
 import { HttpHandlerService } from '../../services/http-handler.service';
 import { Menu } from '../../interfaces/menu.interface';
-import { NgOptimizedImage } from '@angular/common';
+import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import { map } from 'rxjs';
+import { AllergenIconComponent } from '../allergen-icon/allergen-icon.component';
 
 interface MenuAside {
   name: string;
@@ -14,7 +15,7 @@ interface MenuAside {
   selector: 'menu-display',
   templateUrl: './menu-display.component.html',
   styleUrl: './menu-display.component.scss',
-  imports: [NgOptimizedImage],
+  imports: [NgOptimizedImage, CurrencyPipe, AllergenIconComponent],
 })
 export class MenuDisplayComponent implements OnInit {
   protected readonly httpHandlerService = inject(HttpHandlerService);
@@ -30,13 +31,16 @@ export class MenuDisplayComponent implements OnInit {
       .getRequest<MenuAside[]>(UrlProvider.getAllMenus)
       .subscribe((menus: MenuAside[]) => {
         this.menuAvailables.set(menus);
+
+        if (menus.length > 0) {
+          this.getMenuItems(menus[0].id);
+        }
       });
   }
 
   getMenuItems(menuId: string): void {
-    this.selectedMenuId.set(menuId);
-
     if (this.menus[menuId]) {
+      this.selectedMenuId.set(menuId);
       return;
     }
 
@@ -62,6 +66,7 @@ export class MenuDisplayComponent implements OnInit {
       )
       .subscribe((menu: Menu) => {
         this.menus[menuId] = menu;
+        this.selectedMenuId.set(menuId);
       });
   }
 
