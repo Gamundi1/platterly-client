@@ -1,10 +1,11 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { MatTooltip } from '@angular/material/tooltip';
 import { Allergen } from '../../interfaces/menu.interface';
 
 @Component({
   selector: 'allergen-icon',
   templateUrl: './allergen-icon.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [MatTooltip],
 })
 export class AllergenIconComponent {

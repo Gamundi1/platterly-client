@@ -1,5 +1,12 @@
 import { AsyncPipe, NgTemplateOutlet, NgClass } from '@angular/common';
-import { Component, inject, OnInit, TemplateRef, viewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  TemplateRef,
+  viewChild,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { MatTab, MatTabContent, MatTabGroup } from '@angular/material/tabs';
 import { Observable } from 'rxjs';
 import { catchError, map, shareReplay } from 'rxjs/operators';
@@ -24,6 +31,7 @@ import { ErrorModalComponent } from '../../../shared/components/error-modal/erro
     NgClass,
   ],
   templateUrl: './host-page.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './host-page.component.scss',
 })
 export class HostPageComponent implements OnInit {

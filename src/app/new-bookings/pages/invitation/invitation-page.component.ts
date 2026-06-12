@@ -1,4 +1,12 @@
-import { Component, inject, OnInit, signal, TemplateRef, viewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  TemplateRef,
+  viewChild,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { form, FormField, required } from '@angular/forms/signals';
 import { MatDialog, MatDialogClose } from '@angular/material/dialog';
@@ -16,6 +24,7 @@ import { ErrorModalComponent } from '../../../shared/components/error-modal/erro
 @Component({
   imports: [ReactiveFormsModule, FormField, FaIconComponent, MatDialogClose, RouterLink],
   templateUrl: './invitation-page.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './invitation-page.component.scss',
 })
 export class InvitationPageComponent implements OnInit {

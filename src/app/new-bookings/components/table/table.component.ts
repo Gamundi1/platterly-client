@@ -4,7 +4,8 @@ import {
   input,
   OnChanges,
   output,
-  signal
+  signal,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faKitchenSet, faToilet, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +15,7 @@ import { Table } from '../../interfaces/table.interface';
   selector: 'booking-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FaIconComponent],
 })
 export class TableComponent implements OnChanges {

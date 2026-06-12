@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
@@ -8,6 +8,7 @@ import { AuthService } from '../auth/services/auth.service';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [RouterLink, RouterLinkActive, MatMenuModule, MatIconModule],
 })
 export class HeaderComponent {

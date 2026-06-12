@@ -1,5 +1,5 @@
 import { DatePipe, NgClass } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { getOrderStatusColor, getOrderStatusText } from '../../../helpers/order-status';
 import { OrderStatus } from '../../enums/order-status.enum';
 import { Order } from '../../interfaces/order.interface';
@@ -10,6 +10,7 @@ import { getUserAvatarColor } from '../../../helpers/user.helper';
   selector: 'order-card',
   templateUrl: './order-card.component.html',
   styleUrl: './order-card.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [ProductsTableComponent, DatePipe, NgClass],
 })
 export class OrderCardComponent {

@@ -1,5 +1,13 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, inject, OnInit, signal, TemplateRef, viewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  TemplateRef,
+  viewChild,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {
   MatDialog,
   MatDialogActions,
@@ -18,7 +26,6 @@ import { Dish } from '../../../shared/interfaces/menu.interface';
 import { HttpHandlerService } from '../../../shared/services/http-handler.service';
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
 
-
 interface OrderItem {
   dish: Dish;
   quantity: number;
@@ -27,6 +34,7 @@ interface OrderItem {
 @Component({
   templateUrl: './create-order-page.component.html',
   styleUrls: ['./create-order-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     MenuDisplayComponent,
     CurrencyPipe,

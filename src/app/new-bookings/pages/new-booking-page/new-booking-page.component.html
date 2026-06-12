@@ -18,7 +18,7 @@
                   id="guests-{{ guest.key }}"
                   class="guest-selector"
                   type="radio"
-                  value="{{ guest.key }}"
+                  [attr.value]="guest.key"
                   [attr.aria-selected]="guest.key === bookingForm().value().guests"
                   [formField]="bookingForm.guests"
                 />

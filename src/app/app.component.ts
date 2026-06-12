@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
@@ -9,6 +9,7 @@ import { SocketService } from './socket/services/socket.service';
   selector: 'app-root',
   imports: [RouterOutlet, HeaderComponent],
   templateUrl: './app.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app.component.scss',
 })
 export class App {

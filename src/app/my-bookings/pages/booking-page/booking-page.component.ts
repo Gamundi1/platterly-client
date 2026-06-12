@@ -1,5 +1,12 @@
 import { CurrencyPipe, NgClass, NgOptimizedImage } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,6 +27,7 @@ import { Order } from '../../interfaces/order.interface';
 @Component({
   templateUrl: './booking-page.component.html',
   styleUrl: './booking-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     NgClass,
     FaIconComponent,
@@ -27,7 +35,7 @@ import { Order } from '../../interfaces/order.interface';
     RouterLink,
     OrderCardComponent,
     MatIconModule,
-    CurrencyPipe
+    CurrencyPipe,
   ],
 })
 export class BookingPageComponent implements OnInit {

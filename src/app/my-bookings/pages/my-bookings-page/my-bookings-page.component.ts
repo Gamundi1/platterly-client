@@ -1,5 +1,5 @@
 import { AsyncPipe, DatePipe, NgTemplateOutlet, NgClass } from '@angular/common';
-import { Component, inject, TemplateRef, viewChild } from '@angular/core';
+import { Component, inject, TemplateRef, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { map, Subject } from 'rxjs';
 import { Booking } from '../../../new-bookings/interfaces/booking.interface';
@@ -34,6 +34,7 @@ import { getBookingStatusColor, getBookingStatusText } from '../../../helpers/bo
     MatDialogClose,
   ],
   templateUrl: './my-bookings-page.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './my-bookings-page.component.scss',
 })
 export class MyBookingsPage {

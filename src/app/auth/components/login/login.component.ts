@@ -7,6 +7,7 @@ import {
   OnDestroy,
   Renderer2,
   signal,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { email, form, required } from '@angular/forms/signals';
@@ -26,6 +27,7 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [ReactiveFormsModule, FaIconComponent, MatDialogClose, InputComponent],
 })
 export class LoginComponent implements OnDestroy {

@@ -40,7 +40,7 @@
       <a
         class="add-order"
         routerLink="/menu/create-order"
-        [queryParams]="{ bookingId: booking()?.id }"
+        [queryParams]="{ bookingId: $safeNavigationMigration(booking()?.id) }"
       >
         <img ngSrc="images/my-bookings/create-order.webp" fill alt="" />
         <div class="add-symbol"><fa-icon [icon]="faPlus"></fa-icon></div>

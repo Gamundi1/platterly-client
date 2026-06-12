@@ -1,4 +1,12 @@
-import { Component, inject, input, OnInit, output, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  OnInit,
+  output,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { UrlProvider } from '../../enums/url-provider.enum';
 import { HttpHandlerService } from '../../services/http-handler.service';
 import { Dish, Menu } from '../../interfaces/menu.interface';
@@ -15,6 +23,7 @@ interface MenuAside {
   selector: 'menu-display',
   templateUrl: './menu-display.component.html',
   styleUrl: './menu-display.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgOptimizedImage, CurrencyPipe, AllergenIconComponent],
 })
 export class MenuDisplayComponent implements OnInit {

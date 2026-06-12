@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { OrderProduct } from '../../../my-bookings/interfaces/order.interface';
 import { CurrencyPipe } from '@angular/common';
 
@@ -6,6 +6,7 @@ import { CurrencyPipe } from '@angular/common';
   selector: 'products-table',
   templateUrl: './products-table.component.html',
   styleUrl: './products-table.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CurrencyPipe],
 })
 export class ProductsTableComponent {

@@ -1,14 +1,5 @@
-import {
-  Component,
-  input,
-  output,
-} from '@angular/core';
-import {
-  trigger,
-  transition,
-  style,
-  animate,
-} from '@angular/animations';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
+import { trigger, transition, style, animate } from '@angular/animations';
 import { Order } from '../../../my-bookings/interfaces/order.interface';
 import { ProductsTableComponent } from '../../../shared/components/products-table/products-table.component';
 
@@ -17,6 +8,7 @@ import { ProductsTableComponent } from '../../../shared/components/products-tabl
   templateUrl: './order-item.component.html',
   styleUrl: './order-item.component.scss',
   imports: [ProductsTableComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   animations: [
     trigger('slideIn', [
       transition(':enter', [
