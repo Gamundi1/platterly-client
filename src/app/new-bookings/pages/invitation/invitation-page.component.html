@@ -1,4 +1,4 @@
-<ng-template #invitationModal let-booking>
+<ng-template #invitationModal let-data>
   <section>
     <button type="button" class="close-button" mat-dialog-close>
       <fa-icon [icon]="faXMark"></fa-icon>
@@ -10,20 +10,24 @@
     <div class="booking-info">
       <div>
         <span class="title">Ubicación</span>
-        <span>Mesa {{ booking?.table.number }}</span>
+        <span>Mesa {{ data.tableNumber }}</span>
       </div>
       <div>
         <span class="title">Hora</span>
-        <span>{{ booking?.hour.interval }}</span>
+        <span>{{ data.hour }}</span>
       </div>
       <div>
         <span class="title">Fecha</span>
-        <span>{{ booking?.date }}</span>
+        <span>{{ data.date }}</span>
       </div>
     </div>
 
     @if (tryToLogIn()) {
-      <button class="login" (click)="openLogInModal()">Iniciar sesión</button>
+      @if (getUserDetails()) {
+        <button class="login" (click)="sendJoinRequest()">Unirse a la mesa</button>
+      } @else {
+        <button class="login" (click)="openLogInModal()">Iniciar sesión</button>
+      }
       <button class="guest" (click)="tryToLogIn.set(false)">Continuar como invitado</button>
     } @else {
       <form (submit)="joinTable($event)">
@@ -39,14 +43,5 @@
     <fa-icon [icon]="faCheck"></fa-icon>
     <h4 class="successful-title">¡Te has unido a la reserva!</h4>
     <a routerLink="/my-bookings">Ver mis reservas</a>
-  </section>
-</ng-template>
-
-<ng-template #errorModal let-errorMessage>
-  <section class="error-modal">
-    <fa-icon [icon]="faTriangleExclamation"></fa-icon>
-    <h4 class="error-title">No es posible unirse a la reserva</h4>
-    <p>{{ errorMessage }}</p>
-    <a routerLink="/home">Página principal</a>
   </section>
 </ng-template>

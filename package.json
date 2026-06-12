@@ -11,6 +11,7 @@
   "private": true,
   "packageManager": "npm@11.11.0",
   "dependencies": {
+    "@angular/animations": "^21.2.16",
     "@angular/cdk": "^21.2.9",
     "@angular/common": "^21.2.0",
     "@angular/compiler": "^21.2.0",
@@ -24,6 +25,7 @@
     "@fortawesome/free-regular-svg-icons": "^7.2.0",
     "@fortawesome/free-solid-svg-icons": "^7.2.0",
     "rxjs": "~7.8.0",
+    "socket.io-client": "^4.8.3",
     "tslib": "^2.3.0"
   },
   "devDependencies": {

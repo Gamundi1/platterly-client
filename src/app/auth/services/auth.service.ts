@@ -6,6 +6,7 @@ import { DEFAULT_LOGIN_CONFIG, LoginConfig } from '../../shared/interfaces/login
 import { HttpHandlerService } from '../../shared/services/http-handler.service';
 import { LoginComponent } from '../components/login/login.component';
 import { JwtTokens } from '../interfaces/jwt-tokens.interface';
+import { UserRole } from '../../shared/interfaces/user.interface';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -50,6 +51,14 @@ export class AuthService {
       );
   }
 
+  logout() {
+    this.httpHandlerService.postRequest(UrlProvider.logout).subscribe(() => {
+      this.jwtTokens.set(null);
+      this.userDetails.set(null);
+      localStorage.removeItem('access-token');
+    });
+  }
+
   register(name: string) {
     return this.httpHandlerService
       .postRequest<{ 'access-token': string }>(UrlProvider.register, undefined, {
@@ -60,6 +69,14 @@ export class AuthService {
           this.saveTokens(response);
         }),
       );
+  }
+
+  hasAnyRole(roles: UserRole[]): boolean {
+    const user = this.userDetails();
+    if (!user || !user.role) {
+      return false;
+    }
+    return roles.includes(user.role);
   }
 
   public getAccessToken() {
@@ -73,9 +90,8 @@ export class AuthService {
   public showLoginModal() {
     this.loginComponentRef = this.matDialog.open(LoginComponent, {
       data: { configuration: this.loginConfiguration() },
-      width: '46rem',
-      maxWidth: '90vw',
-      height: '32rem',
+      panelClass: 'login-modal',
+      maxWidth: '100vw',
     });
   }
 
@@ -87,6 +103,12 @@ export class AuthService {
 
   public modifyLoginConfig(configuration: LoginConfig) {
     this.loginConfig.set({ ...this.loginConfig(), ...configuration });
+  }
+
+  public refreshTokens() {
+    return this.httpHandlerService
+      .postRequest<{ 'access-token': string }>(UrlProvider.refresh)
+      .pipe(tap((tokens) => this.saveTokens(tokens)));
   }
 
   private saveTokens(tokens: { 'access-token': string }) {

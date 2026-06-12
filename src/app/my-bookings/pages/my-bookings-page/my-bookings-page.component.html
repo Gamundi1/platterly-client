@@ -6,8 +6,22 @@
   <img src="images/my-bookings/header.png" alt="" width="192" height="192" />
 </section>
 <section class="my-bookings-content">
+  @let activeBookings = userActiveBookings$ | async;
+  @if (activeBookings && activeBookings.length > 0) {
+    <p>ACTIVAS</p>
+    @for (booking of activeBookings; track $index) {
+      <ng-container
+        *ngTemplateOutlet="comingBooking; context: { $implicit: booking }"
+      ></ng-container>
+    } @empty {
+      <div class="empty-bookings">
+        <p>No tienes reservas activas</p>
+        <a href="/bookings">Crear reserva</a>
+      </div>
+    }
+  }
   <p>PRÓXIMAS</p>
-  @for (booking of userComingBookings | async; track $index) {
+  @for (booking of userComingBookings$ | async; track $index) {
     <ng-container *ngTemplateOutlet="comingBooking; context: { $implicit: booking }"></ng-container>
   } @empty {
     <div class="empty-bookings">
@@ -15,7 +29,7 @@
       <a href="/bookings">Crear reserva</a>
     </div>
   }
-  @let pastBookings = userPastBookings | async;
+  @let pastBookings = userPastBookings$ | async;
   @if (pastBookings && pastBookings.length > 0) {
     <p>PASADAS</p>
     @for (booking of pastBookings; track $index) {
@@ -53,7 +67,9 @@
           <fa-icon [icon]="faCircleXMark"></fa-icon> Cancelar reserva
         </button>
       } @else {
-        <a href="/booking/{{ booking.id }}">Ir a la reserva</a>
+        <a class="redirect-booking" href="/my-bookings/{{ booking.id }}"
+          ><span>Ir a la reserva</span><fa-icon [icon]="faArrowRight"></fa-icon
+        ></a>
       }
     </div>
     <div class="booking-guests">

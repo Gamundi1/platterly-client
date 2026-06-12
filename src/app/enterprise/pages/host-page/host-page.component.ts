@@ -1,14 +1,16 @@
 import { AsyncPipe, NgTemplateOutlet, NgClass } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, TemplateRef, viewChild } from '@angular/core';
 import { MatTab, MatTabContent, MatTabGroup } from '@angular/material/tabs';
 import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { catchError, map, shareReplay } from 'rxjs/operators';
 import { Booking } from '../../../new-bookings/interfaces/booking.interface';
 import { UrlProvider } from '../../../shared/enums/url-provider.enum';
 import { HttpHandlerService } from '../../../shared/services/http-handler.service';
 import { getBookingStatusColor, getBookingStatusText } from '../../../helpers/booking-status';
 import { BookingStatus } from '../../../shared/enums/booking-status.enum';
 import { getTableStatusText } from '../../../helpers/table-status';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorModalComponent } from '../../../shared/components/error-modal/error-modal.component';
 
 @Component({
   selector: 'host-page',
@@ -26,6 +28,7 @@ import { getTableStatusText } from '../../../helpers/table-status';
 })
 export class HostPageComponent implements OnInit {
   private readonly httpHandlerService = inject(HttpHandlerService);
+  protected readonly matDialog = inject(MatDialog);
 
   protected readonly dayOffsets = [0, 1, 2, 3];
   protected readonly dayLabels = this.dayOffsets.map((offset) => this.getDay(offset));
@@ -62,12 +65,32 @@ export class HostPageComponent implements OnInit {
 
   protected updateBookingStatus(booking: Booking, status: BookingStatus) {
     this.httpHandlerService
-      .putRequest(
-        UrlProvider.updateBookingStatus,
-        { bookingId: booking.id },
-        { status: status },
+      .putRequest(UrlProvider.updateBookingStatus, { bookingId: booking.id }, { status: status })
+      .pipe(
+        catchError(() => {
+          this.matDialog.open(ErrorModalComponent, {
+            data: {
+              title: 'Error al actualizar el estado de la reserva',
+              message:
+                'Ha ocurrido un error al intentar actualizar el estado de la reserva. Por favor, inténtalo de nuevo.',
+            },
+          });
+          return [];
+        }),
       )
-      .subscribe();
+      .subscribe(() => {
+        this.refreshLoadedDays();
+      });
+  }
+
+  private refreshLoadedDays() {
+    Object.keys(this.bookingsByDay).forEach((key) => {
+      const dayOffset = Number(key);
+      if (Number.isNaN(dayOffset)) {
+        return;
+      }
+      this.bookingsByDay[dayOffset] = this.fetchBookingsByDate(dayOffset).pipe(shareReplay(1));
+    });
   }
 
   protected loadBookingsForDay(daysToAdd: number) {

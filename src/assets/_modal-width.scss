@@ -1,0 +1,25 @@
+.login-modal {
+  --container-inline-size: 100vw;
+  --container-max-inline-size: 100vw;
+  --container-block-size: 100vh;
+  --container-margin-inline: 0;
+  --dialog-border-radius: 0;
+
+  @media (min-width: 576px) {
+    --container-inline-size: 46rem;
+    --container-max-inline-size: 90vw;
+    --container-block-size: 32rem;
+    --dialog-border-radius: 0.5rem;
+    --container-margin-inline: 1rem;
+  }
+
+  inline-size: var(--container-inline-size);
+  max-inline-size: var(--container-max-inline-size);
+  block-size: var(--container-block-size);
+  margin-inline: var(--container-margin-inline);
+
+  .mat-mdc-dialog-surface {
+    border-radius: var(--dialog-border-radius);
+  } 
+}
+

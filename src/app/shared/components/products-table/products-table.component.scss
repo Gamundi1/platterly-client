@@ -1,0 +1,32 @@
+ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-inline-start: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.product-info {
+  font-family: 'Manrope';
+  color: var(--font-primary-color);
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.product-price {
+  font-family: 'Manrope';
+  color: var(--font-primary-color);
+}
+
+.product-name {
+  font-weight: bold;
+}
+.product-quantity {
+  color: var(--font-primary-color);
+}

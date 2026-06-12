@@ -53,9 +53,16 @@
       </div>
     </div>
     @if (booking.status === bookingStatus.CONFIRMED) {
-      <button (click)="updateBookingStatus(booking, bookingStatus.ACTIVE)">Marcar llegada</button>
+      <button class="active-button" (click)="updateBookingStatus(booking, bookingStatus.ACTIVE)">
+        Marcar llegada
+      </button>
     } @else if (booking.status === bookingStatus.ACTIVE) {
-      <button (click)="updateBookingStatus(booking, bookingStatus.COMPLETED)">Liberar mesa</button>
+      <button
+        class="completed-button"
+        (click)="updateBookingStatus(booking, bookingStatus.COMPLETED)"
+      >
+        Liberar mesa
+      </button>
     }
   </div>
 </ng-template>

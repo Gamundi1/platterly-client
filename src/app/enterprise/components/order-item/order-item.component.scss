@@ -1,0 +1,50 @@
+:host {
+    --order-button-background-color: var(--primary-color);
+    --order-border-color: none;
+}
+
+.order-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background-color: var(--white-color);
+  padding-inline: 1rem;
+  padding-block: 1rem;
+  border-radius: 0.5rem;
+  border: 2px solid var(--order-border-color);
+}
+
+h4 {
+  margin-block: 0;
+  font-family: 'Manrope';
+  font-size: 1.1rem;
+}
+
+.table {
+  font-family: 'Manrope';
+  color: var(--font-primary-color);
+  font-size: 1rem;
+}
+
+.order-time {
+    font-family: 'Manrope';
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 0.75rem;
+}
+
+.order-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-action {
+    background-color: var(--order-button-background-color);
+    color: white;
+    border: none;
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}

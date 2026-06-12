@@ -17,5 +17,15 @@
     <button class="sign-in" (click)="showLoginModal()">Inicia sesión</button>
   } @else {
     <p>Hola, {{ userDetails()?.name }}!</p>
+    <button class="user-details" matButton [matMenuTriggerFor]="userDetailsMenu">
+      <mat-icon>perm_identity</mat-icon>
+    </button>
   }
 </header>
+
+<mat-menu xPosition="before" #userDetailsMenu="matMenu" class="user-details-menu">
+  @if (!userDetails()?.email) {
+    <button mat-menu-item routerLink="/my-bookings">Completar cuenta</button>
+  }
+  <button class="logout-button" mat-menu-item (click)="logout()">Cerrar sesión</button>
+</mat-menu>

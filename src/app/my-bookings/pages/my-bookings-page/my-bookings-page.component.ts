@@ -8,7 +8,13 @@ import { HttpHandlerService } from '../../../shared/services/http-handler.servic
 import { BookingStatus } from '../../../shared/enums/booking-status.enum';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { faChair, faClose, faUserPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowRight,
+  faChair,
+  faClose,
+  faUserPlus,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
 import { MatDialog, MatDialogClose } from '@angular/material/dialog';
 import { InvitationButtonComponent } from '../../../shared/components/invitation-button/invitation-button.component';
@@ -31,13 +37,15 @@ import { getBookingStatusColor, getBookingStatusText } from '../../../helpers/bo
   styleUrl: './my-bookings-page.component.scss',
 })
 export class MyBookingsPage {
-  protected userComingBookings: Subject<Booking[]> = new Subject<Booking[]>();
-  protected userPastBookings: Subject<Booking[]> = new Subject<Booking[]>();
+  protected userActiveBookings$: Subject<Booking[]> = new Subject<Booking[]>();
+  protected userComingBookings$: Subject<Booking[]> = new Subject<Booking[]>();
+  protected userPastBookings$: Subject<Booking[]> = new Subject<Booking[]>();
 
   protected readonly faChair = faChair;
   protected readonly faCircleXMark = faCircleXmark;
   protected readonly faUserPlus = faUserPlus;
   protected readonly faClose = faXmark;
+  protected readonly faArrowRight = faArrowRight;
 
   private readonly httpHandlerService = inject(HttpHandlerService);
   private readonly matDialog = inject(MatDialog);
@@ -61,7 +69,10 @@ export class MyBookingsPage {
           });
         }),
         map((bookings) => {
-          const now = new Date();
+          const activeBookings = bookings.filter(
+            (booking) => booking.status === BookingStatus.ACTIVE,
+          );
+          console.log(activeBookings);
 
           const comingBookings = bookings.filter((booking) => {
             const bookingDate = booking.date;
@@ -69,7 +80,8 @@ export class MyBookingsPage {
             if (
               (isDateAfterOrBefore(bookingDate, booking.hour) === TimeInterval.AFTER ||
                 isDateAfterOrBefore(bookingDate, booking.hour) === TimeInterval.WITHIN) &&
-              booking.status !== BookingStatus.CANCELLED
+              booking.status !== BookingStatus.CANCELLED &&
+              booking.status !== BookingStatus.ACTIVE
             ) {
               return true;
             }
@@ -81,8 +93,9 @@ export class MyBookingsPage {
             const bookingDate = booking.date;
 
             if (
-              isDateAfterOrBefore(bookingDate, booking.hour) === TimeInterval.BEFORE ||
-              booking.status === BookingStatus.CANCELLED
+              (isDateAfterOrBefore(bookingDate, booking.hour) === TimeInterval.BEFORE ||
+                booking.status === BookingStatus.CANCELLED) &&
+              booking.status !== BookingStatus.ACTIVE
             ) {
               return true;
             }
@@ -90,8 +103,9 @@ export class MyBookingsPage {
             return false;
           });
 
-          this.userComingBookings.next(comingBookings);
-          this.userPastBookings.next(pastBookings);
+          this.userComingBookings$.next(comingBookings);
+          this.userPastBookings$.next(pastBookings);
+          this.userActiveBookings$.next(activeBookings);
         }),
         takeUntilDestroyed(),
       )

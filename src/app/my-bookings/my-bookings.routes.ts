@@ -6,4 +6,9 @@ export const MY_BOOKING_ROUTES: Routes = [
     loadComponent: () =>
       import('./pages/my-bookings-page/my-bookings-page.component').then((m) => m.MyBookingsPage),
   },
+  {
+    path: ':bookingId',
+    loadComponent: () =>
+      import('./pages/booking-page/booking-page.component').then((m) => m.BookingPageComponent),
+  },
 ];

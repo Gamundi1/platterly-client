@@ -23,7 +23,7 @@ export class InvitationButtonComponent {
   private readonly clipBoard = inject(Clipboard);
 
   ngOnInit(): void {
-    this.invitationLink.set(`${window.location.origin}/bookings/invitation?bookingId=${this.booking().id}`);
+    this.invitationLink.set(`${window.location.origin}/bookings/invitation?bookingId=${this.booking().id}&tableNumber=${this.booking().table.number}&hour=${this.booking().hour.interval}&date=${this.booking().date}`);
   }
   protected copyLink() {
     this.clipBoard.copy(this.invitationLink());

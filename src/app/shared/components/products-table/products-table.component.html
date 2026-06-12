@@ -1,0 +1,16 @@
+<ul>
+  @for (product of products(); track $index) {
+    <li>
+      <div class="product-info">
+        <span class="product-quantity">{{ product.quantity }}</span>
+        <span class="product-x">x</span>
+        <span class="product-name">{{ product.name }}</span>
+      </div>
+      @if (showPrice()) {
+        <div class="product-price">
+          <span>{{ product.price * product.quantity | currency: 'EUR' }}</span>
+        </div>
+      }
+    </li>
+  }
+</ul>

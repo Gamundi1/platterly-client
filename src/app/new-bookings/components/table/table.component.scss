@@ -6,9 +6,8 @@ section {
   --table-map-border-radius: 0.5rem;
   background: var(--white-color);
   border-radius: var(--table-map-border-radius);
-  inline-size: fit-content;
-  min-inline-size: 30rem;
-  padding: 1rem;
+  padding-inline: 1rem;
+  padding-block: 1rem;
   position: relative;
 }
 
@@ -27,6 +26,7 @@ section {
   & span {
     background-color: var(--secondary-color);
     color: var(--white-color);
+    margin-inline: 1rem;
     padding-inline: 1rem;
     padding-block: 0.5rem;
     border-radius: 0.25rem;

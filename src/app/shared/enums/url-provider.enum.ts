@@ -1,8 +1,11 @@
 export const UrlProvider = {
   baseUrl: 'http://localhost:3000/api',
+  socketBaseUrl: 'http://localhost:3000',
   login: '/v1/auth/sign-in',
   user: '/v1/auth/user',
   register: '/v1/auth/register',
+  logout: '/v1/auth/log-out',
+  refresh: '/v1/auth/refresh',
   getAvailableTables: '/v1/table/available/${date}',
   getBookingsByDate: '/v1/booking/active/${date}',
   getAvailableHours: '/v1/booking/available-hours',
@@ -13,4 +16,8 @@ export const UrlProvider = {
   joinBooking: '/v1/booking/join',
   getAllMenus: '/v1/menu/available',
   getMenu: '/v1/menu/${menuId}',
+  postOrder: '/v1/order/create/${bookingId}',
+  getOrdersByBookingId: '/v1/order/booking/${bookingId}',
+  getOrdersByDate: '/v1/order/date/${date}',
+  updateOrderStatus: '/v1/order/update-status',
 } as const;

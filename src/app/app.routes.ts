@@ -16,12 +16,19 @@ export const routes: Routes = [
     loadChildren: () => import('./my-bookings/my-bookings.routes').then((m) => m.MY_BOOKING_ROUTES),
   },
   {
-    path: 'host',
-    loadChildren: () => import('./host/host.routes').then((m) => m.HOST_ROUTES),
+    path: 'enterprise',
+    loadChildren: () => import('./enterprise/enterprise.router').then((m) => m.ENTERPRISE_ROUTES),
   },
   {
     path: 'menu',
     loadChildren: () => import('./menu/menu.routes').then((m) => m.MENU_ROUTES),
+  },
+  {
+    path: '403',
+    loadComponent: () =>
+      import('./error/pages/not-authorized-page/not-authorized-page.component').then(
+        (m) => m.NotAuthorizedPageComponent,
+      ),
   },
   {
     path: '**',

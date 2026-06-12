@@ -1,3 +1,5 @@
+@use '@angular/material' as mat;
+
 header {
   display: flex;
   align-items: center;
@@ -46,6 +48,19 @@ header {
 
     &:hover {
       --button-background-color: oklch(from var(--primary-color) calc(1 - 0.5) c h);
+    }
+  }
+
+  .user-details {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    inline-size: 3rem;
+    border-radius: 1rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: oklch(from var(--primary-color) 0.4 c h);
     }
   }
 }

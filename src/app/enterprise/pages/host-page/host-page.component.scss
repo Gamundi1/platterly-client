@@ -5,7 +5,6 @@
 
 ::ng-deep .booking-tabs {
   .mat-mdc-tab-header {
-    border-bottom: none;
     margin-block-end: 1.5rem;
   }
 
@@ -14,22 +13,6 @@
     border-radius: 1.5rem;
     background-color: transparent;
     transition: all 0.2s ease;
-  }
-
-  .mat-mdc-tab.mdc-tab--active {
-    background-color: #9a4022;
-
-    & .mdc-tab__text-label {
-      color: var(--white-color);
-      
-      &:hover {
-        color: var(--white-color);
-      }
-    }
-  }
-
-  .mdc-tab-indicator {
-    display: none;
   }
 }
 
@@ -49,7 +32,7 @@
   flex-direction: column;
   gap: 0.6rem;
   span {
-    color: #9a4022;
+    color: var(--primary-color);
     font-size: 1.8rem;
   }
 }
@@ -76,13 +59,13 @@
   block-size: 7rem;
   border-radius: 0.5rem;
   border: 1px solid #e0e0e0;
-  border-left: 4px solid #9a4022;
+  border-left: 4px solid var(--primary-color);
   background-color: var(--white-color);
   margin-block-end: 1.5rem;
 
   & .booking-hour {
     font-size: 1.5rem;
-    color: #9a4022;
+    color: var(--primary-color);
   }
 
   & .booking-info {
@@ -100,32 +83,11 @@
       }
 
       .status {
-        --booking-status-background-color: var(--white-color);
-        --booking-status-text-color: var(--black-color);
-
-        background-color: var(--booking-status-background-color);
-        color: var(--booking-status-text-color);
-
         text-transform: uppercase;
         padding-inline: 0.75rem;
         border-radius: 1rem;
         font-size: 0.75rem;
         inline-size: min-content;
-
-        &.confirmed {
-          --booking-status-background-color: #c5e7d6;
-          --booking-status-text-color: #4a695b;
-        }
-
-        &.cancelled {
-          --booking-status-background-color: #f4c6c3;
-          --booking-status-text-color: #7a4a48;
-        }
-
-        &.active {
-          --booking-status-background-color: oklch(from var(--secondary-color) 0.5 c h);
-          --booking-status-text-color: var(--white-color);
-        }
       }
     }
 
@@ -147,4 +109,13 @@
       }
     }
   }
+}
+
+.active-button {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  border: none;
+  border-radius: 1.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
 }

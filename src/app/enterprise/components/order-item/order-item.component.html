@@ -1,0 +1,13 @@
+<div class="order-item" @slideIn>
+  <div class="order-header">
+    <span class="table">Mesa {{ order().booking?.table }}</span>
+    <h4>{{ order().user.name }} {{ order().user.surname }}</h4>
+  </div>
+  <products-table [products]="order().products" [showPrice]="false"></products-table>
+  <div class="order-footer">
+    <span class="order-time">{{ getTimeEllapsed() }}</span>
+    @if (buttonText()) {
+      <button class="order-action" (click)="onButtonClick()">{{ buttonText() }}</button>
+    }
+  </div>
+</div>

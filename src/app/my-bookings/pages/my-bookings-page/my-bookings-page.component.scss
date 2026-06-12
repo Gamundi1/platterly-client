@@ -33,7 +33,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #efeeeb;
+  background-color: var(--gray-color);
   border-radius: 0.5rem;
   padding-block: 2rem;
 
@@ -56,7 +56,7 @@
 
   padding-inline: 2rem;
   padding-block: 2rem;
-  background-color: #f4f3f1;
+  background-color: var(--gray-color);
   border-radius: 0.5rem;
   margin-block-end: 0.6rem;
 
@@ -110,6 +110,38 @@
       font-weight: bold;
       font-size: 0.75rem;
     }
+
+    & .redirect-booking {
+      display: flex;
+      gap: 0.5rem;
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+      cursor: pointer;
+      background-color: transparent;
+      padding-inline: 1rem;
+      padding-block: 0.25rem;
+      border-radius: 0.5rem;
+      font-family: 'Manrope';
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      text-decoration: none;
+
+      transition: all 0.2s ease-in-out;
+
+      & fa-icon {
+        transition: transform 0.25s ease-in-out;
+        transform-origin: center;
+      }
+
+      &:hover {
+        font-size: 0.825rem;
+
+        & fa-icon {
+          animation: arrow-nudge 0.7s ease-in-out infinite;
+        }
+      }
+    }
   }
 
   & .invitation-button {
@@ -132,7 +164,7 @@
   --interval-guests-color: var(--font-primary-color);
   --interval-guests-dot-size: 0.2rem;
   --date-text-color: rgb(0, 0, 0, 0.6);
-  --guests-bg-color: #f4f3f1;
+  --guests-bg-color: var(--gray-color);
 
   padding-inline: 2rem;
 }
@@ -169,27 +201,12 @@
 }
 
 .status {
-  --booking-status-background-color: var(--white-color);
-  --booking-status-text-color: var(--black-color);
-
-  background-color: var(--booking-status-background-color);
-
   text-transform: uppercase;
   padding-inline: 1.5rem;
   padding-block: 0.25rem;
   border-radius: 1rem;
   font-size: 0.75rem;
   inline-size: min-content;
-
-  &.confirmed {
-    --booking-status-background-color: #c5e7d6;
-    --booking-status-text-color: #4a695b;
-  }
-
-  &.cancelled {
-    --booking-status-background-color: #f4c6c3;
-    --booking-status-text-color: #7a4a48;
-  }
 }
 
 .guests-list {
@@ -260,5 +277,17 @@
     font-family: 'Manrope';
     font-size: 0.75rem;
     color: var(--font-primary-color);
+  }
+}
+
+@keyframes arrow-nudge {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(0.3rem);
+  }
+  100% {
+    transform: translateX(0);
   }
 }
