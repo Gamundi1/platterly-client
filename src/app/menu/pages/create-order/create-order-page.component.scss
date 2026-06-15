@@ -1,0 +1,162 @@
+:host {
+  display: block;
+  margin-block-start: 2rem;
+}
+
+.create-order-container {
+  display: flex;
+  gap: 2rem;
+}
+
+.current-order {
+  inline-size: 18rem;
+  background-color: var(--gray-color);
+  block-size: fit-content;
+  padding-inline: 1.5rem;
+  padding-block: 2rem;
+  border-radius: 0.5rem;
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-block: 0;
+    }
+
+    .clear-order {
+      background-color: transparent;
+      border: none;
+      color: #ff4d4f;
+      cursor: pointer;
+      font-size: 0.9rem;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .order-items {
+    min-block-size: 6rem;
+  }
+
+  footer {
+    display: flex;
+    flex-direction: column;
+
+    .order-price {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+
+      & span {
+        color: var(--font-primary-color);
+      }
+
+      & h4 {
+        font-size: 1.25rem;
+      }
+    }
+
+    .next-step {
+      inline-size: 100%;
+      background-color: var(--primary-color);
+      color: var(--white-color);
+      border: none;
+      border-radius: 1.5rem;
+      padding: 0.75rem 1rem;
+      font-family: 'Manrope';
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
+}
+
+.verification-modal {
+  padding-inline: 1rem;
+
+  .content {
+    flex: 1;
+  }
+
+  .order-products {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-block: 1rem;
+
+    & .order-product {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+      color: var(--font-primary-color);
+    }
+  }
+
+  .total-price {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: var(--font-primary-color);
+  }
+
+  .verification-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+
+    button {
+      background-color: var(--primary-color);
+      color: var(--white-color);
+      border: none;
+      border-radius: 1.5rem;
+      padding: 0.75rem 1rem;
+      font-weight: bold;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.confirmation-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+
+  .icon-container {
+    block-size: 3rem;
+    align-content: center;
+    border-radius: 1rem;
+    background-color: #c5e7d6;
+    padding-inline: 0.8rem;
+
+    fa-icon {
+      color: oklch(from var(--secondary-color) 0.5 c h);
+      font-size: 1.5rem;
+    }
+  }
+
+  .actions {
+    display: flex;
+    gap: 1rem;
+
+    a {
+      border: 1px solid var(--primary-color);
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+  }
+}

@@ -11,14 +11,14 @@
         <legend><fa-icon [icon]="faUsers"></fa-icon> Grupo y horario</legend>
         <div class="date-guest-selector">
           <span class="title">Número de asistentes</span>
-          <div id="guests-selector">
+          <div id="guests-selector" role="radiogroup">
             @for (guest of guests | keyvalue; track guest.key) {
               <label for="guests-{{ guest.key }}">
                 <input
                   id="guests-{{ guest.key }}"
                   class="guest-selector"
                   type="radio"
-                  value="{{ guest.key }}"
+                  [attr.value]="guest.key"
                   [attr.aria-selected]="guest.key === bookingForm().value().guests"
                   [formField]="bookingForm.guests"
                 />
@@ -62,7 +62,7 @@
           (selectedTable)="onTableSelected($event)"
         ></booking-table>
       </fieldset>
-      <div class="submit-section">
+      <div class="submit-section-desktop">
         <p>
           Al confirmar la reserva aceptas nuestra politica de cancelación con 24 horas de antelación
         </p>
@@ -73,6 +73,14 @@
     </form>
     <div class="image-container">
       <img priority fill ngSrc="images/new-booking/booking-incentive.webp" alt="" />
+    </div>
+    <div class="submit-section-mobile">
+      <p>
+        Al confirmar la reserva aceptas nuestra politica de cancelación con 24 horas de antelación
+      </p>
+      <button [disabled]="!bookingForm().valid()" type="submit">
+        Confirmar reserva <fa-icon [icon]="faUtensils"></fa-icon>
+      </button>
     </div>
     <section class="booking-summary"></section>
   </section>

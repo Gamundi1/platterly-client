@@ -6,4 +6,11 @@ export const MENU_ROUTES: Routes = [
     loadComponent: () =>
       import('./pages/view-menu/view-menu-page.component').then((m) => m.ViewMenuPage),
   },
+  {
+    path: 'create-order',
+    loadComponent: () =>
+      import('./pages/create-order/create-order-page.component').then(
+        (m) => m.CreateOrderPageComponent,
+      ),
+  },
 ];

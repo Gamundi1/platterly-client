@@ -1,0 +1,44 @@
+<article>
+  <div class="order-columns">
+    <div class="order-column">
+      <h3>Pendientes</h3>
+      <div class="order-container">
+        @for (order of scheduledOrders; track order.id) {
+          <enterprise-order-item
+            [order]="order"
+            buttonText="Preparar"
+            (buttonClicked)="updateOrderStatusToGiven($event, orderStatus.IN_PROGRESS)"
+          ></enterprise-order-item>
+        }
+      </div>
+    </div>
+    <div class="order-column">
+      <h3>En preparación</h3>
+      <div class="order-container">
+        @for (order of preparingOrders; track order.id) {
+          <enterprise-order-item
+            [order]="order"
+            buttonText="Completar"
+            (buttonClicked)="updateOrderStatusToGiven($event, orderStatus.READY)"
+          ></enterprise-order-item>
+        }
+      </div>
+    </div>
+    <div class="order-column">
+      <h3>Listas para servir</h3>
+      <div class="order-container">
+        @for (order of readyOrders; track order.id) {
+          <enterprise-order-item [order]="order"> </enterprise-order-item>
+        }
+      </div>
+    </div>
+    <div class="order-column">
+      <h3>Servidas</h3>
+      <div class="order-container">
+        @for (order of alreadyDeliveredOrders; track order.id) {
+          <enterprise-order-item [order]="order"></enterprise-order-item>
+        }
+      </div>
+    </div>
+  </div>
+</article>

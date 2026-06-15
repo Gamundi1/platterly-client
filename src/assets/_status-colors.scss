@@ -1,0 +1,29 @@
+.status {
+  --booking-status-background-color: var(--white-color);
+  --booking-status-text-color: var(--black-color);
+
+  background-color: var(--booking-status-background-color);
+  color: var(--booking-status-text-color);
+}
+
+.status.confirmed {
+  --booking-status-background-color: #c5e7d6;
+  --booking-status-text-color: #4a695b;
+}
+
+.status.cancelled {
+  --booking-status-background-color: #f4c6c3;
+  --booking-status-text-color: #7a4a48;
+}
+
+.status.active {
+  --booking-status-background-color: #c5e7d6;
+  --booking-status-text-color: #4a695b;
+}
+
+.status.delivered {
+  --booking-status-background-color: #c5e7d6;
+  --booking-status-text-color: #4a695b;
+}
+
+

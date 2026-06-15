@@ -1,0 +1,197 @@
+:host {
+  display: block;
+  margin-block: 2rem;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
+h4 {
+  font-family: 'Manrope';
+  color: var(--primary-color);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  margin-block: 0;
+}
+
+.billing-details {
+  padding-inline: 1.5rem;
+  background-color: var(--gray-color);
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+
+  & .btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border: none;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    padding-inline: 1rem;
+    padding-block: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+
+    & div {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+
+      & span {
+        font-size: 0.7rem;
+        font-weight: bold;
+      }
+      & small {
+        font-size: 0.6rem;
+        color: var(--white-color);
+      }
+    }
+  }
+}
+
+h1 {
+  font-size: 3.5rem;
+  margin-block: 1.75rem;
+}
+
+.status {
+  inline-size: min-content;
+  padding-inline: 1rem;
+  padding-block: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+
+  .dot {
+    inline-size: 0.5rem;
+    block-size: 0.5rem;
+    border-radius: 50%;
+    background-color: var(--booking-status-text-color);
+  }
+
+  span {
+    text-transform: uppercase;
+    font-family: 'Manrope';
+    font-weight: bold;
+  }
+}
+
+.booking-price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  padding-inline: 1rem;
+  background-color: var(--gray-color);
+  gap: 0.25rem;
+  border-radius: 0.5rem;
+
+  .price-title {
+    font-family: 'Manrope';
+    color: var(--font-primary-color);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .fee-reminder {
+    font-family: 'Manrope';
+    color: var(--font-primary-color);
+    font-size: 0.75rem;
+  }
+
+  strong {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+  }
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 15rem;
+  gap: 1rem;
+  margin-block-start: 2rem;
+}
+
+.order-card {
+  background-color: oklch(from var(--white-color) l c h / 0.75);
+  border-radius: 1rem;
+  padding: 1rem;
+
+  h3 {
+    font-size: 1.25rem;
+    margin-block: 0;
+    color: var(--font-primary-color);
+  }
+
+  p {
+    margin-block: 0.5rem;
+    color: var(--font-primary-color);
+  }
+
+  ul {
+    margin-block: 0.5rem;
+    padding-left: 1.5rem;
+
+    li {
+      color: var(--font-primary-color);
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.orders {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.add-order {
+  --add-order-border-radius: 1rem;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-block: 1.5rem;
+  background-color: oklch(from var(--white-color) l c h / 0.75);
+  border-radius: var(--add-order-border-radius);
+  text-decoration: none;
+  gap: 1rem;
+  border: 2px solid var(--primary-color);
+
+  & img {
+    object-fit: cover;
+    border-radius: var(--add-order-border-radius);
+    z-index: -1;
+  }
+
+  & .add-symbol {
+    inline-size: 4rem;
+    block-size: 4rem;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+
+  & span {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--black-color);
+  }
+
+  & p {
+    margin-block: 0;
+    font-size: 0.9rem;
+    font-family: 'Manrope';
+    color: var(--font-primary-color);
+  }
+}

@@ -1,5 +1,5 @@
 import { AsyncPipe, KeyValuePipe, NgOptimizedImage } from '@angular/common';
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { form, FormField, min, required } from '@angular/forms/signals';
 import { MatDialog } from '@angular/material/dialog';
@@ -27,6 +27,7 @@ import { Table } from '../../interfaces/table.interface';
     NgOptimizedImage,
   ],
   templateUrl: './new-booking-page.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './new-booking-page.component.scss',
 })
 export class NewBookingPageComponent {
@@ -53,7 +54,6 @@ export class NewBookingPageComponent {
     required(model.date);
     required(model.availableHoursId);
     required(model.tableNumber);
-    min(model.guests, 1);
   });
 
   protected faUsers = faUsers;
@@ -120,7 +120,7 @@ export class NewBookingPageComponent {
       return;
     }
 
-    if (!this.authService.getUserDetails().email) {
+    if (!this.authService.getUserDetails()!.email) {
       console.log('Usuario incompleto');
       return;
     }

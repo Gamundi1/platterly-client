@@ -68,14 +68,14 @@ h3 {
 .dishes-container {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   margin-block-start: 2rem;
 
   .dish-card {
     display: flex;
     flex-direction: column;
     border-radius: 0.5rem;
-    block-size: 24rem;
+    block-size: 25rem;
     background-color: var(--white-color);
     box-shadow: var(--small-box-shadow);
 
@@ -128,4 +128,16 @@ h3 {
 .allergens-container {
   display: flex;
   gap: 0.5rem;
+}
+
+.add-button {
+  inline-size: 100%;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  border: none;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  font-family: 'Manrope';
+  font-weight: bold;
+  cursor: pointer;
 }

@@ -1,7 +1,13 @@
 <header>
+  <button
+    class="pt-hidden-tablet pt-hidden-desktop sidenav-toggle"
+    (click)="sideNavOpen = !sideNavOpen"
+  >
+    <mat-icon class="menu-icon">menu</mat-icon>
+  </button>
   <h1>Platterly</h1>
 
-  <nav>
+  <nav class="pt-hidden-mobile">
     <li><a routerLink="/home" [routerLinkActive]="'active'">Inicio</a></li>
     <li><a routerLink="/menu" [routerLinkActive]="'active'">Nuestras Cartas</a></li>
     <li>
@@ -13,9 +19,60 @@
   </nav>
 
   @if (!userDetails()) {
-    <a>Registrate</a>
-    <button class="sign-in" (click)="showLoginModal()">Inicia sesión</button>
+    <div class="pt-hidden-mobile">
+      <a routerLink="/auth/register">Registrate</a>
+      <button class="sign-in" (click)="showLoginModal()">Inicia sesión</button>
+    </div>
   } @else {
     <p>Hola, {{ userDetails()?.name }}!</p>
+    <button class="user-details" matButton [matMenuTriggerFor]="userDetailsMenu">
+      <mat-icon>perm_identity</mat-icon>
+    </button>
   }
 </header>
+
+<mat-menu xPosition="before" #userDetailsMenu="matMenu" class="user-details-menu">
+  @if (!userDetails()?.email) {
+    <button mat-menu-item routerLink="/auth/register">Completar cuenta</button>
+  }
+  <button class="logout-button" mat-menu-item (click)="logout()">Cerrar sesión</button>
+</mat-menu>
+
+@if (sideNavOpen) {
+  <div class="backdrop" (click)="sideNavOpen = false"></div>
+
+  <aside class="side-nav">
+    <button class="close-btn" (click)="sideNavOpen = false">
+      <mat-icon>close</mat-icon>
+    </button>
+
+    <nav class="mobile-nav">
+      <a routerLink="/home" (click)="sideNavOpen = false" routerLinkActive="active">Inicio</a>
+      <a routerLink="/menu" (click)="sideNavOpen = false" routerLinkActive="active"
+        >Nuestras Cartas</a
+      >
+      <a routerLink="/bookings" (click)="sideNavOpen = false" routerLinkActive="active"
+        >Reservar Mesa</a
+      >
+
+      @if (userDetails()) {
+        <a routerLink="/my-bookings" (click)="sideNavOpen = false" routerLinkActive="active">
+          Mis Reservas
+        </a>
+      }
+    </nav>
+
+    <div class="mobile-auth">
+      @if (!userDetails()) {
+        <a routerLink="/auth/register">Registrate</a>
+        <button (click)="showLoginModal(); sideNavOpen = false">Inicia sesión</button>
+      } @else {
+        <p>Hola, {{ userDetails()?.name }}!</p>
+        @if (!userDetails()?.email) {
+          <button mat-menu-item routerLink="/auth/register">Completar cuenta</button>
+        }
+        <button (click)="logout(); sideNavOpen = false">Cerrar sesión</button>
+      }
+    </div>
+  </aside>
+}

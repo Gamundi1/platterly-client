@@ -1,0 +1,69 @@
+<article class="create-order-container">
+  <menu-display (selectedDish)="selectedDish($event)" [showAddButton]="true"></menu-display>
+  <section class="current-order">
+    <header>
+      <h2>Tu carrito</h2>
+      @if (orderItems().length > 0) {
+        <span class="order-items-length">{{ orderItems().length }}</span>
+      }
+    </header>
+    <div class="order-items">
+      @for (orderItem of orderItems(); track orderItem.dish.id) {
+        <div class="order-item">
+          <div class="order-item-description">
+            <h3>{{ orderItem.dish.name }}</h3>
+            <span>{{ orderItem.quantity }}</span>
+            <p>{{ orderItem.dish.price | currency: orderItem.dish.priceUnits }}</p>
+          </div>
+        </div>
+      }
+    </div>
+    <footer>
+      <div class="order-price">
+        <span>Subtotal</span>
+        <span>{{ getTotalPrice() | currency: 'EUR' }}</span>
+        <span>Cargo adicional</span>
+        <span>{{ getTotalPrice() * 0.1 | currency: 'EUR' }}</span>
+        <h4>Total</h4>
+        <h4>{{ getTotalPrice() * 1.1 | currency: 'EUR' }}</h4>
+      </div>
+      <button class="next-step" (click)="nextStep()">Realizar pedido</button>
+    </footer>
+  </section>
+</article>
+
+<ng-template #verificationModal>
+  <section class="verification-modal">
+    <h2 mat-dialog-title>Por favor, verifica tu pedido</h2>
+    <div mat-dialog-content>
+      <div class="order-products">
+        @for (orderItem of orderItems(); track orderItem.dish.id) {
+          <div class="order-product">
+            <span>{{ orderItem.quantity }} x ({{ orderItem.dish.name }})</span>
+            <span>{{ orderItem.quantity * orderItem.dish.price | currency: 'EUR' }}</span>
+          </div>
+        }
+      </div>
+    </div>
+    <div mat-dialog-actions class="verification-actions">
+      <button (click)="confirmOrder()">Confirmar</button>
+      <button mat-dialog-close>Modificar</button>
+    </div>
+  </section>
+</ng-template>
+
+<ng-template #confirmationModal>
+  <section class="confirmation-modal">
+    <div class="icon-container">
+      <fa-icon [icon]="faCircleCheck"></fa-icon>
+    </div>
+    <h4>¡Pedido realizado con éxito!</h4>
+    <div mat-dialog-content>
+      <p>Tu pedido ha sido enviado al restaurante. ¡Buen provecho!</p>
+    </div>
+    <div class="actions" mat-dialog-actions>
+      <a routerLink="/my-bookings/{{ bookingId }}">Volver a la reserva</a>
+      <a routerLink="/home">Menú principal</a>
+    </div>
+  </section>
+</ng-template>

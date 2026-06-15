@@ -1,0 +1,52 @@
+<article>
+  <header>
+    <div>
+      <h4>Resumen de tu reserva</h4>
+      <h1>Mesa {{ booking()?.table?.number }}</h1>
+      <div class="status" [ngClass]="getBookingStatusColor()">
+        <div class="dot"></div>
+        <span>{{ getBookingStatusText() }}</span>
+      </div>
+    </div>
+    <div class="booking-price">
+      <span class="price-title">Resumen compartido</span>
+      <strong>{{ bookingTotalPrice * 1.1 | currency: 'EUR' }}</strong>
+      <span class="fee-reminder">Incluye un cargo adicional del 10%</span>
+    </div>
+  </header>
+  <section class="main-content">
+    <div>
+      <h2>Historial de pedidos</h2>
+      <div class="orders">
+        @for (order of orders(); track order.id) {
+          <order-card [order]="order"></order-card>
+        }
+      </div>
+    </div>
+    <div class="billing-details">
+      <h3>Detalles de facturación</h3>
+      <button class="btn-primary">
+        <mat-icon>account_balance_wallet</mat-icon>
+        <div><span>Pago total</span><small>Pagar todo lo restante</small></div>
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+      <button class="btn-primary">
+        <mat-icon>account_balance_wallet</mat-icon>
+        <div><span>Pago parcial</span><small>Pagar solo tu parte</small></div>
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+    @if (booking()?.status === bookingStatus.ACTIVE) {
+      <a
+        class="add-order"
+        routerLink="/menu/create-order"
+        [queryParams]="{ bookingId: $safeNavigationMigration(booking()?.id) }"
+      >
+        <img ngSrc="images/my-bookings/create-order.webp" fill alt="" />
+        <div class="add-symbol"><fa-icon [icon]="faPlus"></fa-icon></div>
+        <span>Nueva comanda</span>
+        <p>Explora nuestras mejores ofertas semanales</p>
+      </a>
+    }
+  </section>
+</article>

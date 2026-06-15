@@ -17,7 +17,7 @@ section {
   inline-size: 85cqi;
 
   & div {
-    background-color: #f4f3f1;
+    background-color: var(--gray-color);
     block-size: 3.5rem;
     display: flex;
     flex-direction: column;

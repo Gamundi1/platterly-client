@@ -1,0 +1,8 @@
+<section class="error-modal">
+  <div mat-dialog-title>
+    <fa-icon [icon]="faTriangleExclamation"></fa-icon>
+    <h4 class="error-title">{{ message.title }}</h4>
+  </div>
+  <p mat-dialog-content>{{ message.message }}</p>
+  <a routerLink="/home">Página principal</a>
+</section>

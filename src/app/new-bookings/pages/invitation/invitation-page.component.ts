@@ -1,4 +1,12 @@
-import { Component, inject, OnInit, signal, TemplateRef, viewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  TemplateRef,
+  viewChild,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { form, FormField, required } from '@angular/forms/signals';
 import { MatDialog, MatDialogClose } from '@angular/material/dialog';
@@ -11,10 +19,13 @@ import { UrlProvider } from '../../../shared/enums/url-provider.enum';
 import { HttpHandlerService } from '../../../shared/services/http-handler.service';
 import { Booking } from '../../interfaces/booking.interface';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
+import { ErrorModalComponent } from '../../../shared/components/error-modal/error-modal.component';
+import { User, UserRole } from '../../../shared/interfaces/user.interface';
 
 @Component({
   imports: [ReactiveFormsModule, FormField, FaIconComponent, MatDialogClose, RouterLink],
   templateUrl: './invitation-page.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './invitation-page.component.scss',
 })
 export class InvitationPageComponent implements OnInit {
@@ -22,11 +33,9 @@ export class InvitationPageComponent implements OnInit {
   private readonly matDialog = inject(MatDialog);
   private readonly authService = inject(AuthService);
   private readonly invitationModal = viewChild<TemplateRef<unknown>>('invitationModal');
-  private readonly errorModal = viewChild<TemplateRef<unknown>>('errorModal');
   private readonly successfulModal = viewChild<TemplateRef<unknown>>('successfulModal');
   private readonly activatedRoute = inject(ActivatedRoute);
   protected tryToLogIn = signal(true);
-  protected booking: Booking | null = null;
   protected faXMark = faXmark;
   protected faTriangleExclamation = faTriangleExclamation;
   protected faCheck = faCheckCircle;
@@ -40,23 +49,16 @@ export class InvitationPageComponent implements OnInit {
   });
 
   async ngOnInit() {
-    if (this.activatedRoute.snapshot.queryParams['bookingId']) {
-      this.booking = await firstValueFrom(
-        this.httpHandleService.getRequest<Booking>(UrlProvider.getBooking, {
-          bookingId: this.activatedRoute.snapshot.queryParams['bookingId'],
-        }),
-      );
-    }
-
-    if (this.booking && !this.getUserDetails()) {
-      this.matDialog.open(this.invitationModal()!, {
-        data: this.booking,
-      });
-    }
-
-    if (this.getUserDetails()) {
-      this.sendJoinRequest();
-    }
+    const tableNumber = this.activatedRoute.snapshot.params['tableNumber'];
+    const hour = this.activatedRoute.snapshot.params['hour'];
+    const date = this.activatedRoute.snapshot.params['date'];
+    this.matDialog.open(this.invitationModal()!, {
+      data: {
+        tableNumber,
+        hour,
+        date,
+      },
+    });
   }
 
   openLogInModal() {
@@ -79,7 +81,11 @@ export class InvitationPageComponent implements OnInit {
     event.preventDefault();
 
     if (!this.tryToLogIn() && this.bookingForm().valid()) {
-      await firstValueFrom(this.authService.register(this.bookingForm().value().name));
+      const user: User = {
+        name: this.bookingForm().value().name,
+        role: UserRole.USER,
+      };
+      await firstValueFrom(this.authService.register(user));
       this.sendJoinRequest();
     } else {
       this.sendJoinRequest();
@@ -89,7 +95,7 @@ export class InvitationPageComponent implements OnInit {
   sendJoinRequest() {
     this.httpHandleService
       .postRequest(UrlProvider.joinBooking, undefined, {
-        bookingId: this.activatedRoute.snapshot.params['bookingId'],
+        bookingId: this.activatedRoute.snapshot.queryParams['bookingId'],
       })
       .pipe(
         catchError((error) => {
@@ -105,8 +111,11 @@ export class InvitationPageComponent implements OnInit {
             message = 'Parece que ya formas parte de esta reserva.';
           }
 
-          this.matDialog.open(this.errorModal()!, {
-            data: message,
+          this.matDialog.open(ErrorModalComponent, {
+            data: {
+              title: 'Error al unirse a la reserva',
+              message,
+            },
           });
           throw error;
         }),

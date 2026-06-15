@@ -1,0 +1,81 @@
+.order-card {
+  --order-display-direction: column;
+
+  background-color: var(--white-color);
+  display: flex;
+  padding-block: 1.5rem;
+  padding-inline: 1.5rem;
+  border-radius: 0.5rem;
+  flex-direction: var(--order-display-direction);
+}
+
+.order-info {
+  display: flex;
+  gap: 0.5rem;
+
+  & .time {
+    color: var(--font-primary-color);
+    font-size: 0.75rem;
+  }
+
+  & .user-icon {
+
+    --user-icon-bg-color: var(--primary-color);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--user-icon-bg-color);
+    color: var(--white-color);
+    border-radius: 50%;
+    inline-size: 2rem;
+    block-size: 2rem;
+    font-weight: bold;
+  }
+
+  & strong {
+    font-size: 1rem;
+  }
+
+  & .table-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--white-color);
+    background-color: var(--primary-color);
+    inline-size: min-content;
+    padding-inline: 0.5rem;
+    border-radius: 1rem;
+  }
+}
+
+.order-user {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  block-size: 2rem;
+  padding-inline: 1rem;
+  border-radius: 1rem;
+}
+
+.order-actions {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem;
+
+  .deliver-button {
+    cursor: pointer;
+    max-block-size: 2.5rem;
+    border-radius: 0.5rem;
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border: none;
+    padding-inline: 1.5rem;
+    padding-block: 0.5rem;
+  }
+}

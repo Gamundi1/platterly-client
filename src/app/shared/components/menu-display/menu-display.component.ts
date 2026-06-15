@@ -1,7 +1,15 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  OnInit,
+  output,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { UrlProvider } from '../../enums/url-provider.enum';
 import { HttpHandlerService } from '../../services/http-handler.service';
-import { Menu } from '../../interfaces/menu.interface';
+import { Dish, Menu } from '../../interfaces/menu.interface';
 import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import { map } from 'rxjs';
 import { AllergenIconComponent } from '../allergen-icon/allergen-icon.component';
@@ -15,10 +23,14 @@ interface MenuAside {
   selector: 'menu-display',
   templateUrl: './menu-display.component.html',
   styleUrl: './menu-display.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgOptimizedImage, CurrencyPipe, AllergenIconComponent],
 })
 export class MenuDisplayComponent implements OnInit {
   protected readonly httpHandlerService = inject(HttpHandlerService);
+
+  public showAddButton = input<boolean>(false);
+  public selectedDish = output<Dish>();
 
   protected menuAvailables = signal<MenuAside[]>([]);
 

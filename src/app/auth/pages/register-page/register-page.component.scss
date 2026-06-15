@@ -1,0 +1,110 @@
+@use 'index.scss' as *;
+
+.register-page {
+  --register-page-direction: column;
+  --register-page-image-block-size: 11rem;
+
+  display: flex;
+  flex-direction: var(--register-page-direction);
+
+  @include medium-breakpoint {
+    --register-page-direction: row;
+    --register-page-image-block-size: unset;
+  }
+}
+
+.image-container {
+  --image-margin-inline: -1.5rem;
+  --image-background-gradient: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 40%,
+    oklch(0.982 0.0041 91.45) 95%
+  );
+  --image-min-inline-size: 0;
+  @include medium-breakpoint {
+    --image-margin-inline: 0;
+    --image-background-gradient: none;
+    --image-min-inline-size: 28rem;
+  }
+
+  block-size: var(--register-page-image-block-size);
+  margin-inline: var(--image-margin-inline);
+  position: relative;
+  min-inline-size: var(--image-min-inline-size);
+
+  img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    block-size: 100%;
+    inline-size: 100%;
+    z-index: 2;
+    background: var(--image-background-gradient);
+  }
+}
+
+.register-form {
+  --register-form-padding-inline: 0;
+  --submit-button-inline-size: 100%;
+
+  @include medium-breakpoint {
+    --register-form-padding-inline: 2rem;
+    --submit-button-inline-size: 50%;
+  }
+
+  padding-inline: var(--register-form-padding-inline);
+
+  .register-form-header {
+    span {
+      font-size: var(--font-subtitle-size);
+      color: var(--primary-color);
+    }
+
+    h1 {
+      font-size: var(--font-title-size);
+      line-height: 1;
+      margin-block: 0.5rem;
+    }
+
+    p {
+      font-size: var(--font-content-size);
+      color: var(--secondary-color);
+    }
+  }
+
+  .register-form-footer {
+    margin-block-start: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    button {
+      background-color: var(--primary-color);
+      color: var(--white-color);
+      border: none;
+      padding: 0.5rem 1rem;
+      inline-size: var(--submit-button-inline-size);
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: calc(var(--font-content-size) + 0.2rem);
+    }
+
+    p {
+      margin-block-start: 0.5rem;
+      font-size: var(--font-content-size);
+
+      a {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: bold;
+        margin-inline-start: 0.25rem;
+      }
+    }
+  }
+}

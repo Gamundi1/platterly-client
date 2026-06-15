@@ -38,6 +38,11 @@
                 <allergen-icon [allergen]="allergen"></allergen-icon>
               }
             </div>
+            @if (showAddButton()) {
+              <button (click)="selectedDish.emit(dish)" class="add-button">
+                Añadir al carrito
+              </button>
+            }
           </div>
         </div>
       }

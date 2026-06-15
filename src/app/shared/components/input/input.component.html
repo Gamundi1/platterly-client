@@ -1,0 +1,5 @@
+<mat-form-field class="shared-input">
+  <mat-label>{{ label() }}</mat-label>
+  <input [type]="type()" matInput [formField]="field()" />
+  <mat-error>{{ errorMessage() }}</mat-error>
+</mat-form-field>

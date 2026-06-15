@@ -1,15 +1,22 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../auth/services/auth.service';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { CdkAutofill } from "@angular/cdk/text-field";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
-  imports: [RouterLink, RouterLinkActive],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [RouterLink, RouterLinkActive, MatMenuModule, MatIconModule],
 })
 export class HeaderComponent {
   private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+
+  protected sideNavOpen = false;
 
   protected showLoginModal() {
     this.authService.showLoginModal();
@@ -17,5 +24,10 @@ export class HeaderComponent {
 
   protected userDetails() {
     return this.authService.getUserDetails();
+  }
+
+  protected logout() {
+    this.authService.logout();
+    this.router.navigate(['/home']);
   }
 }

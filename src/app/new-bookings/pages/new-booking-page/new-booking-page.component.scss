@@ -1,3 +1,5 @@
+@use 'index.scss' as *;
+
 .new-booking-container {
   --booking-element-border-radius: 0.5rem;
 
@@ -8,26 +10,32 @@
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: var(--font-title-size);
   margin-block-end: 0;
 }
 
 h3 {
   font-weight: normal;
-  font-size: 1rem;
+  font-size: var(--font-subtitle-size);
+  text-align: center;
 }
 
 .booking-details {
-  inline-size: 100cqi;
-  display: grid;
-  grid-template-columns: 1fr 18rem;
+  inline-size: 100%;
   gap: 1rem;
+  display: flex;
+  flex-direction: column;
   border-radius: var(--booking-element-border-radius);
+
+  @include large-device {
+    display: grid;
+    grid-template-columns: 1fr 18rem;
+  }
 }
 
 .date-guest-selector {
-  display: grid;
-  grid-template-columns: 1fr 15rem;
+  display: flex;
+  flex-direction: column;
 
   & .guests-selector {
     grid-column: 1 / 2;
@@ -42,17 +50,22 @@ h3 {
   span {
     grid-row: 1 / 2;
   }
+
+  @include large-device {
+    display: grid;
+    grid-template-columns: 1fr 15rem;
+  }
 }
 
 .title {
-  font-size: 0.75rem;
+  font-size: var(--font-content-size);
   text-transform: uppercase;
   color: var(--font-primary-color);
   margin-block-end: 0.5rem;
 }
 
 .booking-information {
-  background-color: oklch(from var(--white-color) 0.95 c h);
+  background-color: var(--gray-color);
   grid-column: 1 / 2;
   grid-row: 1 / 3;
   padding-inline: 2rem;
@@ -63,13 +76,13 @@ h3 {
 
 #guests-selector {
   display: flex;
-  inline-size: 50cqi;
+  inline-size: 50%;
   gap: 0.5rem;
 }
 
 legend {
   margin-block-end: 1rem;
-  font-size: 1.25rem;
+  font-size: var(--font-content-size);
   align-content: center;
 }
 
@@ -117,12 +130,17 @@ input[type='radio'] {
   margin-block-start: 1rem;
   padding-block-start: 1rem;
 
+  & div {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
   & label {
     display: inline-block;
     cursor: pointer;
-    font-size: 0.75rem;
+    font-size: var(--font-content-size);
     background-color: var(--white-color);
-    margin-inline-end: 0.5rem;
     padding-inline: 1.5rem;
     border-radius: 0.2rem;
     block-size: 2rem;
@@ -140,7 +158,7 @@ input[type='radio'] {
 
   .duration-info {
     margin-block-start: 2rem;
-    font-size: 0.875rem;
+    font-size: var(--font-content-size);
 
     fa-icon {
       color: var(--black-color);
@@ -150,24 +168,29 @@ input[type='radio'] {
 
 fieldset {
   border: none;
-  font-size: 1rem;
-  container-type: inline-size;
+  font-size: var(--font-content-size);
 
   fa-icon {
-    font-size: 0.75rem;
+    font-size: var(--font-content-size);
     color: var(--primary-color);
   }
 }
 
-.submit-section {
-  display: flex;
+.submit-section-desktop {
+  --submit-display: none;
+
+  @include large-device {
+    --submit-display: flex;
+  }
+
+  display: var(--submit-display);
   margin-block-start: 5rem;
   padding-inline: 1rem;
   gap: 1rem;
 
   & p {
     color: var(--font-primary-color);
-    font-size: 0.875rem;
+    font-size: var(--font-content-size);
   }
 
   & button {
@@ -180,7 +203,48 @@ fieldset {
     background-color: var(--primary-color);
     border: none;
     color: var(--white-color);
-    font-size: 1rem;
+    font-size: var(--font-content-size);
+
+    &[disabled] {
+      background-color: oklch(from var(--primary-color) 0.8 c h);
+      cursor: not-allowed;
+    }
+  }
+}
+
+.submit-section-mobile {
+  --submit-display: flex;
+
+  @include large-device {
+    --submit-display: none;
+  }
+
+  display: var(--submit-display);
+  margin-block-start: 2rem;
+  padding-inline: 1rem;
+  align-items: center;
+  block-size: 7rem;
+  gap: 1rem;
+  border: 1px solid var(--primary-color);
+  border-radius: var(--booking-element-border-radius);
+
+  & p {
+    color: var(--font-primary-color);
+    font-size: var(--font-subtitle-size);
+  }
+
+  & button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding-inline: 1.5rem;
+    padding-block: 0.5rem;
+    border-radius: 0.3rem;
+    background-color: var(--primary-color);
+    border: none;
+    color: var(--white-color);
+    font-size: var(--font-content-size);
 
     &[disabled] {
       background-color: oklch(from var(--primary-color) 0.8 c h);
@@ -190,8 +254,20 @@ fieldset {
 }
 
 .image-container {
+  --image-display: none;
+  --image-block-size: 10rem;
+
+  @include medium-breakpoint {
+    --image-display: block;
+  }
+
+  @include large-device {
+    --image-block-size: 100%;
+  }
+
+  display: var(--image-display);
   position: relative;
-  block-size: 22rem;
+  block-size: var(--image-block-size);
   inline-size: 100%;
   border-radius: var(--booking-element-border-radius);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -207,5 +283,11 @@ fieldset {
     inset: 0;
     background: linear-gradient(rgba(40, 20, 10, 0.4), rgba(20, 10, 5, 0.6));
     border-radius: inherit;
+  }
+}
+
+booking-table {
+  @include medium-breakpoint {
+    max-inline-size: 80cqi;
   }
 }
