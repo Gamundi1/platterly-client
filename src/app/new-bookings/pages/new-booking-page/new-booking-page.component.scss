@@ -1,3 +1,5 @@
+@use 'index.scss' as *;
+
 .new-booking-container {
   --booking-element-border-radius: 0.5rem;
 
@@ -15,19 +17,17 @@ h1 {
 h3 {
   font-weight: normal;
   font-size: var(--font-subtitle-size);
-  max-inline-size: 80cqi;
   text-align: center;
 }
 
 .booking-details {
-  inline-size: 100cqi;
+  inline-size: 100%;
   gap: 1rem;
   display: flex;
   flex-direction: column;
   border-radius: var(--booking-element-border-radius);
-  container-type: inline-size;
 
-  @container (min-width: 800px) {
+  @include large-device {
     display: grid;
     grid-template-columns: 1fr 18rem;
   }
@@ -51,7 +51,7 @@ h3 {
     grid-row: 1 / 2;
   }
 
-  @container (min-width: 500px) {
+  @include large-device {
     display: grid;
     grid-template-columns: 1fr 15rem;
   }
@@ -76,7 +76,7 @@ h3 {
 
 #guests-selector {
   display: flex;
-  inline-size: 50cqi;
+  inline-size: 50%;
   gap: 0.5rem;
 }
 
@@ -169,7 +169,6 @@ input[type='radio'] {
 fieldset {
   border: none;
   font-size: var(--font-content-size);
-  container-type: inline-size;
 
   fa-icon {
     font-size: var(--font-content-size);
@@ -180,7 +179,7 @@ fieldset {
 .submit-section-desktop {
   --submit-display: none;
 
-  @container (min-width: 800px) {
+  @include large-device {
     --submit-display: flex;
   }
 
@@ -216,7 +215,7 @@ fieldset {
 .submit-section-mobile {
   --submit-display: flex;
 
-  @container (min-width: 800px) {
+  @include large-device {
     --submit-display: none;
   }
 
@@ -258,11 +257,11 @@ fieldset {
   --image-display: none;
   --image-block-size: 10rem;
 
-  @container (min-width: 500px) {
+  @include medium-breakpoint {
     --image-display: block;
   }
 
-  @container (min-width: 800px) {
+  @include large-device {
     --image-block-size: 100%;
   }
 
@@ -288,7 +287,7 @@ fieldset {
 }
 
 booking-table {
-  @container (min-width: 600px) {
+  @include medium-breakpoint {
     max-inline-size: 80cqi;
   }
 }

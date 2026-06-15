@@ -1,0 +1,48 @@
+<article class="register-page">
+  <div class="image-container">
+    <img src="images/login/register.webp" alt="" />
+  </div>
+  <div class="register-form">
+    <div class="register-form-header">
+      <span>Únete a nuestra comunidad</span>
+      <h1>Regístrate en Platterly</h1>
+      <p>Rellena el formulario para registrate y poder aprovechar todas nuestras ventajas</p>
+    </div>
+    <form (submit)="registerUser($event)">
+      <shared-input
+        label="Nombre"
+        [field]="registerForm.name"
+        errorMessage="por favor introduce un nombre válido"
+      ></shared-input>
+      <shared-input
+        label="Primer Apellido"
+        [field]="registerForm.surname"
+        errorMessage="por favor introduce un primer apellido válido"
+      ></shared-input>
+      <shared-input
+        label="Segundo Apellido"
+        [field]="registerForm.secondSurname"
+        errorMessage="por favor introduce un segundo apellido válido"
+      ></shared-input>
+      <shared-input
+        label="Email"
+        type="email"
+        [field]="registerForm.email"
+        errorMessage="por favor introduce un email válido"
+      ></shared-input>
+      <shared-input
+        label="Contraseña"
+        type="password"
+        [field]="registerForm.password"
+        errorMessage="por favor introduce una contraseña válida (mínimo 8 caracteres)"
+      ></shared-input>
+      <div class="register-form-footer">
+        <button type="submit">Crear cuenta</button>
+        <p>
+          ¿Ya tienes una cuenta?
+          <a routerLink="/login">Inicia sesión</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</article>

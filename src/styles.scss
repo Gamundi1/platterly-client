@@ -1,7 +1,5 @@
 @use '@angular/material' as mat;
-@import 'assets/_fonts.scss';
-@import 'assets/_status-colors.scss';
-@import 'assets/_modal-width.scss';
+@use 'index.scss' as *;
 
 * {
   box-sizing: border-box;
@@ -92,9 +90,23 @@ body {
 }
 
 .booking-tabs {
-  @include mat.tabs-overrides(
-    (
-      
-    )
-  );
+  @include mat.tabs-overrides(());
+}
+
+.pt-hidden-mobile {
+  @include small-device {
+    display: none !important;
+  }
+}
+
+.pt-hidden-tablet {
+  @include medium-device {
+    display: none !important;
+  }
+}
+
+.pt-hidden-desktop {
+  @include large-device {
+    display: none !important;
+  }
 }

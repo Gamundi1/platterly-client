@@ -1,0 +1,23 @@
+@mixin small-device {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin medium-device {
+  @media (min-width: 769px) and (max-width: 989px) {
+    @content;
+  }
+}
+
+@mixin medium-breakpoint {
+  @media (min-width: 769px) {
+    @content;
+  }
+}
+
+@mixin large-device {
+  @media (min-width: 990px) {
+    @content;
+  }
+}

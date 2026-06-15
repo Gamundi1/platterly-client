@@ -28,7 +28,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.Eager,
-  imports: [ReactiveFormsModule, FaIconComponent, MatDialogClose, InputComponent],
+  imports: [FaIconComponent, MatDialogClose, InputComponent],
 })
 export class LoginComponent implements OnDestroy {
   private readonly authService = inject(AuthService);

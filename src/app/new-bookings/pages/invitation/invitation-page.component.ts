@@ -20,6 +20,7 @@ import { HttpHandlerService } from '../../../shared/services/http-handler.servic
 import { Booking } from '../../interfaces/booking.interface';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { ErrorModalComponent } from '../../../shared/components/error-modal/error-modal.component';
+import { User, UserRole } from '../../../shared/interfaces/user.interface';
 
 @Component({
   imports: [ReactiveFormsModule, FormField, FaIconComponent, MatDialogClose, RouterLink],
@@ -80,7 +81,11 @@ export class InvitationPageComponent implements OnInit {
     event.preventDefault();
 
     if (!this.tryToLogIn() && this.bookingForm().valid()) {
-      await firstValueFrom(this.authService.register(this.bookingForm().value().name));
+      const user: User = {
+        name: this.bookingForm().value().name,
+        role: UserRole.USER,
+      };
+      await firstValueFrom(this.authService.register(user));
       this.sendJoinRequest();
     } else {
       this.sendJoinRequest();

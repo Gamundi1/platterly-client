@@ -6,13 +6,13 @@ import { DEFAULT_LOGIN_CONFIG, LoginConfig } from '../../shared/interfaces/login
 import { HttpHandlerService } from '../../shared/services/http-handler.service';
 import { LoginComponent } from '../components/login/login.component';
 import { JwtTokens } from '../interfaces/jwt-tokens.interface';
-import { UserRole } from '../../shared/interfaces/user.interface';
+import { User, UserRole } from '../../shared/interfaces/user.interface';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private jwtTokens = signal<JwtTokens | null>(null);
   private loginConfig = signal<LoginConfig>(DEFAULT_LOGIN_CONFIG);
-  private userDetails = signal<any | null>(null);
+  private userDetails = signal<User | null>(null);
   public readonly loginConfiguration = this.loginConfig.asReadonly();
 
   private readonly httpHandlerService = inject(HttpHandlerService);
@@ -23,7 +23,7 @@ export class AuthService {
   constructor() {
     effect(() => {
       if (this.jwtTokens()) {
-        this.httpHandlerService.getRequest(UrlProvider.user).subscribe((user) => {
+        this.httpHandlerService.getRequest<User>(UrlProvider.user).subscribe((user) => {
           this.userDetails.set(user);
         });
       }
@@ -59,10 +59,10 @@ export class AuthService {
     });
   }
 
-  register(name: string) {
+  register(user: User) {
     return this.httpHandlerService
       .postRequest<{ 'access-token': string }>(UrlProvider.register, undefined, {
-        name,
+        ...user,
       })
       .pipe(
         tap((response) => {
@@ -117,4 +117,6 @@ export class AuthService {
     });
     localStorage.setItem('access-token', tokens['access-token']);
   }
+
+  private subscribeToNotifications() {}
 }

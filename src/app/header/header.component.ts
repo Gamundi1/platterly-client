@@ -3,6 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../auth/services/auth.service';
+import { CdkAutofill } from "@angular/cdk/text-field";
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,8 @@ import { AuthService } from '../auth/services/auth.service';
 export class HeaderComponent {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+
+  protected sideNavOpen = false;
 
   protected showLoginModal() {
     this.authService.showLoginModal();

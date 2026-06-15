@@ -120,7 +120,7 @@ export class NewBookingPageComponent {
       return;
     }
 
-    if (!this.authService.getUserDetails().email) {
+    if (!this.authService.getUserDetails()!.email) {
       console.log('Usuario incompleto');
       return;
     }

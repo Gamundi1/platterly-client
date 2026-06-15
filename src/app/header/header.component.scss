@@ -3,8 +3,16 @@
 header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 1rem;
   block-size: 3rem;
+
+  .sidenav-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    inline-size: min-content;
+  }
 
   nav {
     flex: 1;
@@ -63,4 +71,53 @@ header {
       background-color: oklch(from var(--primary-color) 0.4 c h);
     }
   }
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 998;
+}
+
+.side-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  inline-size: 280px;
+  block-size: 100%;
+  background: white;
+  z-index: 999;
+
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+
+  transform: translateX(0);
+}
+
+.close-btn {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.mobile-nav a {
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+.mobile-auth {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }

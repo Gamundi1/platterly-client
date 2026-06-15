@@ -11,7 +11,7 @@
         <legend><fa-icon [icon]="faUsers"></fa-icon> Grupo y horario</legend>
         <div class="date-guest-selector">
           <span class="title">Número de asistentes</span>
-          <div id="guests-selector">
+          <div id="guests-selector" role="radiogroup">
             @for (guest of guests | keyvalue; track guest.key) {
               <label for="guests-{{ guest.key }}">
                 <input

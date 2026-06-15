@@ -1,6 +1,8 @@
+import { environment } from '../../../environments/environment';
+
 export const UrlProvider = {
-  baseUrl: 'http://localhost:3000/api',
-  socketBaseUrl: 'http://localhost:3000',
+  baseUrl: environment.baseUrl,
+  socketBaseUrl: environment.socketBaseUrl,
   login: '/v1/auth/sign-in',
   user: '/v1/auth/user',
   register: '/v1/auth/register',
@@ -20,4 +22,5 @@ export const UrlProvider = {
   getOrdersByBookingId: '/v1/order/booking/${bookingId}',
   getOrdersByDate: '/v1/order/date/${date}',
   updateOrderStatus: '/v1/order/update-status',
+  subscribeToNotifications: '/v1/notifications/subscribe',
 } as const;
