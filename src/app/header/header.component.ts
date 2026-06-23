@@ -1,9 +1,9 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../auth/services/auth.service';
-import { CdkAutofill } from "@angular/cdk/text-field";
+import { getUserAvatarColor } from '../helpers/user.helper';
 
 @Component({
   selector: 'app-header',
@@ -29,5 +29,9 @@ export class HeaderComponent {
   protected logout() {
     this.authService.logout();
     this.router.navigate(['/home']);
+  }
+
+  protected getCurrentUserAvatarColor(): string {
+    return getUserAvatarColor(this.userDetails()?.name || '');
   }
 }

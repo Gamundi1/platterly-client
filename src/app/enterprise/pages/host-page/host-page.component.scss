@@ -119,3 +119,12 @@
   padding: 0.5rem 1rem;
   cursor: pointer;
 }
+
+.completed-button {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  border: none;
+  border-radius: 1.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}

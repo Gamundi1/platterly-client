@@ -8,26 +8,31 @@
   <h1>Platterly</h1>
 
   <nav class="pt-hidden-mobile">
-    <li><a routerLink="/home" [routerLinkActive]="'active'">Inicio</a></li>
-    <li><a routerLink="/menu" [routerLinkActive]="'active'">Nuestras Cartas</a></li>
-    <li>
-      <a routerLink="/bookings" [routerLinkActive]="'active'">Reservar Mesa</a>
-    </li>
+    <a routerLink="/home" [routerLinkActive]="'active'">Inicio</a>
+    <a routerLink="/menu" [routerLinkActive]="'active'">Nuestras Cartas</a>
+    <a routerLink="/bookings" [routerLinkActive]="'active'">Reservar Mesa</a>
     @if (userDetails()) {
-      <li><a routerLink="/my-bookings" [routerLinkActive]="'active'">Mis Reservas</a></li>
+      <a routerLink="/my-bookings" [routerLinkActive]="'active'">Mis Reservas</a>
     }
   </nav>
 
   @if (!userDetails()) {
     <div class="pt-hidden-mobile">
-      <a routerLink="/auth/register">Registrate</a>
+      <a class="register-desktop" routerLink="/auth/register">Registrate</a>
       <button class="sign-in" (click)="showLoginModal()">Inicia sesión</button>
     </div>
   } @else {
-    <p>Hola, {{ userDetails()?.name }}!</p>
-    <button class="user-details" matButton [matMenuTriggerFor]="userDetailsMenu">
-      <mat-icon>perm_identity</mat-icon>
-    </button>
+    <div class="pt-hidden-mobile user-details-desktop">
+      <p>Hola, {{ userDetails()?.name }}!</p>
+      <button
+        class="user-details"
+        [style.--button-background-color]="getCurrentUserAvatarColor()"
+        matButton
+        [matMenuTriggerFor]="userDetailsMenu"
+      >
+        {{ userDetails()?.name?.charAt(0) }}
+      </button>
+    </div>
   }
 </header>
 
@@ -64,14 +69,22 @@
 
     <div class="mobile-auth">
       @if (!userDetails()) {
-        <a routerLink="/auth/register">Registrate</a>
-        <button (click)="showLoginModal(); sideNavOpen = false">Inicia sesión</button>
+        <span class="register-mobile"
+          >¿No tienes cuenta?
+          <a routerLink="/auth/register">Registrate</a>
+        </span>
+        <button class="login-mobile" (click)="showLoginModal(); sideNavOpen = false">
+          Inicia sesión
+        </button>
       } @else {
         <p>Hola, {{ userDetails()?.name }}!</p>
         @if (!userDetails()?.email) {
           <button mat-menu-item routerLink="/auth/register">Completar cuenta</button>
         }
-        <button (click)="logout(); sideNavOpen = false">Cerrar sesión</button>
+        <button class="logout-mobile" (click)="logout(); sideNavOpen = false">
+          <mat-icon>logout</mat-icon>
+          <span>Cerrar sesión</span>
+        </button>
       }
     </div>
   </aside>

@@ -73,7 +73,6 @@ export class MyBookingsPage {
           const activeBookings = bookings.filter(
             (booking) => booking.status === BookingStatus.ACTIVE,
           );
-          console.log(activeBookings);
 
           const comingBookings = bookings.filter((booking) => {
             const bookingDate = booking.date;
@@ -81,8 +80,7 @@ export class MyBookingsPage {
             if (
               (isDateAfterOrBefore(bookingDate, booking.hour) === TimeInterval.AFTER ||
                 isDateAfterOrBefore(bookingDate, booking.hour) === TimeInterval.WITHIN) &&
-              booking.status !== BookingStatus.CANCELLED &&
-              booking.status !== BookingStatus.ACTIVE
+              booking.status === BookingStatus.CONFIRMED
             ) {
               return true;
             }
@@ -94,9 +92,9 @@ export class MyBookingsPage {
             const bookingDate = booking.date;
 
             if (
-              (isDateAfterOrBefore(bookingDate, booking.hour) === TimeInterval.BEFORE ||
-                booking.status === BookingStatus.CANCELLED) &&
-              booking.status !== BookingStatus.ACTIVE
+              (isDateAfterOrBefore(bookingDate, booking.hour) === TimeInterval.BEFORE &&
+                booking.status !== BookingStatus.ACTIVE) ||
+              booking.status === BookingStatus.CANCELLED
             ) {
               return true;
             }

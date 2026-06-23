@@ -49,9 +49,10 @@ body {
   --font-error-color: #ba1a1a;
   --font-success-color: #21b821;
 
-  --font-title-size: clamp(1.5rem, 2vw + 1rem, 2.5rem);
-  --font-subtitle-size: clamp(0.75rem, 1vw + 0.25rem, 1.25rem);
-  --font-content-size: clamp(0.75rem, 1vw + 0.5rem, 1rem);
+  --font-title-size: clamp(2rem, 1.5rem + 2vw, 3.5rem);
+  --font-subtitle-size: clamp(1.125rem, 1rem + 0.75vw, 1.75rem);
+  --font-content-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+  --font-small-size: clamp(0.875rem, 0.85rem + 0.1vw, 1rem);
 
   --small-box-shadow: 0 20px 40px -14px oklch(from black l c h / 25%);
 
@@ -64,33 +65,6 @@ body {
   margin-inline: auto;
   font-family: 'Noto Serif', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   padding-inline: 1.5rem;
-}
-
-.user-details-menu {
-  @include mat.menu-overrides(
-    (
-      item-icon-color: var(--primary-color),
-      container-shape: 10px,
-      container-color: var(--white-color),
-    )
-  );
-}
-
-.shared-input {
-  @include mat.form-field-overrides(
-    (
-      container-text-font: 'Noto Serif',
-      container-text-size: 0.8rem,
-      filled-container-shape: 0,
-      filled-container-color: transparent,
-    )
-  );
-
-  inline-size: 100%;
-}
-
-.booking-tabs {
-  @include mat.tabs-overrides(());
 }
 
 .pt-hidden-mobile {

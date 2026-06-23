@@ -13,10 +13,11 @@ import { HeaderComponent } from './header/header.component';
 import { SocketService } from './socket/services/socket.service';
 import { NotificationsService } from './socket/services/notifications.service';
 import { AuthService } from './auth/services/auth.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent],
+  imports: [RouterOutlet, HeaderComponent, MatIcon],
   templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app.component.scss',

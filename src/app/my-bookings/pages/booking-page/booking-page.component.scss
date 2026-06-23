@@ -18,13 +18,28 @@ h4 {
 
 .billing-details {
   padding-inline: 1.5rem;
+  padding-block: 1.5rem;
   background-color: var(--gray-color);
   border-radius: 0.5rem;
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
+  block-size: min-content;
+
+  & h3 {
+    margin-block: 0;
+  }
 
   & .btn-primary {
     background-color: var(--primary-color);
+  }
+
+  & .btn-secondary {
+    background-color: var(--secondary-color);
+  }
+
+  & .btn-primary,
+  .btn-secondary {
     color: var(--white-color);
     border: none;
     display: flex;
@@ -194,4 +209,9 @@ h1 {
     font-family: 'Manrope';
     color: var(--font-primary-color);
   }
+}
+
+.price-modal {
+  padding-inline: 1rem;
+  padding-block: 1rem;
 }

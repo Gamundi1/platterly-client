@@ -1,10 +1,12 @@
+@use 'index.scss' as *;
+
 article {
   --container-border-radius: 0;
   --container-items-flex-direction: column-reverse;
   --container-items-max-inline-size: 100cqi;
-  --image-block-size: 30cqi;
+  --image-block-size: 150px;
 
-  @media (min-width: 576px) {
+  @include medium-breakpoint {
     --container-border-radius: 0.5rem;
     --container-items-flex-direction: row;
     --container-items-max-inline-size: 50cqi;

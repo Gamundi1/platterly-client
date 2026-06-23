@@ -49,6 +49,14 @@ header {
     cursor: pointer;
   }
 
+  .register-desktop {
+    font-family: 'Manrope';
+    margin-inline-end: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--black-color);
+  }
+
   .sign-in {
     --button-background-color: var(--primary-color);
     color: var(--white-color);
@@ -59,24 +67,32 @@ header {
     }
   }
 
-  .user-details {
-    background-color: var(--primary-color);
-    color: var(--white-color);
-    inline-size: 3rem;
-    border-radius: 1rem;
-    font-weight: bold;
-    transition: background-color 0.2s;
+  .user-details-desktop {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
 
-    &:hover {
-      background-color: oklch(from var(--primary-color) 0.4 c h);
-    }
+  .user-details {
+    --button-background-color: var(--primary-color);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--button-background-color);
+    color: var(--white-color);
+    border-radius: 50%;
+    border: 1px solid var(--primary-color);
+    inline-size: 2rem;
+    block-size: 2rem;
+    font-weight: bold;
   }
 }
 
 .backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
   z-index: 998;
 }
 
@@ -112,7 +128,9 @@ header {
 
 .mobile-nav a {
   text-decoration: none;
+  color: var(--black-color);
   font-size: 1.1rem;
+  line-height: 1.5rem;
 }
 
 .mobile-auth {
@@ -120,4 +138,51 @@ header {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+
+  & .register-mobile {
+    font-family: 'Manrope';
+    font-weight: 600;
+
+    & a {
+      text-decoration: none;
+      color: var(--primary-color);
+    }
+  }
+
+  & .login-mobile {
+    --button-background-color: var(--primary-color);
+
+    background-color: var(--button-background-color);
+    color: var(--white-color);
+    font-weight: bold;
+    border-radius: 0.3rem;
+    block-size: 2rem;
+    inline-size: 100%;
+    cursor: pointer;
+
+    &:hover {
+      --button-background-color: oklch(from var(--primary-color) calc(1 - 0.5) c h);
+    }
+  }
+
+  p {
+    font-family: 'Manrope';
+    font-weight: 600;
+    margin-block: 0;
+  }
+
+  & .logout-mobile {
+    color: var(--font-error-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: bold;
+    font-family: 'Manrope';
+    font-size: 1rem;
+    border: none;
+    background: none;
+    block-size: 2rem;
+    inline-size: fit-content;
+    cursor: pointer;
+  }
 }

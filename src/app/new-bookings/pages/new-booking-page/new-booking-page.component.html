@@ -1,9 +1,6 @@
 <article class="new-booking-container">
   <h1>Reserva tu mesa</h1>
-  <h3>
-    Por favor, completa la información para poder comenzar tu proceso de reserva en nuestras
-    instalaciones
-  </h3>
+  <h3>Por favor, completa toda la información para poder comenzar tu proceso de reserva</h3>
 
   <section class="booking-details">
     <form class="booking-information" (submit)="onSubmitForm($event)">
@@ -27,7 +24,16 @@
             }
           </div>
           <span class="title">Fecha seleccionada</span>
-          <input class="date-selector" type="date" [formField]="bookingForm.date" />
+          <mat-form-field class="date-picker">
+            <input
+              matInput
+              [min]="minDate"
+              [matDatepicker]="datePicker"
+              [formField]="bookingForm.date"
+            />
+            <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <mat-datepicker #datePicker></mat-datepicker>
+          </mat-form-field>
         </div>
         <div class="hour-guest-selector">
           <span class="title">Horarios disponibles</span>
@@ -74,14 +80,14 @@
     <div class="image-container">
       <img priority fill ngSrc="images/new-booking/booking-incentive.webp" alt="" />
     </div>
+    <section class="booking-summary">
+      
+    </section>
     <div class="submit-section-mobile">
-      <p>
-        Al confirmar la reserva aceptas nuestra politica de cancelación con 24 horas de antelación
-      </p>
+      <p>Las reservas solo podrán cancelarse con 2 horas de antelación.</p>
       <button [disabled]="!bookingForm().valid()" type="submit">
         Confirmar reserva <fa-icon [icon]="faUtensils"></fa-icon>
       </button>
     </div>
-    <section class="booking-summary"></section>
   </section>
 </article>

@@ -1,5 +1,18 @@
 <aside>
   <h3>Categorías de menús</h3>
+
+  <select name="menu-categories">
+    @for (menuAvailable of menuAvailables(); track menuAvailable.id) {
+      <option
+        [value]="menuAvailable.id"
+        [selected]="selectedMenuId() === menuAvailable.id"
+        (click)="getMenuItems(menuAvailable.id)"
+      >
+        {{ menuAvailable.name }}
+      </option>
+    }
+  </select>
+
   @for (menuAvailable of menuAvailables(); track menuAvailable.id) {
     <button
       [aria-selected]="selectedMenuId() === menuAvailable.id"
@@ -47,5 +60,16 @@
         </div>
       }
     </div>
+    @if (currentMenu.products.drinks.length > 0) {
+      <div class="drinks-container">
+        <h4>Bebidas</h4>
+        @for (drink of currentMenu.products.drinks; track drink.id) {
+          <div class="drink-card">
+            <span>{{ drink.name }}</span>
+            <span>{{ drink.price | currency: drink.priceUnits }}</span>
+          </div>
+        }
+      </div>
+    }
   }
 </section>

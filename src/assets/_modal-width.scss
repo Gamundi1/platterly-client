@@ -1,3 +1,5 @@
+@use 'mixins' as *;
+
 .login-modal {
   --container-inline-size: 100vw;
   --container-max-inline-size: 100vw;
@@ -5,7 +7,7 @@
   --container-margin-inline: 0;
   --dialog-border-radius: 0;
 
-  @media (min-width: 576px) {
+  @include medium-breakpoint {
     --container-inline-size: 46rem;
     --container-max-inline-size: 90vw;
     --container-block-size: 32rem;
@@ -20,6 +22,5 @@
 
   .mat-mdc-dialog-surface {
     border-radius: var(--dialog-border-radius);
-  } 
+  }
 }
-

@@ -1,8 +1,13 @@
 import { AsyncPipe, KeyValuePipe, NgOptimizedImage } from '@angular/common';
-import { Component, effect, inject, signal, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { form, FormField, min, required } from '@angular/forms/signals';
+import {
+  MatDatepickerModule
+} from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faCalendar, faClock, faCompass, faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faCheck, faCircleCheck, faUsers, faUtensils } from '@fortawesome/free-solid-svg-icons';
@@ -25,6 +30,9 @@ import { Table } from '../../interfaces/table.interface';
     TableComponent,
     FaIconComponent,
     NgOptimizedImage,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
   ],
   templateUrl: './new-booking-page.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -54,6 +62,7 @@ export class NewBookingPageComponent {
     required(model.date);
     required(model.availableHoursId);
     required(model.tableNumber);
+    min(model.tableNumber, 1);
   });
 
   protected faUsers = faUsers;
@@ -71,6 +80,7 @@ export class NewBookingPageComponent {
 
   protected linkCopied = signal(false);
   protected booking = signal({});
+  protected minDate = new Date();
 
   constructor() {
     this.availableHours$ = this.httpHandlerService

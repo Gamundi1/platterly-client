@@ -1,0 +1,51 @@
+@use '@angular/material' as mat;
+
+.user-details-menu {
+  @include mat.menu-overrides(
+    (
+      item-icon-color: var(--primary-color),
+      container-shape: 10px,
+      container-color: var(--white-color),
+    )
+  );
+}
+
+.shared-input {
+  @include mat.form-field-overrides(
+    (
+      container-text-font: 'Noto Serif',
+      container-text-size: 0.8rem,
+      filled-container-shape: 0,
+      filled-container-color: transparent,
+    )
+  );
+
+  inline-size: 100%;
+}
+
+:root {
+  @include mat.datepicker-overrides(
+    (
+      calendar-container-background-color: var(--white-color),
+      calendar-text-font: 'Manrope',
+      calendar-date-selected-state-background-color: var(--primary-color),
+      calendar-date-today-outline-color: var(--primary-color),
+      calendar-date-today-selected-state-outline-color: var(--primary-color),
+    )
+  );
+
+  .mat-datepicker-content {
+    border: 1px solid var(--black-color);
+  }
+}
+
+.date-picker {
+  @include mat.form-field-overrides(
+    (
+      filled-container-color: var(--white-color),
+      outlined-label-text-size: 0.8rem,
+      container-text-font: 'Manrope',
+      filled-active-indicator-color: transparent,
+    )
+  );
+}
