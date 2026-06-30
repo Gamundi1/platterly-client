@@ -1,11 +1,13 @@
 :host {
   display: block;
+  container-type: inline-size;
 }
 
 section {
   --table-map-border-radius: 0.5rem;
   background: var(--white-color);
   border-radius: var(--table-map-border-radius);
+  border: 1px solid var(--black-color);
   padding-inline: 1rem;
   padding-block: 1rem;
   position: relative;
@@ -18,6 +20,7 @@ section {
   width: 100%;
   height: 100%;
   background-color: rgba(255, 255, 255, 0.8);
+  border-radius: var(--table-map-border-radius);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,7 +48,8 @@ section {
 
 .table {
   --table-size: 2.5rem;
-
+  align-self: center;
+  justify-self: center;
   font-size: 1rem;
 
   display: flex;
@@ -97,15 +101,31 @@ section {
 
 .legend {
   display: flex;
-  align-items: center;
   margin-block-end: 1rem;
-  gap: 2rem;
+  flex-direction: column;
+
+  @container (min-width: 400px) {
+    gap: 1.5rem;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.separator {
+  inline-size: 100%;
+  block-size: 1px;
+  border-block: 1px dashed var(--secondary-color);
+  margin-block: 1rem;
+
+  @container (min-width: 400px) {
+    display: none;
+  }
 }
 
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.2rem;
 
   & span {
     font-size: 0.875rem;

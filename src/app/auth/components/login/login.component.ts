@@ -22,13 +22,14 @@ import {
 } from '../../../shared/interfaces/login-config.interface';
 import { LoginData } from '../../interfaces/login-data.interface';
 import { AuthService } from '../../services/auth.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.Eager,
-  imports: [FaIconComponent, MatDialogClose, InputComponent],
+  imports: [FaIconComponent, MatDialogClose, InputComponent, RouterLink],
 })
 export class LoginComponent implements OnDestroy {
   private readonly authService = inject(AuthService);

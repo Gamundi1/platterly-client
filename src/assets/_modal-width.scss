@@ -1,3 +1,25 @@
+@use 'mixins' as *;
+
+.fullscreen {
+  --fullscreen-modal-inline-size: 100vw;
+  --fullscreen-modal-block-size: 100vh;
+  --fullscreen-modal-border-radius: 0;
+
+  @include medium-breakpoint {
+    --fullscreen-modal-inline-size: auto;
+    --fullscreen-modal-block-size: auto;
+    --fullscreen-modal-border-radius: 0.5rem;
+  }
+
+  inline-size: var(--fullscreen-modal-inline-size);
+  block-size: var(--fullscreen-modal-block-size);
+  max-inline-size: 100vw !important;
+
+  .mat-mdc-dialog-surface {
+    border-radius: var(--fullscreen-modal-border-radius);
+  }
+}
+
 .login-modal {
   --container-inline-size: 100vw;
   --container-max-inline-size: 100vw;
@@ -5,7 +27,7 @@
   --container-margin-inline: 0;
   --dialog-border-radius: 0;
 
-  @media (min-width: 576px) {
+  @include medium-breakpoint {
     --container-inline-size: 46rem;
     --container-max-inline-size: 90vw;
     --container-block-size: 32rem;
@@ -20,6 +42,5 @@
 
   .mat-mdc-dialog-surface {
     border-radius: var(--dialog-border-radius);
-  } 
+  }
 }
-

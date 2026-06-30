@@ -84,7 +84,7 @@
     flex-direction: column;
     align-items: center;
 
-    button {
+    button[type='submit'] {
       background-color: var(--primary-color);
       color: var(--white-color);
       border: none;
@@ -95,16 +95,19 @@
       font-size: calc(var(--font-content-size) + 0.2rem);
     }
 
+    .redirect-login {
+      background-color: transparent;
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: bold;
+      margin-inline-start: 0.25rem;
+      font-size: var(--font-content-size);
+      border: none;
+    }
+
     p {
       margin-block-start: 0.5rem;
       font-size: var(--font-content-size);
-
-      a {
-        color: var(--primary-color);
-        text-decoration: none;
-        font-weight: bold;
-        margin-inline-start: 0.25rem;
-      }
     }
   }
 }

@@ -6,6 +6,7 @@ import { provideServiceWorker } from '@angular/service-worker';
 
 import { routes } from './app.routes';
 import { authInterceptor } from './auth/interceptors/auth.interceptor-interceptor';
+import { provideLuxonDateAdapter } from '@angular/material-luxon-adapter';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,6 +18,7 @@ export const appConfig: ApplicationConfig = {
       provide: LOCALE_ID,
       useValue: 'es-ES',
     },
-    provideServiceWorker('ngsw-worker.js', { enabled: true })
+    provideServiceWorker('ngsw-worker.js', { enabled: true }),
+    provideLuxonDateAdapter(),
   ],
 };

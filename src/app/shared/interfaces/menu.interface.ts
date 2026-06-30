@@ -27,6 +27,7 @@ export interface Drink {
   isAlcoholic: boolean;
   volume: number;
   units: string;
+  priceUnits: string;
   allergens: Allergen[];
 }
 

@@ -1,10 +1,17 @@
+@use 'index.scss' as *;
+
 :host {
   display: block;
-  padding-inline: 4rem;
   margin-block-start: 3rem;
 }
 
 .my-bookings-header {
+  --header-img-display: none;
+
+  @include medium-breakpoint {
+    --header-img-display: block;
+  }
+
   display: flex;
   justify-content: space-between;
 
@@ -25,6 +32,10 @@
       font-size: 3rem;
       font-weight: 600;
     }
+  }
+
+  & img {
+    display: var(--header-img-display);
   }
 }
 
@@ -53,6 +64,15 @@
   --interval-guests-dot-size: 0.2rem;
   --date-text-color: var(--black-color);
   --guests-bg-color: var(--white-color);
+  --booking-info-direction: column;
+  --booking-info-gap: 1rem;
+  --booking-actions-position: flex-start;
+
+  @include medium-breakpoint {
+    --booking-info-direction: row;
+    --booking-info-gap: 5rem;
+    --booking-actions-position: flex-end;
+  }
 
   padding-inline: 2rem;
   padding-block: 2rem;
@@ -62,9 +82,13 @@
 
   .booking-info {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 5rem;
+    flex-direction: var(--booking-info-direction);
+    gap: var(--booking-info-gap);
+
+    @include medium-breakpoint {
+      justify-content: space-between;
+      align-items: center;
+    }
 
     & .location {
       display: flex;
@@ -99,7 +123,7 @@
   .booking-actions {
     margin-block-start: 1.5rem;
     display: flex;
-    justify-content: flex-end;
+    justify-content: var(--booking-actions-position);
 
     & .cancel-button {
       cursor: pointer;
@@ -244,39 +268,6 @@
       background-color: var(--primary-color);
       border-radius: 50%;
     }
-  }
-}
-
-.invitation-modal {
-  display: flex;
-  flex-direction: column;
-  padding-inline: 1.5rem;
-  padding-block: 1rem;
-
-  & .invitation-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    & h3 {
-      font-family: 'Noto Serif';
-      font-size: 1.2rem;
-      font-weight: 600;
-    }
-
-    & button {
-      background-color: transparent;
-      font-size: 1.2rem;
-      color: var(--font-primary-color);
-      border: none;
-      cursor: pointer;
-    }
-  }
-
-  & h4 {
-    font-family: 'Manrope';
-    font-size: 0.75rem;
-    color: var(--font-primary-color);
   }
 }
 

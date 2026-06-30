@@ -1,8 +1,11 @@
 import { AsyncPipe, KeyValuePipe, NgOptimizedImage } from '@angular/common';
-import { Component, effect, inject, signal, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { form, FormField, min, required } from '@angular/forms/signals';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faCalendar, faClock, faCompass, faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faCheck, faCircleCheck, faUsers, faUtensils } from '@fortawesome/free-solid-svg-icons';
@@ -15,6 +18,15 @@ import { TableComponent } from '../../components/table/table.component';
 import { AvailableHour } from '../../interfaces/available-hour.interface';
 import { Booking } from '../../interfaces/booking.interface';
 import { Table } from '../../interfaces/table.interface';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { DateTime } from 'luxon';
+
+interface NewBookingFormInterface {
+  guests: string;
+  date: DateTime;
+  availableHoursId: string;
+  tableNumber: number;
+}
 
 @Component({
   imports: [
@@ -25,6 +37,10 @@ import { Table } from '../../interfaces/table.interface';
     TableComponent,
     FaIconComponent,
     NgOptimizedImage,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatProgressSpinner,
   ],
   templateUrl: './new-booking-page.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -42,9 +58,9 @@ export class NewBookingPageComponent {
     6: '6+',
   };
 
-  private bookingModel = signal({
+  private bookingModel = signal<NewBookingFormInterface>({
     guests: '1',
-    date: new Date(),
+    date: DateTime.now(),
     availableHoursId: '',
     tableNumber: 0,
   });
@@ -54,6 +70,7 @@ export class NewBookingPageComponent {
     required(model.date);
     required(model.availableHoursId);
     required(model.tableNumber);
+    min(model.tableNumber, 1);
   });
 
   protected faUsers = faUsers;
@@ -71,6 +88,8 @@ export class NewBookingPageComponent {
 
   protected linkCopied = signal(false);
   protected booking = signal({});
+  protected minDate = new Date();
+  protected loading = signal(false);
 
   constructor() {
     this.availableHours$ = this.httpHandlerService
@@ -89,7 +108,7 @@ export class NewBookingPageComponent {
     effect(() => {
       this.httpHandlerService
         .getRequest<Table[]>(UrlProvider.getAvailableTables, {
-          date: this.bookingForm.date().value().toISOString().slice(0, 10),
+          date: this.bookingForm.date().value().toISODate()!.slice(0, 10),
         })
         .subscribe((tables) => {
           this.availableTables.set(tables);
@@ -129,6 +148,7 @@ export class NewBookingPageComponent {
   }
 
   private createBooking() {
+    this.loading.set(true);
     this.httpHandlerService
       .postRequest<Booking>(UrlProvider.createBooking, undefined, {
         ...this.bookingForm().value(),
@@ -136,12 +156,13 @@ export class NewBookingPageComponent {
       })
       .subscribe((booking: Booking) => {
         this.booking.set(booking);
+        this.loading.set(false);
         this.matDialog.open(BookingConfirmedComponent, {
           data: {
             booking,
           },
-          width: '22rem',
-          maxWidth: '90vw',
+          panelClass: 'fullscreen',
+          disableClose: true,
         });
       });
   }

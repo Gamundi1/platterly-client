@@ -1,14 +1,14 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
   input,
   OnChanges,
   output,
   signal,
-  ChangeDetectionStrategy,
 } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { faKitchenSet, faToilet, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faKitchenSet, faRestroom, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Table } from '../../interfaces/table.interface';
 
 @Component({
@@ -26,7 +26,7 @@ export class TableComponent implements OnChanges {
 
   currentSelectedTable = signal<Table | null>(null);
 
-  protected faToilet = faToilet;
+  protected faToilet = faRestroom;
   protected faKitchen = faKitchenSet;
   protected faUser = faUser;
 

@@ -10,12 +10,27 @@
     </div>
     <div class="booking-price">
       <span class="price-title">Resumen compartido</span>
-      <strong>{{ bookingTotalPrice * 1.1 | currency: 'EUR' }}</strong>
+      <strong>{{ bookingTotalPrice() * 1.1 | currency: 'EUR' }}</strong>
       <span class="fee-reminder">Incluye un cargo adicional del 10%</span>
     </div>
   </header>
   <section class="main-content">
-    <div>
+    <div class="billing-details">
+      <h3>Detalles de facturación</h3>
+      <div class="billing-options">
+        <button class="btn-primary" (click)="retrieveTotalPrice()">
+          <mat-icon class="pt-hidden-mobile">account_balance_wallet</mat-icon>
+          <div><span>Pago total</span><small>Pagar todo lo restante</small></div>
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+        <button class="btn-secondary" (click)="retrieveUserOrdersTotalPrice()">
+          <mat-icon class="pt-hidden-mobile">account_balance_wallet</mat-icon>
+          <div><span>Pago parcial</span><small>Pagar solo tu parte</small></div>
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="booking-info">
       <h2>Historial de pedidos</h2>
       <div class="orders">
         @for (order of orders(); track order.id) {
@@ -23,19 +38,7 @@
         }
       </div>
     </div>
-    <div class="billing-details">
-      <h3>Detalles de facturación</h3>
-      <button class="btn-primary">
-        <mat-icon>account_balance_wallet</mat-icon>
-        <div><span>Pago total</span><small>Pagar todo lo restante</small></div>
-        <mat-icon>chevron_right</mat-icon>
-      </button>
-      <button class="btn-primary">
-        <mat-icon>account_balance_wallet</mat-icon>
-        <div><span>Pago parcial</span><small>Pagar solo tu parte</small></div>
-        <mat-icon>chevron_right</mat-icon>
-      </button>
-    </div>
+
     @if (booking()?.status === bookingStatus.ACTIVE) {
       <a
         class="add-order"
@@ -50,3 +53,13 @@
     }
   </section>
 </article>
+
+<ng-template #showPrices let-price>
+  <div class="price-modal">
+    <h2>Precio total</h2>
+    <p>Estarás pagando:</p>
+    <strong>{{ price.response | currency: 'EUR' }}</strong>
+    <small>Pulsa pagar si estás de acuerdo</small>
+    <button (click)="payOrders()">Pagar</button>
+  </div>
+</ng-template>

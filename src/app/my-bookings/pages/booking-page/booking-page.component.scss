@@ -1,3 +1,5 @@
+@use 'index.scss' as *;
+
 :host {
   display: block;
   margin-block: 2rem;
@@ -8,139 +10,143 @@ header {
   justify-content: space-between;
 }
 
-h4 {
-  font-family: 'Manrope';
-  color: var(--primary-color);
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  margin-block: 0;
-}
-
-.billing-details {
-  padding-inline: 1.5rem;
-  background-color: var(--gray-color);
-  border-radius: 0.5rem;
-  display: flex;
-  flex-direction: column;
-
-  & .btn-primary {
-    background-color: var(--primary-color);
-    color: var(--white-color);
-    border: none;
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    padding-inline: 1rem;
-    padding-block: 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-
-    & div {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.25rem;
-
-      & span {
-        font-size: 0.7rem;
-        font-weight: bold;
-      }
-      & small {
-        font-size: 0.6rem;
-        color: var(--white-color);
-      }
-    }
-  }
-}
-
 h1 {
   font-size: 3.5rem;
   margin-block: 1.75rem;
 }
 
+h4 {
+  margin: 0;
+  font: 700 0.75rem 'Manrope';
+  color: var(--primary-color);
+  text-transform: uppercase;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-block-start: 2rem;
+
+  @include medium-breakpoint {
+    display: grid;
+    grid-template-columns: 1fr 15rem;
+  }
+}
+
+.booking-info {
+  grid-column: 1;
+}
+
+.billing-details {
+  --billing-details-gap: 0.5rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--billing-details-gap);
+  padding: 1.5rem;
+  background: var(--gray-color);
+  border-radius: 0.5rem;
+  block-size: min-content;
+  grid-column: 2;
+  grid-row: 1;
+
+  h3 {
+    margin: 0;
+  }
+
+  .billing-options {
+    display: flex;
+    gap: var(--billing-details-gap);
+
+    @include medium-breakpoint {
+      flex-direction: column;
+      justify-content: space-between;
+    }
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    border: none;
+    border-radius: 4px;
+    color: var(--white-color);
+    cursor: pointer;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+    }
+
+    span {
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    small {
+      font-size: 0.6rem;
+      color: inherit;
+    }
+  }
+
+  .btn-primary {
+    background: var(--primary-color);
+  }
+
+  .btn-secondary {
+    background: var(--secondary-color);
+  }
+}
+
 .status {
-  inline-size: min-content;
-  padding-inline: 1rem;
-  padding-block: 0.25rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  inline-size: min-content;
+  padding: 0.25rem 1rem;
   border-radius: 0.5rem;
 
   .dot {
     inline-size: 0.5rem;
     block-size: 0.5rem;
     border-radius: 50%;
-    background-color: var(--booking-status-text-color);
+    background: var(--booking-status-text-color);
   }
 
   span {
+    font: 700 1rem 'Manrope';
     text-transform: uppercase;
-    font-family: 'Manrope';
-    font-weight: bold;
   }
 }
 
 .booking-price {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
   justify-content: center;
-  padding-inline: 1rem;
-  background-color: var(--gray-color);
+  align-items: flex-end;
   gap: 0.25rem;
+  padding-inline: 1rem;
+  background: var(--gray-color);
   border-radius: 0.5rem;
 
-  .price-title {
-    font-family: 'Manrope';
+  .price-title,
+  .fee-reminder {
+    font: 0.75rem 'Manrope';
     color: var(--font-primary-color);
-    font-size: 0.75rem;
-    text-transform: uppercase;
   }
 
-  .fee-reminder {
-    font-family: 'Manrope';
-    color: var(--font-primary-color);
-    font-size: 0.75rem;
+  .price-title {
+    text-transform: uppercase;
   }
 
   strong {
     font-size: 1.5rem;
     color: var(--primary-color);
-  }
-}
-
-.main-content {
-  display: grid;
-  grid-template-columns: 1fr 15rem;
-  gap: 1rem;
-  margin-block-start: 2rem;
-}
-
-.order-card {
-  background-color: oklch(from var(--white-color) l c h / 0.75);
-  border-radius: 1rem;
-  padding: 1rem;
-
-  h3 {
-    font-size: 1.25rem;
-    margin-block: 0;
-    color: var(--font-primary-color);
-  }
-
-  p {
-    margin-block: 0.5rem;
-    color: var(--font-primary-color);
-  }
-
-  ul {
-    margin-block: 0.5rem;
-    padding-left: 1.5rem;
-
-    li {
-      color: var(--font-primary-color);
-      font-size: 0.9rem;
-    }
   }
 }
 
@@ -150,48 +156,80 @@ h1 {
   gap: 1rem;
 }
 
+.order-card {
+  padding: 1rem;
+  background: oklch(from var(--white-color) l c h / 0.75);
+  border-radius: 1rem;
+
+  h3 {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+
+  p {
+    margin: 0.5rem 0;
+  }
+
+  h3,
+  p,
+  li {
+    color: var(--font-primary-color);
+  }
+
+  ul {
+    margin: 0.5rem 0;
+    padding-inline-start: 1.5rem;
+
+    li {
+      font-size: 0.9rem;
+    }
+  }
+}
+
 .add-order {
-  --add-order-border-radius: 1rem;
+  --radius: 1rem;
 
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-block: 1.5rem;
-  background-color: oklch(from var(--white-color) l c h / 0.75);
-  border-radius: var(--add-order-border-radius);
-  text-decoration: none;
   gap: 1rem;
+  padding-block: 1.5rem;
   border: 2px solid var(--primary-color);
+  border-radius: var(--radius);
+  background: oklch(from var(--white-color) l c h / 0.75);
+  text-decoration: none;
 
-  & img {
+  img {
     object-fit: cover;
-    border-radius: var(--add-order-border-radius);
+    border-radius: inherit;
     z-index: -1;
   }
 
-  & .add-symbol {
+  .add-symbol {
+    display: grid;
+    place-items: center;
     inline-size: 4rem;
     block-size: 4rem;
     border-radius: 50%;
-    background-color: var(--primary-color);
+    background: var(--primary-color);
     color: var(--white-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-size: 1.2rem;
   }
 
-  & span {
+  span {
     font-size: 1.2rem;
-    font-weight: bold;
+    font-weight: 700;
     color: var(--black-color);
   }
 
-  & p {
-    margin-block: 0;
-    font-size: 0.9rem;
-    font-family: 'Manrope';
+  p {
+    margin: 0;
+    font: 0.9rem 'Manrope';
     color: var(--font-primary-color);
   }
+}
+
+.price-modal {
+  padding: 1rem;
 }

@@ -1,38 +1,23 @@
-import { AsyncPipe, DatePipe, NgTemplateOutlet, NgClass } from '@angular/common';
-import { Component, inject, TemplateRef, viewChild, ChangeDetectionStrategy } from '@angular/core';
+import { AsyncPipe, DatePipe, NgClass, NgTemplateOutlet } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, TemplateRef, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { map, Subject } from 'rxjs';
-import { Booking } from '../../../new-bookings/interfaces/booking.interface';
-import { UrlProvider } from '../../../shared/enums/url-provider.enum';
-import { HttpHandlerService } from '../../../shared/services/http-handler.service';
-import { BookingStatus } from '../../../shared/enums/booking-status.enum';
+import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import {
-  faArrowRight,
-  faChair,
-  faClose,
-  faUserPlus,
-  faXmark,
-} from '@fortawesome/free-solid-svg-icons';
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
-import { MatDialog, MatDialogClose } from '@angular/material/dialog';
-import { InvitationButtonComponent } from '../../../shared/components/invitation-button/invitation-button.component';
-import { isDateAfterOrBefore } from '../../../helpers/date.helper';
-import { TimeInterval } from '../../../shared/enums/time-interval.enum';
+import { faArrowRight, faChair, faUserPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { map, Subject } from 'rxjs';
 import { getBookingStatusColor, getBookingStatusText } from '../../../helpers/booking-status';
+import { isDateAfterOrBefore } from '../../../helpers/date.helper';
+import { Booking } from '../../../new-bookings/interfaces/booking.interface';
+import { BookingStatus } from '../../../shared/enums/booking-status.enum';
+import { TimeInterval } from '../../../shared/enums/time-interval.enum';
+import { UrlProvider } from '../../../shared/enums/url-provider.enum';
+import { HttpHandlerService } from '../../../shared/services/http-handler.service';
+import { InvitationComponent } from '../../components/invitation/invitation.component';
 
 @Component({
-  imports: [
-    AsyncPipe,
-    NgTemplateOutlet,
-    DatePipe,
-    NgClass,
-    InvitationButtonComponent,
-    MatExpansionModule,
-    FaIconComponent,
-    MatDialogClose,
-  ],
+  imports: [AsyncPipe, NgTemplateOutlet, DatePipe, NgClass, MatExpansionModule, FaIconComponent],
   templateUrl: './my-bookings-page.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './my-bookings-page.component.scss',
@@ -50,7 +35,6 @@ export class MyBookingsPage {
 
   private readonly httpHandlerService = inject(HttpHandlerService);
   private readonly matDialog = inject(MatDialog);
-  private readonly invitationModal = viewChild<TemplateRef<any>>('invitationModal');
   protected bookingStatus = BookingStatus;
 
   constructor() {
@@ -73,7 +57,6 @@ export class MyBookingsPage {
           const activeBookings = bookings.filter(
             (booking) => booking.status === BookingStatus.ACTIVE,
           );
-          console.log(activeBookings);
 
           const comingBookings = bookings.filter((booking) => {
             const bookingDate = booking.date;
@@ -81,8 +64,7 @@ export class MyBookingsPage {
             if (
               (isDateAfterOrBefore(bookingDate, booking.hour) === TimeInterval.AFTER ||
                 isDateAfterOrBefore(bookingDate, booking.hour) === TimeInterval.WITHIN) &&
-              booking.status !== BookingStatus.CANCELLED &&
-              booking.status !== BookingStatus.ACTIVE
+              booking.status === BookingStatus.CONFIRMED
             ) {
               return true;
             }
@@ -94,9 +76,9 @@ export class MyBookingsPage {
             const bookingDate = booking.date;
 
             if (
-              (isDateAfterOrBefore(bookingDate, booking.hour) === TimeInterval.BEFORE ||
-                booking.status === BookingStatus.CANCELLED) &&
-              booking.status !== BookingStatus.ACTIVE
+              (isDateAfterOrBefore(bookingDate, booking.hour) === TimeInterval.BEFORE &&
+                booking.status !== BookingStatus.ACTIVE) ||
+              booking.status === BookingStatus.CANCELLED
             ) {
               return true;
             }
@@ -122,7 +104,7 @@ export class MyBookingsPage {
   }
 
   openInvitationModal(booking: Booking) {
-    this.matDialog.open(this.invitationModal()!, {
+    this.matDialog.open(InvitationComponent, {
       data: booking,
       width: '22rem',
       height: '12rem',

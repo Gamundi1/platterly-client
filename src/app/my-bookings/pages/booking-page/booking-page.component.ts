@@ -6,6 +6,8 @@ import {
   OnInit,
   signal,
   ChangeDetectionStrategy,
+  viewChild,
+  TemplateRef,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
@@ -43,11 +45,11 @@ export class BookingPageComponent implements OnInit {
   private readonly httpHandlerService = inject(HttpHandlerService);
   private readonly matDialog = inject(MatDialog);
   private readonly socketService = inject(SocketService);
-
   private readonly destroyRef = inject(DestroyRef);
 
   protected booking = signal<Booking | null>(null);
   protected orders = signal<Order[] | []>([]);
+  private readonly priceModal = viewChild<TemplateRef<any>>('showPrices');
 
   protected faPlus = faPlus;
 
@@ -86,13 +88,43 @@ export class BookingPageComponent implements OnInit {
     return getBookingStatusColor(this.booking()!);
   }
 
-  protected get bookingTotalPrice(): number {
+  protected bookingTotalPrice(): number {
     return this.orders().reduce((total, order) => total + this.getOrderPrice(order), 0);
   }
 
   protected getOrderPrice(order: Order): number {
     return order.products.reduce((total, product) => total + product.price * product.quantity, 0);
   }
+
+  protected retrieveTotalPrice(): void {
+    this.httpHandlerService
+      .getRequest<{ totalPrice: number }>(UrlProvider.getTotalPriceByBookingId, {
+        bookingId: this.booking()!.id,
+      })
+      .subscribe((response) => {
+        this.matDialog.open(this.priceModal()!, {
+          data: {
+            response: response.totalPrice,
+          },
+        });
+      });
+  }
+
+  protected retrieveUserOrdersTotalPrice(): void {
+    this.httpHandlerService
+      .getRequest<{ totalPrice: number }>(UrlProvider.getUserOrdersTotalPrice, {
+        bookingId: this.booking()!.id,
+      })
+      .subscribe((response) => {
+        this.matDialog.open(this.priceModal()!, {
+          data: {
+            price: response.totalPrice,
+          },
+        });
+      });
+  }
+
+  protected payOrders(): void {}
 
   private fetchOrderItems() {
     this.httpHandlerService
@@ -122,6 +154,17 @@ export class BookingPageComponent implements OnInit {
           this.orders.update((currentOrders) => [...currentOrders, order]);
         }
       });
+
+    this.socketService.onOrderUpdate().subscribe((updatedOrder) => {
+      const index = this.orders().findIndex((o) => o.id === updatedOrder.id);
+      if (index !== -1) {
+        this.orders.update((currentOrders) => {
+          const newOrders = [...currentOrders];
+          newOrders[index] = updatedOrder;
+          return newOrders;
+        });
+      }
+    });
   }
 
   private showErrorModal(code: string) {

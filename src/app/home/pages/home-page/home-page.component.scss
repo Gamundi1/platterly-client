@@ -1,0 +1,39 @@
+.image-container {
+  margin-inline: -1.5rem;
+  block-size: 28rem;
+  position: relative;
+
+  img {
+    object-fit: cover;
+  }
+
+  .accesibility-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .hero-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+  }
+
+  h1 {
+    color: var(--white-color);
+    font-size: var(--font-title-size);
+    max-inline-size: 45rem;
+    line-height: 1.2;
+    margin-block: 0.5rem;
+  }
+
+  h3 {
+    color: var(--tertiary-color);
+    font-size: var(--font-subtitle-size);
+    margin-block: 0;
+  }
+}

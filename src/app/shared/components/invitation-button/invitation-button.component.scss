@@ -1,20 +1,20 @@
 :host {
-  --invitation-button-inline-size: 10rem;
+  --invitation-button-inline-size: 100%;
   --invitation-button-flex-direction: row;
 
-  container-type: inline-size;
   display: flex;
   flex-direction: var(--invitation-button-flex-direction);
+  inline-size: var(--invitation-button-inline-size);
   gap: 0.5rem;
 }
 
 .link {
-  max-inline-size: var(--invitation-button-inline-size);
   background-color: var(--gray-color);
   padding-inline: 0.8rem;
   border-radius: 1rem;
   display: flex;
   align-items: center;
+  inline-size: calc(100% - 7rem);
 
   & span {
     font-size: 0.7rem;
@@ -33,8 +33,7 @@ button {
   background-color: var(--primary-color);
   color: var(--white-color);
   border: none;
-  min-inline-size: 6.5rem;
-  max-inline-size: 7.5rem;
+  inline-size: 7rem;
   min-block-size: 2rem;
   padding-inline: 1.3rem;
   border-radius: 1rem;

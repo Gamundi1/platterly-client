@@ -6,3 +6,15 @@
   inline-size: 100dvw;
   background-color: red;
 }
+
+footer {
+  border-top: 1px solid var(--black-color);
+  margin-block-start: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  padding-block: 1rem;
+  font-family: 'Manrope';
+  color: var(--black-color);
+}

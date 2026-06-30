@@ -4,6 +4,7 @@ export interface Order {
   id: string;
   status: OrderStatus;
   scheduledAt: Date;
+  tableNumber?: number;
   deliveredAt?: Date;
   user: {
     name: string;

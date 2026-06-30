@@ -1,16 +1,22 @@
+@use 'index.scss' as *;
+
 .ok-response {
+  --ok-response-inline-size: 100%;
+  @include medium-breakpoint {
+    --ok-response-inline-size: 25rem;
+  }
+
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: var(--white-color);
-  inline-size: 100%;
-  padding-inline: 0;
+  inline-size: var(--ok-response-inline-size);
+  padding-inline: 2rem;
   padding-block: 2rem;
   justify-content: flex-start;
   gap: 0.6rem;
   border: none;
   border-radius: 0.5rem;
-  container-type: inline-size;
 
   .icon-container {
     block-size: 2rem;
@@ -36,7 +42,7 @@
     gap: 0.5rem;
     background-color: var(--gray-color);
     border-radius: 0.5rem;
-    inline-size: 85cqi;
+    inline-size: 100%;
     padding-inline: 0.5rem;
     padding-block: 1rem;
     margin-block-end: 1rem;
@@ -74,7 +80,8 @@
 
   .link-generator {
     display: grid;
-    grid-template-columns: 13rem auto;
+    grid-template-columns: 1fr 5rem;
+    inline-size: 100%;
     gap: 0.5rem;
     margin-block-end: 2rem;
 
@@ -95,7 +102,7 @@
     }
 
     invitation-button {
-        grid-column: 1 / 3;
+      grid-column: 1 / 3;
     }
   }
 
@@ -116,7 +123,7 @@
     color: var(--primary-color);
     border: 1px solid var(--primary-color);
     min-block-size: 2rem;
-    inline-size: 90cqi;
+    inline-size: 100%;
   }
   .booking {
     --link-background-color: #e3e2e0;

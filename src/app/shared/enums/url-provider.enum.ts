@@ -23,4 +23,6 @@ export const UrlProvider = {
   getOrdersByDate: '/v1/order/date/${date}',
   updateOrderStatus: '/v1/order/update-status',
   subscribeToNotifications: '/v1/notifications/subscribe',
+  getTotalPriceByBookingId: '/v1/order/total-price/${bookingId}',
+  getUserOrdersTotalPrice: '/v1/order/retrieve/${bookingId}',
 } as const;

@@ -55,11 +55,6 @@
           ><fa-icon [icon]="faChair"></fa-icon> Mesa {{ booking.table.number }}</span
         >
       </div>
-      <div class="status-container">
-        <div class="status" [ngClass]="getBookingColor(booking)">
-          {{ getBookingStatus(booking) }}
-        </div>
-      </div>
     </div>
     <div class="booking-actions">
       @if (booking.status !== bookingStatus.ACTIVE) {
@@ -106,21 +101,6 @@
       <div class="status" [ngClass]="getBookingColor(booking)">
         {{ getBookingStatus(booking) }}
       </div>
-    </div>
-  </section>
-</ng-template>
-
-<ng-template #invitationModal let-booking>
-  <section class="invitation-modal">
-    <div class="invitation-header">
-      <h3>Invita a tus amigos</h3>
-      <button mat-dialog-close>
-        <fa-icon [icon]="faClose"></fa-icon>
-      </button>
-    </div>
-    <h4>Comparte el siguiente enlace:</h4>
-    <div>
-      <invitation-button [booking]="booking"></invitation-button>
     </div>
   </section>
 </ng-template>
