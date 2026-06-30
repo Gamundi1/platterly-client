@@ -31,6 +31,12 @@ export class RegisterPage {
     minLength(model.password, 8);
   });
 
+  protected openLogin() {
+    this.router.navigate(['/home']).then(() => {
+      this.authService.showLoginModal();
+    });
+  }
+
   protected registerUser(event: Event) {
     event.preventDefault();
 

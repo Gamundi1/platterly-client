@@ -15,7 +15,22 @@
     </div>
   </header>
   <section class="main-content">
-    <div>
+    <div class="billing-details">
+      <h3>Detalles de facturación</h3>
+      <div class="billing-options">
+        <button class="btn-primary" (click)="retrieveTotalPrice()">
+          <mat-icon class="pt-hidden-mobile">account_balance_wallet</mat-icon>
+          <div><span>Pago total</span><small>Pagar todo lo restante</small></div>
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+        <button class="btn-secondary" (click)="retrieveUserOrdersTotalPrice()">
+          <mat-icon class="pt-hidden-mobile">account_balance_wallet</mat-icon>
+          <div><span>Pago parcial</span><small>Pagar solo tu parte</small></div>
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="booking-info">
       <h2>Historial de pedidos</h2>
       <div class="orders">
         @for (order of orders(); track order.id) {
@@ -23,19 +38,7 @@
         }
       </div>
     </div>
-    <div class="billing-details">
-      <h3>Detalles de facturación</h3>
-      <button class="btn-primary" (click)="retrieveTotalPrice()">
-        <mat-icon>account_balance_wallet</mat-icon>
-        <div><span>Pago total</span><small>Pagar todo lo restante</small></div>
-        <mat-icon>chevron_right</mat-icon>
-      </button>
-      <button class="btn-secondary" (click)="retrieveUserOrdersTotalPrice()">
-        <mat-icon>account_balance_wallet</mat-icon>
-        <div><span>Pago parcial</span><small>Pagar solo tu parte</small></div>
-        <mat-icon>chevron_right</mat-icon>
-      </button>
-    </div>
+
     @if (booking()?.status === bookingStatus.ACTIVE) {
       <a
         class="add-order"

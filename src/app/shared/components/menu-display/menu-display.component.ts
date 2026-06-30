@@ -10,9 +10,10 @@ import {
 import { UrlProvider } from '../../enums/url-provider.enum';
 import { HttpHandlerService } from '../../services/http-handler.service';
 import { Dish, Menu } from '../../interfaces/menu.interface';
-import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
-import { map } from 'rxjs';
+import { AsyncPipe, CurrencyPipe, NgOptimizedImage } from '@angular/common';
+import { map, Observable } from 'rxjs';
 import { AllergenIconComponent } from '../allergen-icon/allergen-icon.component';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 interface MenuAside {
   name: string;
@@ -28,15 +29,21 @@ interface MenuAside {
 })
 export class MenuDisplayComponent implements OnInit {
   protected readonly httpHandlerService = inject(HttpHandlerService);
+  private readonly breakpointObserver = inject(BreakpointObserver);
 
   public showAddButton = input<boolean>(false);
   public selectedDish = output<Dish>();
 
   protected menuAvailables = signal<MenuAside[]>([]);
-
   protected menus: Record<string, Menu> = {};
-
   protected selectedMenuId = signal<string | null>(null);
+  protected isMobile$: Observable<boolean>;
+
+  constructor() {
+    this.isMobile$ = this.breakpointObserver
+      .observe('(max-width: 768px)')
+      .pipe(map((result) => result.matches));
+  }
 
   ngOnInit(): void {
     this.httpHandlerService

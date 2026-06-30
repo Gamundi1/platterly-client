@@ -15,13 +15,11 @@ export const roleGuard: CanActivateFn = (route: ActivatedRouteSnapshot): boolean
       return false;
   }
 
-  // Ruta sin roles -> permitir
   if (!requiredRoles || requiredRoles.length === 0) {
 
     return true;
   }
 
-  // Tiene algún rol requerido
   const hasPermission = authService.hasAnyRole(requiredRoles);
 
   if (!hasPermission) {

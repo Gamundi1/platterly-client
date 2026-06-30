@@ -1,19 +1,11 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  inject,
-  OnDestroy,
-  OnInit,
-  effect,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIcon } from '@angular/material/icon';
 import { NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
+import { AuthService } from './auth/services/auth.service';
 import { HeaderComponent } from './header/header.component';
 import { SocketService } from './socket/services/socket.service';
-import { NotificationsService } from './socket/services/notifications.service';
-import { AuthService } from './auth/services/auth.service';
-import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-root',
@@ -22,11 +14,10 @@ import { MatIcon } from '@angular/material/icon';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app.component.scss',
 })
-export class App implements OnDestroy {
+export class App {
   private readonly socketService: SocketService = inject(SocketService);
   private readonly router: Router = inject(Router);
   private readonly dialog: MatDialog = inject(MatDialog);
-  private readonly notificationsService: NotificationsService = inject(NotificationsService);
   private readonly authService = inject(AuthService);
 
   constructor() {
@@ -36,11 +27,6 @@ export class App implements OnDestroy {
     this.socketService.connect();
     effect(() => {
       this.authService.getUserDetails();
-      this.notificationsService.subscribeToNotifications();
     });
-  }
-
-  ngOnDestroy(): void {
-    this.notificationsService.unsubscribeFromNotifications();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
@@ -14,5 +14,5 @@ import { RouterLink } from '@angular/router';
 export class ErrorModalComponent {
   protected readonly faTriangleExclamation = faTriangleExclamation;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public message: ErrorModalConfig) {}
+  protected readonly message = inject<ErrorModalConfig>(MAT_DIALOG_DATA);
 }

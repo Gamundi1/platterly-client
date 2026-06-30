@@ -49,3 +49,11 @@
     )
   );
 }
+
+.new-booking-progress {
+  @include mat.progress-spinner-overrides(
+    (
+      active-indicator-color: var(--white-color),
+    )
+  );
+}

@@ -1,35 +1,18 @@
+<a routerLink="/my-bookings/{{ bookingId }}" class="return-booking"
+  ><mat-icon>chevron_left</mat-icon>Volver a la reserva</a
+>
 <article class="create-order-container">
   <menu-display (selectedDish)="selectedDish($event)" [showAddButton]="true"></menu-display>
-  <section class="current-order">
-    <header>
-      <h2>Tu carrito</h2>
-      @if (orderItems().length > 0) {
-        <span class="order-items-length">{{ orderItems().length }}</span>
-      }
-    </header>
-    <div class="order-items">
-      @for (orderItem of orderItems(); track orderItem.dish.id) {
-        <div class="order-item">
-          <div class="order-item-description">
-            <h3>{{ orderItem.dish.name }}</h3>
-            <span>{{ orderItem.quantity }}</span>
-            <p>{{ orderItem.dish.price | currency: orderItem.dish.priceUnits }}</p>
-          </div>
-        </div>
-      }
-    </div>
-    <footer>
-      <div class="order-price">
-        <span>Subtotal</span>
-        <span>{{ getTotalPrice() | currency: 'EUR' }}</span>
-        <span>Cargo adicional</span>
-        <span>{{ getTotalPrice() * 0.1 | currency: 'EUR' }}</span>
-        <h4>Total</h4>
-        <h4>{{ getTotalPrice() * 1.1 | currency: 'EUR' }}</h4>
-      </div>
-      <button class="next-step" (click)="nextStep()">Realizar pedido</button>
-    </footer>
-  </section>
+
+  @if (!(isMobile$ | async)) {
+    <ng-template [ngTemplateOutlet]="cart"></ng-template>
+  } @else {
+    @if (orderItems().length > 0) {
+      <button class="view-cart pt-hidden-tablet pt-hidden-desktop" (click)="viewCart()">
+        Ver carrito
+      </button>
+    }
+  }
 </article>
 
 <ng-template #verificationModal>
@@ -49,6 +32,42 @@
       <button (click)="confirmOrder()">Confirmar</button>
       <button mat-dialog-close>Modificar</button>
     </div>
+  </section>
+</ng-template>
+
+<ng-template #cart>
+  <section class="current-order">
+    <header>
+      <h2>Tu carrito</h2>
+    </header>
+    <div class="order-items">
+      @for (orderItem of orderItems(); track orderItem.dish.id) {
+        <div class="order-item">
+          <div class="order-item-header">
+            <h3>{{ orderItem.dish.name }}</h3>
+            <button (click)="removeDish(orderItem.dish)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          <div class="order-item-details">
+            <span>{{ orderItem.quantity }}</span>
+            <p>{{ orderItem.dish.price | currency: orderItem.dish.priceUnits }}</p>
+            <span>{{ orderItem.quantity * orderItem.dish.price | currency: 'EUR' }}</span>
+          </div>
+        </div>
+      }
+    </div>
+    <footer>
+      <div class="order-price">
+        <span>Subtotal</span>
+        <span class="price">{{ getTotalPrice() | currency: 'EUR' }}</span>
+        <span>Cargo adicional</span>
+        <span class="price">{{ getTotalPrice() * 0.1 | currency: 'EUR' }}</span>
+        <h4>Total</h4>
+        <h4>{{ getTotalPrice() * 1.1 | currency: 'EUR' }}</h4>
+      </div>
+      <button class="next-step" (click)="nextStep()">Realizar pedido</button>
+    </footer>
   </section>
 </ng-template>
 

@@ -1,28 +1,17 @@
-<aside>
-  <h3>Categorías de menús</h3>
+<aside aria-labelledby="menu-categories">
+  <h3 id="menu-categories">Categorías de menús</h3>
 
-  <select name="menu-categories">
+  <div class="menu-horizontal-scroll">
     @for (menuAvailable of menuAvailables(); track menuAvailable.id) {
-      <option
-        [value]="menuAvailable.id"
-        [selected]="selectedMenuId() === menuAvailable.id"
+      <button
+        [aria-selected]="selectedMenuId() === menuAvailable.id"
         (click)="getMenuItems(menuAvailable.id)"
       >
         {{ menuAvailable.name }}
-      </option>
+      </button>
     }
-  </select>
-
-  @for (menuAvailable of menuAvailables(); track menuAvailable.id) {
-    <button
-      [aria-selected]="selectedMenuId() === menuAvailable.id"
-      (click)="getMenuItems(menuAvailable.id)"
-    >
-      {{ menuAvailable.name }}
-    </button>
-  }
+  </div>
 </aside>
-
 <section>
   <p class="ingredients-incentive">Con los mejores ingredientes</p>
   @let currentMenu = menus[selectedMenuId() || ''];

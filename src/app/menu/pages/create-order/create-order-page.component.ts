@@ -1,4 +1,4 @@
-import { CurrencyPipe } from '@angular/common';
+import { AsyncPipe, CurrencyPipe, NgTemplateOutlet } from '@angular/common';
 import {
   Component,
   inject,
@@ -18,13 +18,15 @@ import {
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { catchError } from 'rxjs';
+import { catchError, map, Observable } from 'rxjs';
 import { ErrorModalComponent } from '../../../shared/components/error-modal/error-modal.component';
 import { MenuDisplayComponent } from '../../../shared/components/menu-display/menu-display.component';
 import { UrlProvider } from '../../../shared/enums/url-provider.enum';
 import { Dish } from '../../../shared/interfaces/menu.interface';
 import { HttpHandlerService } from '../../../shared/services/http-handler.service';
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
+import { MatIcon } from '@angular/material/icon';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 interface OrderItem {
   dish: Dish;
@@ -45,23 +47,31 @@ interface OrderItem {
     MatDialogContent,
     RouterLink,
     FaIconComponent,
+    NgTemplateOutlet,
+    MatIcon,
+    AsyncPipe,
   ],
 })
 export class CreateOrderPageComponent implements OnInit {
   protected orderItems = signal<OrderItem[]>([]);
+  protected isMobile$: Observable<boolean>;
 
   private readonly verificationModal = viewChild<TemplateRef<any>>('verificationModal');
   private readonly confirmationModal = viewChild<TemplateRef<any>>('confirmationModal');
+  private readonly cartModal = viewChild<TemplateRef<any>>('cart');
   private readonly matDialog = inject(MatDialog);
   private readonly httpHandlerService = inject(HttpHandlerService);
   private readonly activatedRoute = inject(ActivatedRoute);
-  private readonly router = inject(Router);
+  private readonly breakpointObserver = inject(BreakpointObserver);
 
   protected bookingId: string;
   protected faCircleCheck = faCircleCheck;
 
   constructor() {
     this.bookingId = this.activatedRoute.snapshot.queryParams['bookingId'];
+    this.isMobile$ = this.breakpointObserver
+      .observe('(max-width: 768px)')
+      .pipe(map((result) => result.matches));
   }
 
   ngOnInit(): void {
@@ -103,6 +113,23 @@ export class CreateOrderPageComponent implements OnInit {
     }
   }
 
+  protected removeDish(dish: Dish): void {
+    const orderItem = this.orderItems().find((item) => item.dish.id === dish.id);
+
+    if (orderItem && orderItem.quantity > 1) {
+      this.orderItems.update((items) =>
+        items.map((item) => {
+          if (item.dish.id === dish.id) {
+            return { ...item, quantity: item.quantity - 1 };
+          }
+          return item;
+        }),
+      );
+    } else {
+      this.orderItems.update((items) => items.filter((item) => item.dish.id !== dish.id));
+    }
+  }
+
   protected getTotalPrice(): number {
     const total = this.orderItems().reduce(
       (total, product) => total + Number(product.dish.price) * product.quantity,
@@ -139,8 +166,14 @@ export class CreateOrderPageComponent implements OnInit {
         },
       )
       .subscribe(() => {
-        this.matDialog.open(this.confirmationModal()!);
+        this.matDialog.open(this.confirmationModal()!, {
+          disableClose: true,
+        });
       });
+  }
+
+  protected viewCart(): void {
+    this.matDialog.open(this.cartModal()!);
   }
 
   private getErrorMessage(errorCode: string): { title: string; message: string } {

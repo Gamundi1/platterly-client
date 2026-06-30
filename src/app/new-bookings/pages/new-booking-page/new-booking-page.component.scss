@@ -218,6 +218,7 @@ fieldset {
   }
 
   display: var(--submit-display);
+  align-items: center;
   margin-block-start: 5rem;
   padding-inline: 1rem;
   gap: 1rem;
@@ -231,8 +232,10 @@ fieldset {
     cursor: pointer;
     display: flex;
     align-items: center;
+    position: relative;
     gap: 1.2rem;
     padding-inline: 2rem;
+    padding-block: 0.5rem;
     border-radius: 0.3rem;
     background-color: var(--primary-color);
     border: none;
@@ -242,6 +245,16 @@ fieldset {
     &[disabled] {
       background-color: oklch(from var(--primary-color) 0.8 c h);
       cursor: not-allowed;
+    }
+
+    & .button-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: inherit;
     }
   }
 }
@@ -264,14 +277,17 @@ fieldset {
   & p {
     color: var(--font-primary-color);
     font-size: var(--font-small-size);
+    flex: 1;
   }
 
   & button {
     cursor: pointer;
     display: flex;
     align-items: center;
+    position: relative;
     gap: 1.2rem;
-    padding-inline: 1.5rem;
+    max-inline-size: 9rem;
+    padding-inline: 1rem;
     padding-block: 0.5rem;
     border-radius: 0.3rem;
     background-color: var(--primary-color);
@@ -282,6 +298,16 @@ fieldset {
     &[disabled] {
       background-color: oklch(from var(--primary-color) 0.8 c h);
       cursor: not-allowed;
+    }
+
+    & .button-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: inherit;
     }
   }
 }

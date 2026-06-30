@@ -70,23 +70,33 @@
       </fieldset>
       <div class="submit-section-desktop">
         <p>
-          Al confirmar la reserva aceptas nuestra politica de cancelación con 24 horas de antelación
+          Al confirmar la reserva aceptas nuestra politica de cancelación con 2 horas de antelación
         </p>
         <button [disabled]="!bookingForm().valid()" type="submit">
           Confirmar reserva <fa-icon [icon]="faUtensils"></fa-icon>
+          @if (loading()) {
+            <div class="button-overlay">
+              <mat-progress-spinner
+                class="new-booking-progress"
+                diameter="40"
+                mode="indeterminate"
+              ></mat-progress-spinner>
+            </div>
+          }
         </button>
       </div>
     </form>
     <div class="image-container">
       <img priority fill ngSrc="images/new-booking/booking-incentive.webp" alt="" />
     </div>
-    <section class="booking-summary">
-      
-    </section>
+    <section class="booking-summary"></section>
     <div class="submit-section-mobile">
       <p>Las reservas solo podrán cancelarse con 2 horas de antelación.</p>
-      <button [disabled]="!bookingForm().valid()" type="submit">
-        Confirmar reserva <fa-icon [icon]="faUtensils"></fa-icon>
+      <button [disabled]="!bookingForm().valid()" (click)="onSubmitForm($event)">
+        Confirmar reserva
+        @if (loading()) {
+          <mat-progress-spinner diameter="20" mode="indeterminate"></mat-progress-spinner>
+        }
       </button>
     </div>
   </section>

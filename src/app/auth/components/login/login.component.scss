@@ -4,7 +4,7 @@ article {
   --container-border-radius: 0;
   --container-items-flex-direction: column-reverse;
   --container-items-max-inline-size: 100cqi;
-  --image-block-size: 150px;
+  --image-block-size: 14rem;
 
   @include medium-breakpoint {
     --container-border-radius: 0.5rem;
