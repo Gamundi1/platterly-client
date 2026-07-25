@@ -1,5 +1,10 @@
 @use '@angular/material' as mat;
 
+:host {
+  z-index: 1000;
+  position: relative;
+}
+
 header {
   display: flex;
   align-items: center;
@@ -29,6 +34,8 @@ header {
       text-decoration: none;
       color: inherit;
       font-size: 0.875rem;
+      font-family: 'Manrope';
+      font-weight: bold;
     }
 
     .active {
@@ -131,6 +138,15 @@ header {
   color: var(--black-color);
   font-size: 1.1rem;
   line-height: 1.5rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
+  
+  &.active {
+    color: var(--primary-color);
+    font-weight: bold;
+  }
 }
 
 .mobile-auth {

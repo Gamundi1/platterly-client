@@ -14,6 +14,7 @@ import { AsyncPipe, CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import { map, Observable } from 'rxjs';
 import { AllergenIconComponent } from '../allergen-icon/allergen-icon.component';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 interface MenuAside {
   name: string;
@@ -25,7 +26,7 @@ interface MenuAside {
   templateUrl: './menu-display.component.html',
   styleUrl: './menu-display.component.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
-  imports: [NgOptimizedImage, CurrencyPipe, AllergenIconComponent],
+  imports: [NgOptimizedImage, CurrencyPipe, AllergenIconComponent, TranslocoPipe],
 })
 export class MenuDisplayComponent implements OnInit {
   protected readonly httpHandlerService = inject(HttpHandlerService);
@@ -47,7 +48,7 @@ export class MenuDisplayComponent implements OnInit {
 
   ngOnInit(): void {
     this.httpHandlerService
-      .getRequest<MenuAside[]>(UrlProvider.getAllMenus)
+      .getRequest<MenuAside[]>(UrlProvider.getAllAvailableMenus)
       .subscribe((menus: MenuAside[]) => {
         this.menuAvailables.set(menus);
 

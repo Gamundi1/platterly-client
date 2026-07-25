@@ -8,10 +8,20 @@ import { routes } from './app.routes';
 import { authInterceptor } from './auth/interceptors/auth.interceptor-interceptor';
 import { provideLuxonDateAdapter } from '@angular/material-luxon-adapter';
 
+import { provideTransloco } from '@jsverse/transloco';
+import { I18nService } from './i18n/services/i18n.service';
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideAnimations(),
+    provideTransloco({
+      config: {
+        defaultLang: 'es',
+        availableLangs: ['es'],
+      },
+      loader: I18nService,
+    }),
     provideHttpClient(withXhr(), withInterceptors([authInterceptor])),
     provideRouter(routes),
     {

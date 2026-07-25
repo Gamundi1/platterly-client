@@ -1,0 +1,64 @@
+@use 'index.scss' as *;
+
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  min-block-size: 15rem;
+  padding-block: 2rem;
+  padding-inline: 1rem;
+  font-size: var(--font-content-size);
+}
+
+mat-icon {
+  color: var(--info-color);
+  height: 2rem;
+  width: 2rem;
+}
+
+a {
+  --link-background-color: transparent;
+  --link-font-color: var(--primary-color);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-decoration: none;
+  text-transform: uppercase;
+
+  background-color: var(--link-background-color);
+  border-radius: 1rem;
+  color: var(--link-font-color);
+  border: 1px solid var(--primary-color);
+  min-block-size: 2rem;
+  inline-size: 100%;
+
+  &.register-link {
+    --link-background-color: var(--primary-color);
+    --link-font-color: var(--white-color);
+  }
+}
+
+::ng-deep {
+  .complete-account {
+    --complete-account-max-inline-size: 100%;
+    --complete-account-position: absolute;
+
+    @include medium-breakpoint {
+      --complete-account-position: static;
+      --complete-account-max-inline-size: initial;
+    }
+
+    position: var(--complete-account-position) !important;
+    max-inline-size: var(--complete-account-max-inline-size) !important;
+    bottom: 0;
+
+    & .mat-mdc-dialog-surface {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { NavigationStart, Router, RouterOutlet } from '@angular/router';
@@ -25,6 +25,7 @@ export class App {
       this.dialog.closeAll();
     });
     this.socketService.connect();
+
     effect(() => {
       this.authService.getUserDetails();
     });

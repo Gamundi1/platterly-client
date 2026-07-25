@@ -1,18 +1,15 @@
 <header>
   <button
     class="pt-hidden-tablet pt-hidden-desktop sidenav-toggle"
-    (click)="sideNavOpen = !sideNavOpen"
+    (click)="toggleSideNav()"
   >
     <mat-icon class="menu-icon">menu</mat-icon>
   </button>
   <h1>Platterly</h1>
 
   <nav class="pt-hidden-mobile">
-    <a routerLink="/home" [routerLinkActive]="'active'">Inicio</a>
-    <a routerLink="/menu" [routerLinkActive]="'active'">Nuestras Cartas</a>
-    <a routerLink="/bookings" [routerLinkActive]="'active'">Reservar Mesa</a>
-    @if (userDetails()) {
-      <a routerLink="/my-bookings" [routerLinkActive]="'active'">Mis Reservas</a>
+    @for (link of headerMapByRole(); track $index) {
+      <a [routerLink]="link.link" [routerLinkActive]="'active'">{{ link.label }}</a>
     }
   </nav>
 
@@ -43,25 +40,25 @@
   <button class="logout-button" mat-menu-item (click)="logout()">Cerrar sesión</button>
 </mat-menu>
 
-@if (sideNavOpen) {
-  <div class="backdrop" (click)="sideNavOpen = false"></div>
+@if (sideNavOpen()) {
+  <div class="backdrop" (click)="closeSideNav()"></div>
 
-  <aside class="side-nav">
-    <button class="close-btn" (click)="sideNavOpen = false">
+  <aside class="side-nav" cdkTrapFocus>
+    <button class="close-btn" (click)="closeSideNav()">
       <mat-icon>close</mat-icon>
     </button>
 
     <nav class="mobile-nav">
-      <a routerLink="/home" (click)="sideNavOpen = false" routerLinkActive="active">Inicio</a>
-      <a routerLink="/menu" (click)="sideNavOpen = false" routerLinkActive="active"
+      <a routerLink="/home" (click)="closeSideNav()" [routerLinkActive]="'active'">Inicio</a>
+      <a routerLink="/menu" (click)="closeSideNav()" [routerLinkActive]="'active'"
         >Nuestras Cartas</a
       >
-      <a routerLink="/bookings" (click)="sideNavOpen = false" routerLinkActive="active"
+      <a routerLink="/bookings" (click)="closeSideNav()" [routerLinkActive]="'active'"
         >Reservar Mesa</a
       >
 
       @if (userDetails()) {
-        <a routerLink="/my-bookings" (click)="sideNavOpen = false" routerLinkActive="active">
+        <a routerLink="/my-bookings" (click)="closeSideNav()" [routerLinkActive]="'active'">
           Mis Reservas
         </a>
       }
@@ -71,17 +68,17 @@
       @if (!userDetails()) {
         <span class="register-mobile"
           >¿No tienes cuenta?
-          <a routerLink="/auth/register">Registrate</a>
+          <a (click)="closeSideNav()" routerLink="/auth/register">Registrate</a>
         </span>
-        <button class="login-mobile" (click)="showLoginModal(); sideNavOpen = false">
+        <button class="login-mobile" (click)="showLoginModal(); closeSideNav()">
           Inicia sesión
         </button>
       } @else {
         <p>Hola, {{ userDetails()?.name }}!</p>
         @if (!userDetails()?.email) {
-          <button mat-menu-item routerLink="/auth/register">Completar cuenta</button>
+          <a (click)="closeSideNav()" routerLink="/auth/register">Completar cuenta</a>
         }
-        <button class="logout-mobile" (click)="logout(); sideNavOpen = false">
+        <button class="logout-mobile" (click)="logout(); closeSideNav()">
           <mat-icon>logout</mat-icon>
           <span>Cerrar sesión</span>
         </button>

@@ -1,9 +1,12 @@
-import { Component, inject, signal } from '@angular/core';
-import { form, minLength, required } from '@angular/forms/signals';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { disabled, form, minLength, required } from '@angular/forms/signals';
 import { InputComponent } from '../../../shared/components/input/input.component';
 import { AuthService } from '../../services/auth.service';
 import { User, UserRole } from '../../../shared/interfaces/user.interface';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs';
+import { ErrorModalComponent } from '../../../shared/components/error-modal/error-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-register-page',
@@ -11,9 +14,13 @@ import { Router } from '@angular/router';
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.scss',
 })
-export class RegisterPage {
+export class RegisterPage implements OnInit {
+  ngOnInit(): void {
+    this.fillNameIfAvailable();
+  }
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly matDialog = inject(MatDialog);
 
   registerModel = signal({
     name: '',
@@ -29,6 +36,7 @@ export class RegisterPage {
     required(model.email);
     required(model.password);
     minLength(model.password, 8);
+    disabled(model.name, { when: () => this.authService.getUserDetails()?.name !== undefined });
   });
 
   protected openLogin() {
@@ -49,12 +57,37 @@ export class RegisterPage {
         password: this.registerModel().password,
         role: UserRole.USER,
       };
-      this.authService.register(user).subscribe(() => {
-        this.router.navigate(['/home']);
-      });
+      this.authService
+        .register(user)
+        .pipe(
+          catchError((error) => {
+            this.showErrorModal();
+            return [];
+          }),
+        )
+        .subscribe(() => {
+          this.router.navigate(['/home']);
+        });
     } else {
       console.log('Form is invalid');
       console.log('Errors:', this.registerForm().errors());
+    }
+  }
+
+  private showErrorModal() {
+    this.matDialog.open(ErrorModalComponent, {
+      data: {
+        title: 'Error creando el usuario',
+        message:
+          'Ha ocurrido un error al crear el usuario. Por favor, revisa los datos e inténtalo de nuevo.',
+      },
+    });
+  }
+
+  private fillNameIfAvailable() {
+    const user = this.authService.getUserDetails();
+    if (user && user.name) {
+      this.registerForm.name().value.set(user.name);
     }
   }
 }

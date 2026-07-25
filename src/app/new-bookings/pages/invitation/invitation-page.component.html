@@ -1,12 +1,8 @@
 <ng-template #invitationModal let-data>
   <section>
-    <button type="button" class="close-button" mat-dialog-close>
-      <fa-icon [icon]="faXMark"></fa-icon>
-    </button>
     <h3>Invitación</h3>
     <h2>Únete a la mesa</h2>
     <p>te han invitado a unirte a una reserva</p>
-
     <div class="booking-info">
       <div>
         <span class="title">Ubicación</span>
@@ -18,7 +14,7 @@
       </div>
       <div>
         <span class="title">Fecha</span>
-        <span>{{ data.date }}</span>
+        <span>{{ data.date | date: "d 'de' MMMM 'de' y" }}</span>
       </div>
     </div>
 

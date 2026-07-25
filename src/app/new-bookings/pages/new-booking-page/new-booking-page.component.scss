@@ -120,6 +120,11 @@ legend {
     background-color: var(--primary-color);
     color: var(--white-color);
   }
+
+  &:has(.guest-selector:focus-visible) {
+    outline: 3px solid var(--black-color);
+    outline-offset: 4px;
+  }
 }
 
 input[type='radio'] {
@@ -177,6 +182,11 @@ input[type='radio'] {
     &:has(.hour-selector[aria-selected='true']) {
       background-color: var(--primary-color);
       color: var(--white-color);
+    }
+
+    &:has(.hour-selector:focus-visible) {
+      outline: 3px solid var(--black-color);
+      outline-offset: 4px;
     }
 
     & input {

@@ -71,6 +71,11 @@ section {
     color: var(--white-color);
   }
 
+  &:focus-visible {
+    outline: 3px solid var(--black-color);
+    outline-offset: 4px;
+  }
+
   &[disabled] {
     background-color: var(--secondary-color);
     cursor: not-allowed;

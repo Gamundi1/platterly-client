@@ -1,29 +1,29 @@
+import { DatePipe } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   inject,
   OnInit,
   signal,
   TemplateRef,
   viewChild,
-  ChangeDetectionStrategy,
 } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { form, FormField, required } from '@angular/forms/signals';
-import { MatDialog, MatDialogClose } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { catchError, firstValueFrom } from 'rxjs';
 import { AuthService } from '../../../auth/services/auth.service';
-import { UrlProvider } from '../../../shared/enums/url-provider.enum';
-import { HttpHandlerService } from '../../../shared/services/http-handler.service';
-import { Booking } from '../../interfaces/booking.interface';
-import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { ErrorModalComponent } from '../../../shared/components/error-modal/error-modal.component';
+import { UrlProvider } from '../../../shared/enums/url-provider.enum';
 import { User, UserRole } from '../../../shared/interfaces/user.interface';
+import { HttpHandlerService } from '../../../shared/services/http-handler.service';
 
 @Component({
-  imports: [ReactiveFormsModule, FormField, FaIconComponent, MatDialogClose, RouterLink],
+  imports: [ReactiveFormsModule, FormField, FaIconComponent, RouterLink, DatePipe],
   templateUrl: './invitation-page.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './invitation-page.component.scss',
@@ -49,15 +49,17 @@ export class InvitationPageComponent implements OnInit {
   });
 
   async ngOnInit() {
-    const tableNumber = this.activatedRoute.snapshot.params['tableNumber'];
-    const hour = this.activatedRoute.snapshot.params['hour'];
-    const date = this.activatedRoute.snapshot.params['date'];
+    const tableNumber = this.activatedRoute.snapshot.queryParams['tableNumber'];
+    const hour = this.activatedRoute.snapshot.queryParams['hour'];
+    const date = new Date(this.activatedRoute.snapshot.queryParams['date']);
+
     this.matDialog.open(this.invitationModal()!, {
       data: {
         tableNumber,
         hour,
         date,
       },
+      disableClose: true,
     });
   }
 

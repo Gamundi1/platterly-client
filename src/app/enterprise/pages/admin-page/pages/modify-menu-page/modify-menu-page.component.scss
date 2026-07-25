@@ -1,0 +1,45 @@
+@use 'index.scss' as *;
+
+:host {
+  display: flex;
+  inline-size: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+section {
+  font-family: 'Manrope';
+  padding-inline: 1rem;
+  inline-size: 100%;
+  max-inline-size: 40rem;
+}
+
+h1 {
+  font-size: var(--font-title-size);
+}
+
+select {
+  inline-size: 100%;
+  block-size: 3rem;
+  font-size: var(--font-content-size);
+  padding-inline: 0.5rem;
+}
+
+.date-container {
+  --dates-input-size: 100%;
+  --date-flex-direction: column;
+
+  @include medium-breakpoint {
+    --dates-input-size: 50%;
+    --date-flex-direction: row;
+  }
+
+  gap: 1rem;
+  inline-size: 100%;
+  display: flex;
+  flex-direction: var(--date-flex-direction);
+
+  & mat-form-field {
+    inline-size: var(--dates-input-size);
+  }
+}

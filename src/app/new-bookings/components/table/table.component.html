@@ -29,14 +29,17 @@
   >
     @for (table of tables(); track table.number) {
       <button
+        #tableButton
         class="table"
         type="button"
+        [attr.data-tn]="table.number"
         [style.grid-column]="getInlineTrack(table)"
         [style.grid-row]="getBlockTrack(table)"
         [attr.aria-label]="'Mesa ' + table.number + ', capacidad ' + table.capacity"
         [attr.aria-selected]="table.number === currentSelectedTable()?.number"
         [disabled]="!isTableAvailable(table)"
         (click)="onTableClick(table)"
+        [tabindex]="table.number === currentSelectedTable()?.number ? 0 : -1"
       >
         <fa-icon [icon]="faUser"></fa-icon>
         <span>
