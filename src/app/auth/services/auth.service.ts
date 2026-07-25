@@ -117,6 +117,4 @@ export class AuthService {
     });
     localStorage.setItem('access-token', tokens['access-token']);
   }
-
-  private subscribeToNotifications() {}
 }

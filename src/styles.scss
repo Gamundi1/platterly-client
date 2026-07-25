@@ -41,9 +41,11 @@ body {
   --black-color: oklch(0 0 0);
   --gray-color: oklch(0.9644 0.0029 84.56);
   --primary-color: #9a4022;
-  --secondary-color: oklch(0.3848 0.0425 165.11);
+  --secondary-color: oklch(46.895% 0.07768 162.064);
   --tertiary-color: oklch(0.8921 0.0315 75.2);
   --neutral-color: oklch(0.9756 0.035 92.82);
+  --info-color: oklch(76.052% 0.11069 235.982);
+  --warning-color: oklch(80.665% 0.09782 91.39);
 
   --font-primary-color: #56423c;
   --font-error-color: #ba1a1a;
@@ -56,7 +58,7 @@ body {
 
   --small-box-shadow: 0 20px 40px -14px oklch(from black l c h / 25%);
 
-  --default-max-width: 68rem;
+  --default-max-width: 70rem;
 }
 
 body {

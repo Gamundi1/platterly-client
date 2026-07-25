@@ -7,7 +7,7 @@
       <strong>{{ order().user.name }} {{ order().user.surname }}</strong>
       <span class="time">{{ order().scheduledAt | date: 'HH:mm' : 'UTC+2' }}h</span>
     </div>
-    <span class="status" [ngClass]="getCurrentOrderStatusColor(order().status)">
+    <span class="order-status" [ngClass]="getCurrentOrderStatusColor(order().status)">
       {{ getOrderStatusText(order().status) }}
     </span>
   </div>

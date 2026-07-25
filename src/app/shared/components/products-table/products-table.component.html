@@ -4,7 +4,7 @@
       <div class="product-info">
         <span class="product-quantity">{{ product.quantity }}</span>
         <span class="product-x">x</span>
-        <span class="product-name">{{ product.name }}</span>
+        <span class="product-name">{{ product.name | transloco }}</span>
       </div>
       @if (showPrice()) {
         <div class="product-price">

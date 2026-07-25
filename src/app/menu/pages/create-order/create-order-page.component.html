@@ -22,7 +22,7 @@
       <div class="order-products">
         @for (orderItem of orderItems(); track orderItem.dish.id) {
           <div class="order-product">
-            <span>{{ orderItem.quantity }} x ({{ orderItem.dish.name }})</span>
+            <span>{{ orderItem.quantity }} x ({{ orderItem.dish.name | transloco }})</span>
             <span>{{ orderItem.quantity * orderItem.dish.price | currency: 'EUR' }}</span>
           </div>
         }
@@ -44,7 +44,7 @@
       @for (orderItem of orderItems(); track orderItem.dish.id) {
         <div class="order-item">
           <div class="order-item-header">
-            <h3>{{ orderItem.dish.name }}</h3>
+            <h3>{{ orderItem.dish.name | transloco }}</h3>
             <button (click)="removeDish(orderItem.dish)">
               <mat-icon>delete</mat-icon>
             </button>

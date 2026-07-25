@@ -2,10 +2,13 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  ElementRef,
   input,
   OnChanges,
   output,
   signal,
+  viewChild,
+  viewChildren,
 } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faKitchenSet, faRestroom, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -17,6 +20,9 @@ import { Table } from '../../interfaces/table.interface';
   styleUrls: ['./table.component.scss'],
   changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FaIconComponent],
+  host: {
+    '(keydown)': 'keyboardInteraction($event)',
+  },
 })
 export class TableComponent implements OnChanges {
   public tables = input.required<Table[]>();
@@ -62,6 +68,8 @@ export class TableComponent implements OnChanges {
     () => this.maxBlockPosition() - this.minBlockPosition() + 1,
   );
 
+  private tableButtons = viewChildren<ElementRef<HTMLButtonElement>>('tableButton');
+
   protected getInlineTrack(table: Table): number {
     return table.inlinePosition! - this.minInlinePosition() + 1;
   }
@@ -83,6 +91,72 @@ export class TableComponent implements OnChanges {
     if (this.currentSelectedTable() && !this.isTableAvailable(this.currentSelectedTable()!)) {
       this.currentSelectedTable.set(null);
       this.selectedTable.emit(0);
+    }
+  }
+
+  private focusNextTableButton(direction: 'up' | 'down' | 'left' | 'right') {
+    const currentTable = this.currentSelectedTable();
+    let nextTable: Table | undefined;
+    const blockPosition = currentTable?.blockPosition || 0;
+    const inlinePosition = currentTable?.inlinePosition || 0;
+
+    if (direction === 'up') {
+      nextTable = this.findNextAvailableTable('blockPosition', blockPosition - 1);
+    }
+
+    if (direction === 'down') {
+      nextTable = this.findNextAvailableTable('blockPosition', blockPosition + 1);
+    }
+
+    if (direction === 'left') {
+      nextTable = this.findNextAvailableTable('inlinePosition', inlinePosition - 1);
+    }
+
+    if (direction === 'right') {
+      nextTable = this.findNextAvailableTable('inlinePosition', inlinePosition + 1);
+    }
+    if (!nextTable) return;
+    this.focusTableNumber(nextTable);
+  }
+
+  private focusTableNumber(table: Table) {
+    const tableButton = this.tableButtons()?.find(
+      (btn) => btn.nativeElement.getAttribute('data-tn') === table?.number.toString(),
+    );
+    tableButton?.nativeElement.focus();
+    this.currentSelectedTable.set(table);
+  }
+
+  private findNextAvailableTable(findCriteria: 'blockPosition' | 'inlinePosition', value: number) {
+    const notUsedCriteria = findCriteria === 'blockPosition' ? 'inlinePosition' : 'blockPosition';
+
+    return this.tables().find(
+      (table) =>
+        table[findCriteria] === value &&
+        table[notUsedCriteria] === this.currentSelectedTable()?.[notUsedCriteria],
+    );
+  }
+
+  protected keyboardInteraction(event: KeyboardEvent) {
+    switch (event.key) {
+      case 'ArrowUp':
+        event.preventDefault();
+        this.focusNextTableButton('up');
+        break;
+      case 'ArrowDown':
+        event.preventDefault();
+        this.focusNextTableButton('down');
+        break;
+
+      case 'ArrowLeft':
+        event.preventDefault();
+        this.focusNextTableButton('left');
+        break;
+
+      case 'ArrowRight':
+        event.preventDefault();
+        this.focusNextTableButton('right');
+        break;
     }
   }
 }

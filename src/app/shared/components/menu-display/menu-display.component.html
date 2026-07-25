@@ -7,7 +7,7 @@
         [aria-selected]="selectedMenuId() === menuAvailable.id"
         (click)="getMenuItems(menuAvailable.id)"
       >
-        {{ menuAvailable.name }}
+        {{ menuAvailable.name | transloco}}
       </button>
     }
   </div>
@@ -16,7 +16,7 @@
   <p class="ingredients-incentive">Con los mejores ingredientes</p>
   @let currentMenu = menus[selectedMenuId() || ''];
   @if (currentMenu) {
-    <h2>{{ currentMenu.name }}</h2>
+    <h2>{{ currentMenu.name | transloco }}</h2>
     <p class="menu-subtitle">
       Todos nuestros platos se hacen bajo demanda para evitar desperdicios, garantizando la frescura
       y calidad.
@@ -29,7 +29,7 @@
             <img [ngSrc]="dish.images[0]" alt="" fill />
           </div>
           <div class="dish-description">
-            <h3>{{ dish.name }}</h3>
+            <h3>{{ dish.name | transloco}}</h3>
             <p class="dish-ingredients">
               {{ dish.ingredients.join(', ') }}
             </p>

@@ -14,18 +14,6 @@ article {
   display: block;
 }
 
-.new-order-button {
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
 .order-columns {
   display: grid;
   gap: 1rem;

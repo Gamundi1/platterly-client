@@ -27,6 +27,7 @@ import { HttpHandlerService } from '../../../shared/services/http-handler.servic
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
 import { MatIcon } from '@angular/material/icon';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 interface OrderItem {
   dish: Dish;
@@ -50,6 +51,7 @@ interface OrderItem {
     NgTemplateOutlet,
     MatIcon,
     AsyncPipe,
+    TranslocoPipe
   ],
 })
 export class CreateOrderPageComponent implements OnInit {

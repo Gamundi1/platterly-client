@@ -26,4 +26,30 @@
   --booking-status-text-color: #4a695b;
 }
 
+.order-status {
+  --order-status-background-color: var(--white-color);
+  --order-status-text-color: var(--black-color);
 
+  background-color: var(--order-status-background-color);
+  color: var(--order-status-text-color);
+}
+
+.order-status.delivered {
+  --order-status-background-color: var(--font-success-color);
+  --order-status-text-color: var(--white-color);
+}
+
+.order-status.in-progress {
+  --order-status-background-color: var(--warning-color);
+  --order-status-text-color: var(--white-color);
+}
+
+.order-status.ready {
+  --order-status-background-color: var(--info-color);
+  --order-status-text-color: var(--white-color);
+}
+
+.order-status.scheduled {
+  --order-status-background-color: var(--primary-color);
+  --order-status-text-color: var(--white-color);
+}

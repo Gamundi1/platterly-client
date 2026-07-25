@@ -20,6 +20,7 @@ import { Booking } from '../../interfaces/booking.interface';
 import { Table } from '../../interfaces/table.interface';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { DateTime } from 'luxon';
+import { CompleteAccountModalComponent } from '../../components/complete-account-modal/complete-account-modal.component';
 
 interface NewBookingFormInterface {
   guests: string;
@@ -140,7 +141,10 @@ export class NewBookingPageComponent {
     }
 
     if (!this.authService.getUserDetails()!.email) {
-      console.log('Usuario incompleto');
+      this.matDialog.open(CompleteAccountModalComponent, {
+        disableClose: true,
+        panelClass: 'complete-account',
+      });
       return;
     }
 
