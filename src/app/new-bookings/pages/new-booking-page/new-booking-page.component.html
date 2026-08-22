@@ -1,6 +1,9 @@
 <article class="new-booking-container">
   <h1>Reserva tu mesa</h1>
-  <h3>Por favor, completa toda la información para poder comenzar tu proceso de reserva</h3>
+  <h3>
+    Por favor, completa la información para poder comenzar tu proceso de reserva en nuestras
+    instalaciones
+  </h3>
 
   <section class="booking-details">
     <form class="booking-information" (submit)="onSubmitForm($event)">
@@ -69,9 +72,7 @@
         ></booking-table>
       </fieldset>
       <div class="submit-section-desktop">
-        <p>
-          Al confirmar la reserva aceptas nuestra politica de cancelación con 2 horas de antelación
-        </p>
+        <p>Por favor revisa todos los datos de la reserva antes de confirmar.</p>
         <button [disabled]="!bookingForm().valid()" type="submit">
           Confirmar reserva <fa-icon [icon]="faUtensils"></fa-icon>
           @if (loading()) {
@@ -91,7 +92,7 @@
     </div>
     <section class="booking-summary"></section>
     <div class="submit-section-mobile">
-      <p>Las reservas solo podrán cancelarse con 2 horas de antelación.</p>
+      <p>Por favor revisa todos los datos de la reserva antes de confirmar.</p>
       <button [disabled]="!bookingForm().valid()" (click)="onSubmitForm($event)">
         Confirmar reserva
         @if (loading()) {
