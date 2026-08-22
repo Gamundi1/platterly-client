@@ -1,0 +1,15 @@
+<section class="products-modal">
+  <ng-container [ngTemplateOutlet]="dish"></ng-container>
+</section>
+
+<ng-template #dish>
+  <div class="products-container">
+    @for (dish of dishes; track $index) {
+      <button class="dish-card">
+        <h3>{{ dish.name | transloco }}</h3>
+        <p>{{ dish.ingredients.join(', ') }}</p>
+        <p>{{ dish.price | currency: 'EUR' }}</p>
+      </button>
+    }
+  </div>
+</ng-template>

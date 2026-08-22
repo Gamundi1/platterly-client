@@ -1,0 +1,53 @@
+.ok-response {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--white-color);
+  padding-inline: 2rem;
+  padding-block: 2rem;
+  justify-content: flex-start;
+  gap: 0.6rem;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.icon-container {
+  block-size: 2rem;
+  align-content: center;
+  border-radius: 1rem;
+  background-color: #c5e7d6;
+  padding-inline: 0.6rem;
+
+  fa-icon {
+    color: oklch(from var(--secondary-color) 0.5 c h);
+  }
+}
+
+.booking,
+.home {
+  --link-background-color: transparent;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 0.6rem;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  background-color: var(--link-background-color);
+  border-radius: 1rem;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  min-block-size: 2rem;
+  inline-size: 100%;
+}
+.booking {
+  --link-background-color: #e3e2e0;
+  color: var(--black-color);
+  border: none;
+}
+
+.home {
+  margin-block-end: 2rem;
+}

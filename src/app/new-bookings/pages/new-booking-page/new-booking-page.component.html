@@ -1,8 +1,18 @@
 <article class="new-booking-container">
-  <h1>Reserva tu mesa</h1>
+  <h1>
+    @if (isHost()) {
+      Crear una reserva
+    } @else {
+      Reserva tu mesa
+    }
+  </h1>
   <h3>
-    Por favor, completa la información para poder comenzar tu proceso de reserva en nuestras
-    instalaciones
+    @if (isHost()) {
+      Completa la información para crear una reserva en nombre de un cliente.
+    } @else {
+      Por favor, completa la información para poder comenzar tu proceso de reserva en nuestras
+      instalaciones
+    }
   </h3>
 
   <section class="booking-details">
@@ -10,7 +20,7 @@
       <fieldset>
         <legend><fa-icon [icon]="faUsers"></fa-icon> Grupo y horario</legend>
         <div class="date-guest-selector">
-          <span class="title">Número de asistentes</span>
+          <span class="title">Selecciona el número de asistentes</span>
           <div id="guests-selector" role="radiogroup">
             @for (guest of guests | keyvalue; track guest.key) {
               <label for="guests-{{ guest.key }}">
@@ -26,7 +36,7 @@
               </label>
             }
           </div>
-          <span class="title">Fecha seleccionada</span>
+          <span class="title">Selecciona el día</span>
           <mat-form-field class="date-picker">
             <input
               matInput
@@ -39,7 +49,7 @@
           </mat-form-field>
         </div>
         <div class="hour-guest-selector">
-          <span class="title">Horarios disponibles</span>
+          <span class="title">Selecciona la hora</span>
           @let availableHours = availableHours$ | async;
           <div>
             @for (availableHour of availableHours; track availableHour.id; let i = $index) {
@@ -63,13 +73,16 @@
         </div>
       </fieldset>
       <fieldset>
-        <legend><fa-icon [icon]="faMap"></fa-icon> Mapa del restaurante</legend>
+        <legend><fa-icon [icon]="faMap"></fa-icon>Mapa del restaurante</legend>
+        @let availableTables = availableTables$ | async;
+        @if (availableTables && availableTables?.length > 0) {
         <booking-table
-          [tables]="availableTables()"
+          [tables]="availableTables"
           [guests]="+bookingForm().value().guests"
           [selectedHour]="bookingForm().value().availableHoursId"
           (selectedTable)="onTableSelected($event)"
         ></booking-table>
+        }
       </fieldset>
       <div class="submit-section-desktop">
         <p>Por favor revisa todos los datos de la reserva antes de confirmar.</p>

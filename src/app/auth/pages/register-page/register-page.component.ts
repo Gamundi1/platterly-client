@@ -69,8 +69,6 @@ export class RegisterPage implements OnInit {
           this.router.navigate(['/home']);
         });
     } else {
-      console.log('Form is invalid');
-      console.log('Errors:', this.registerForm().errors());
     }
   }
 

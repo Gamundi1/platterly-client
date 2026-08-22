@@ -18,6 +18,7 @@ import { BookingStatus } from '../../../shared/enums/booking-status.enum';
 import { getTableStatusText } from '../../../helpers/table-status';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorModalComponent } from '../../../shared/components/error-modal/error-modal.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'host-page',
@@ -29,6 +30,7 @@ import { ErrorModalComponent } from '../../../shared/components/error-modal/erro
     NgTemplateOutlet,
     NgTemplateOutlet,
     NgClass,
+    RouterLink
   ],
   templateUrl: './host-page.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,

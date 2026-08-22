@@ -1,15 +1,15 @@
 <header>
-  <button
-    class="pt-hidden-tablet pt-hidden-desktop sidenav-toggle"
-    (click)="toggleSideNav()"
-  >
+  <button class="pt-hidden-tablet pt-hidden-desktop sidenav-toggle" (click)="toggleSideNav()">
     <mat-icon class="menu-icon">menu</mat-icon>
   </button>
   <h1>Platterly</h1>
 
   <nav class="pt-hidden-mobile">
+    <ul></ul>
     @for (link of headerMapByRole(); track $index) {
-      <a [routerLink]="link.link" [routerLinkActive]="'active'">{{ link.label }}</a>
+      <li>
+        <a [routerLink]="link.link" routerLinkActive="active">{{ link.label }}</a>
+      </li>
     }
   </nav>
 

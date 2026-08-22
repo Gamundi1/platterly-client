@@ -1,36 +1,64 @@
 <section>
-  <h1>Modificar menú</h1>
+  <h1>Editor de cartas</h1>
 
   @let menus = allMenusAvailable$ | async;
 
   <form>
-    <select class="menu-select">
+    <fieldset>
+      <legend>Configuración del menú</legend>
+      <select class="menu-select" [formField]="modifyMenuForm.menuId">
         <option [value]=""></option>
-      @for (menu of menus; track menu.id) {
-        <option [value]="menu.id">{{ menu.name | transloco }}</option>
-      }
-    </select>
-    <div class="date-container">
-      <mat-form-field class="date-picker">
-        <input
-          matInput
-          [matDatepicker]="datePickerFrom"
-          [formField]="modifyMenuForm.availableFrom"
-        />
-        <mat-datepicker-toggle matSuffix [for]="datePickerFrom"></mat-datepicker-toggle>
-        <mat-datepicker #datePickerFrom></mat-datepicker>
-      </mat-form-field>
-
-      <mat-form-field class="date-picker">
-        <input
-          matInput
-          [min]="minDate"
-          [matDatepicker]="datePickerTo"
-          [formField]="modifyMenuForm.availableTo"
-        />
-        <mat-datepicker-toggle matSuffix [for]="datePickerTo"></mat-datepicker-toggle>
-        <mat-datepicker #datePickerTo></mat-datepicker>
-      </mat-form-field>
-    </div>
+        @for (menu of menus; track menu.id) {
+          <option [value]="menu.id">{{ menu.name | transloco }}</option>
+        }
+      </select>
+      <div class="date-container">
+        <mat-form-field class="date-picker">
+          <input
+            matInput
+            [matDatepicker]="datePickerFrom"
+            [formField]="modifyMenuForm.availableFrom"
+          />
+          <mat-datepicker-toggle matSuffix [for]="datePickerFrom"></mat-datepicker-toggle>
+          <mat-datepicker #datePickerFrom></mat-datepicker>
+        </mat-form-field>
+  
+        <mat-form-field class="date-picker">
+          <input
+            matInput
+            [min]="minDate"
+            [matDatepicker]="datePickerTo"
+            [formField]="modifyMenuForm.availableTo"
+          />
+          <mat-datepicker-toggle matSuffix [for]="datePickerTo"></mat-datepicker-toggle>
+          <mat-datepicker #datePickerTo></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </fieldset>
+    @if (menuInfo()) {
+      @let menu = menuInfo();
+      <fieldset class="dishes">
+        <legend>Platos</legend>
+        <button type="button" (click)="showAddDishModal()" class="add-button">Añadir plato</button>
+        @for (dish of menu?.products?.dishes; track dish.id) {
+          <div class="dish-card">
+            <h3>{{ dish.name | transloco }}</h3>
+            <p>{{ dish.ingredients.join(', ') }}</p>
+            <p>{{ dish.price | currency: 'EUR' }}</p>
+          </div>
+        }
+      </fieldset>
+      <fieldset class="drinks">
+        <legend>Bebidas</legend>
+        <button type="button" class="add-button">Añadir bebida</button>
+        @for (drink of menu?.products?.drinks; track drink.id) {
+          <div class="drink-card">
+            <h3>{{ drink.name | transloco }}</h3>
+            <p>{{ drink.price | currency: 'EUR' }}</p>
+          </div>
+        }
+      </fieldset>
+    }
+    <button type="submit" class="submit-button">Modificar menú</button>
   </form>
 </section>

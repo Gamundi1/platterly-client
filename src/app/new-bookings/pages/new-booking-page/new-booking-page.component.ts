@@ -1,5 +1,12 @@
 import { AsyncPipe, KeyValuePipe, NgOptimizedImage } from '@angular/common';
-import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { form, FormField, min, required } from '@angular/forms/signals';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -21,6 +28,8 @@ import { Table } from '../../interfaces/table.interface';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { DateTime } from 'luxon';
 import { CompleteAccountModalComponent } from '../../components/complete-account-modal/complete-account-modal.component';
+import { UserRole } from '../../../shared/interfaces/user.interface';
+import { BookingConfirmedHostComponent } from '../../components/booking-confirmed-host/booking-confirmed-host.component';
 
 interface NewBookingFormInterface {
   guests: string;
@@ -49,7 +58,7 @@ interface NewBookingFormInterface {
 })
 export class NewBookingPageComponent {
   protected availableHours$: Observable<AvailableHour[]>;
-  protected availableTables = signal<Table[]>([]);
+  protected availableTables$: Observable<Table[]>;
   protected guests: Record<number, string> = {
     1: '1',
     2: '2',
@@ -91,6 +100,10 @@ export class NewBookingPageComponent {
   protected booking = signal({});
   protected minDate = new Date();
   protected loading = signal(false);
+  protected isHost = computed(() => {
+    this.authService.getUserDetails();
+    return this.authService.hasAnyRole([UserRole.HOST]);
+  });
 
   constructor() {
     this.availableHours$ = this.httpHandlerService
@@ -106,15 +119,12 @@ export class NewBookingPageComponent {
         ),
       );
 
-    effect(() => {
-      this.httpHandlerService
-        .getRequest<Table[]>(UrlProvider.getAvailableTables, {
-          date: this.bookingForm.date().value().toISODate()!.slice(0, 10),
-        })
-        .subscribe((tables) => {
-          this.availableTables.set(tables);
-        });
-    });
+    this.availableTables$ = this.httpHandlerService.getRequest<Table[]>(
+      UrlProvider.getAvailableTables,
+      {
+        date: this.bookingForm.date().value().toISODate()!.slice(0, 10),
+      },
+    );
   }
 
   onTableSelected(tableNumber: number): void {
@@ -161,13 +171,20 @@ export class NewBookingPageComponent {
       .subscribe((booking: Booking) => {
         this.booking.set(booking);
         this.loading.set(false);
-        this.matDialog.open(BookingConfirmedComponent, {
-          data: {
-            booking,
-          },
-          panelClass: 'fullscreen',
-          disableClose: true,
-        });
+        if (!this.isHost()) {
+          this.matDialog.open(BookingConfirmedComponent, {
+            data: {
+              booking,
+            },
+            panelClass: 'fullscreen',
+            disableClose: true,
+          });
+        } else {
+          this.matDialog.open(BookingConfirmedHostComponent, {
+            panelClass: 'fullscreen',
+            disableClose: true,
+          });
+        }
       });
   }
 }

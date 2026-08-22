@@ -75,7 +75,6 @@ export class OrderManagementDirective implements OnInit {
 
   private listenToOrdersCreated() {
     this.socketService.onOrderCreated().subscribe((newOrder) => {
-      console.log('New order received:', newOrder);
       this.orders.update((orders) => [...orders, newOrder]);
     });
   }

@@ -1,0 +1,26 @@
+@use 'index.scss' as *;
+
+.products-modal {
+  --product-display-max-block-size: 300px;
+  padding-block: 2rem;
+  padding-inline: 2rem;
+}
+
+.products-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-block-size: var(--product-display-max-block-size);
+  overflow-y: auto;
+  max-inline-size: 30rem;
+}
+
+.dish-card,
+.drink-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  border: none;
+  background-color: var(--color-white);
+  cursor: pointer;
+}

@@ -95,9 +95,20 @@ export class HeaderComponent {
             label: 'Ver reservas',
           },
           {
-            link: '/enterprise/host/create-booking',
+            link: '/bookings',
             label: 'Crear reserva',
           },
+        ];
+      case UserRole.ADMIN:
+        return [
+          {
+            link: '/home',
+            label: 'Inicio',
+          },
+          {
+            link: '/enterprise/admin',
+            label: 'Panel de administración',
+          }
         ];
       default:
         return [

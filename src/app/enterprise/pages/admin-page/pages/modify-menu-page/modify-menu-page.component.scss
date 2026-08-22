@@ -23,6 +23,7 @@ select {
   block-size: 3rem;
   font-size: var(--font-content-size);
   padding-inline: 0.5rem;
+  margin-block-end: 1rem;
 }
 
 .date-container {
@@ -42,4 +43,68 @@ select {
   & mat-form-field {
     inline-size: var(--dates-input-size);
   }
+}
+
+.dishes, .drinks {
+  border: 2px solid var(--black-color);
+  max-block-size: 20rem;
+  overflow-y: auto;
+  border-radius: 0.5rem;
+  padding-inline: 0.5rem;
+}
+
+.drinks {
+  margin-block-start: 1rem;
+}
+
+legend {
+  font-size: var(--font-content-size);
+  font-weight: 600;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  border: 1.5px solid #7e7e7e;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #f1f1f1;
+  border: 2px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.dish-card, .drink-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  background-color: var(--color-white);
+}
+
+.add-button {
+  background-color: transparent;
+}
+
+.submit-button {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: var(--font-content-size);
+  cursor: pointer;
+  margin-block-start: 1rem;
+}
+
+.add-button {
+  inline-size: 100%;
+  border: none;
+  border-block-end: 1px solid var(--black-color);
+  cursor: pointer;
 }

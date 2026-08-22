@@ -76,7 +76,7 @@ export class LoginComponent implements OnDestroy {
   }
 
   private manageLoginError(errorCode: string) {
-    if (errorCode === 'INVALID_CREDENTIALS' || errorCode === 'USER_NOT_FOUND') {
+    if (errorCode === 'INVALID_CREDENTIALS') {
       this.invalidCredentials.set(true);
     }
   }

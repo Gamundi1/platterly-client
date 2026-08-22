@@ -1,8 +1,8 @@
 <article>
   <header>
     <div>
-      <h4>Resumen de tu reserva</h4>
-      <h1>Mesa {{ booking()?.table?.number }}</h1>
+      <h1>Resumen de tu reserva</h1>
+      <h2>Mesa {{ booking()?.table?.number }}</h2>
       <div class="status" [ngClass]="getBookingStatusColor()">
         <div class="dot"></div>
         <span>{{ getBookingStatusText() }}</span>
@@ -31,7 +31,7 @@
       </div>
     </div>
     <div class="booking-info">
-      <h2>Historial de pedidos</h2>
+      <h3>Historial de pedidos</h3>
       <div class="orders">
         @for (order of orders(); track order.id) {
           <order-card [order]="order"></order-card>

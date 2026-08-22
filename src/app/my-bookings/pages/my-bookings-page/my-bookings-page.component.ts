@@ -27,7 +27,6 @@ export class MyBookingsPage {
   protected userComingBookings$: Subject<Booking[]> = new Subject<Booking[]>();
   protected userPastBookings$: Subject<Booking[]> = new Subject<Booking[]>();
 
-  protected readonly faChair = faChair;
   protected readonly faCircleXMark = faCircleXmark;
   protected readonly faUserPlus = faUserPlus;
   protected readonly faClose = faXmark;
@@ -73,11 +72,8 @@ export class MyBookingsPage {
           });
 
           const pastBookings = bookings.filter((booking) => {
-            const bookingDate = booking.date;
-
             if (
-              (isDateAfterOrBefore(bookingDate, booking.hour) === TimeInterval.BEFORE &&
-                booking.status !== BookingStatus.ACTIVE) ||
+              booking.status === BookingStatus.COMPLETED ||
               booking.status === BookingStatus.CANCELLED
             ) {
               return true;
