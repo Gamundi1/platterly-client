@@ -76,7 +76,7 @@ section {
     outline-offset: 4px;
   }
 
-  &[disabled] {
+  &[aria-disabled='true'] {
     background-color: var(--secondary-color);
     cursor: not-allowed;
   }

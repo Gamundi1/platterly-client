@@ -5,7 +5,7 @@
   <div class="register-form">
     <div class="register-form-header">
       <span>Únete a nuestra comunidad</span>
-      <h1>Regístrate en Platterly</h1>
+      <h1 tabindex="-1">Regístrate en Platterly</h1>
       <p>Rellena el formulario para registrate y poder aprovechar todas nuestras ventajas</p>
     </div>
     <form (submit)="registerUser($event)">
@@ -34,7 +34,7 @@
         label="Contraseña"
         type="password"
         [field]="registerForm.password"
-        errorMessage="por favor introduce una contraseña válida (mínimo 8 caracteres)"
+        errorMessage="por favor introduce una contraseña válida (mínimo 12 caracteres)"
       ></shared-input>
       <div class="register-form-footer">
         <button type="submit">Crear cuenta</button>

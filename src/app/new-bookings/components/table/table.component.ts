@@ -2,12 +2,12 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   ElementRef,
   input,
   OnChanges,
   output,
   signal,
-  viewChild,
   viewChildren,
 } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -24,17 +24,24 @@ import { Table } from '../../interfaces/table.interface';
     '(keydown)': 'keyboardInteraction($event)',
   },
 })
-export class TableComponent implements OnChanges {
+export class TableComponent {
   public tables = input.required<Table[]>();
   public guests = input.required<number>();
   public selectedHour = input.required<string>();
   public selectedTable = output<number>();
 
   currentSelectedTable = signal<Table | null>(null);
+  focusedTable = signal<Table | null>(null);
 
   protected faToilet = faRestroom;
   protected faKitchen = faKitchenSet;
   protected faUser = faUser;
+
+  constructor() {
+    effect(() => {
+      this.verifyCurrentTableAvailability(this.selectedHour(), this.tables());
+    });
+  }
 
   protected readonly minInlinePosition = computed(() => {
     const tables = this.tables();
@@ -79,23 +86,17 @@ export class TableComponent implements OnChanges {
   }
 
   protected isTableAvailable(table: Table): boolean {
-    return table.capacity! >= this.guests() && table.availableHours!.includes(this.selectedHour());
+    return table.capacity >= this.guests() && table.availableHours.includes(this.selectedHour());
   }
 
   protected onTableClick(table: Table): void {
+    this.focusedTable.set(table);
     this.currentSelectedTable.set(table);
     this.selectedTable.emit(table.number);
   }
 
-  ngOnChanges(): void {
-    if (this.currentSelectedTable() && !this.isTableAvailable(this.currentSelectedTable()!)) {
-      this.currentSelectedTable.set(null);
-      this.selectedTable.emit(0);
-    }
-  }
-
   private focusNextTableButton(direction: 'up' | 'down' | 'left' | 'right') {
-    const currentTable = this.currentSelectedTable();
+    const currentTable = this.focusedTable();
     let nextTable: Table | undefined;
     const blockPosition = currentTable?.blockPosition || 0;
     const inlinePosition = currentTable?.inlinePosition || 0;
@@ -124,7 +125,7 @@ export class TableComponent implements OnChanges {
       (btn) => btn.nativeElement.getAttribute('data-tn') === table?.number.toString(),
     );
     tableButton?.nativeElement.focus();
-    this.currentSelectedTable.set(table);
+    this.focusedTable.set(table);
   }
 
   private findNextAvailableTable(findCriteria: 'blockPosition' | 'inlinePosition', value: number) {
@@ -133,8 +134,21 @@ export class TableComponent implements OnChanges {
     return this.tables().find(
       (table) =>
         table[findCriteria] === value &&
-        table[notUsedCriteria] === this.currentSelectedTable()?.[notUsedCriteria],
+        table[notUsedCriteria] === this.focusedTable()?.[notUsedCriteria],
     );
+  }
+
+  private verifyCurrentTableAvailability(selectedHour: string, tables: Table[]) {
+    if (!this.currentSelectedTable()) return;
+    const newTable = tables.find((table) => table.number === this.currentSelectedTable()!.number);
+
+    if (!newTable || !this.isTableAvailable(newTable) || !selectedHour) {
+      this.currentSelectedTable.set(null);
+      this.selectedTable.emit(0);
+      return;
+    }
+
+    this.currentSelectedTable.set(newTable);
   }
 
   protected keyboardInteraction(event: KeyboardEvent) {

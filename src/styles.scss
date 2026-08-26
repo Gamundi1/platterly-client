@@ -55,6 +55,7 @@ body {
   margin-inline: auto;
   font-family: 'Manrope';
   padding-inline: 1.5rem;
+  overflow-x: clip;
 }
 
 .pt-hidden-mobile {
@@ -74,3 +75,4 @@ body {
     display: none !important;
   }
 }
+

@@ -1,51 +1,73 @@
 @use 'index.scss' as *;
 
 :host {
-  display: flex;
   inline-size: 100%;
-  align-items: center;
-  justify-content: center;
 }
 
 section {
+  --configuration-flex-direction: column;
+  --configuration-padding: 0.625rem;
+  --configuration-content-gap: 1rem;
+  --configuration-legend-margin-block-end: 1.5rem;
+
+  @include medium-breakpoint {
+    --configuration-flex-direction: row;
+    --configuration-padding: 3rem;
+    --configuration-content-gap: 1.625rem;
+    --configuration-legend-margin-block-end: 2.25rem;
+  }
+
   font-family: 'Manrope';
-  padding-inline: 1rem;
   inline-size: 100%;
-  max-inline-size: 40rem;
+  max-inline-size: 52rem;
+  margin-inline: auto;
+}
+
+header {
+  display: grid;
+  margin-block: 2rem;
+  grid-template-columns: 1fr 7rem;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    'p button'
+    'h1 button';
+}
+
+p {
+  font-size: var(--font-small-size);
+  text-transform: uppercase;
+  color: var(--font-primary-color);
+  grid-area: p;
 }
 
 h1 {
   font-size: var(--font-title-size);
+  font-weight: normal;
+  margin-block: 0;
+  line-height: 1;
+  grid-area: h1;
+}
+
+button {
+  grid-area: button;
+  align-self: flex-end;
+  block-size: 2.5rem;
+  border: none;
+  border-radius: 1.2rem;
+  color: var(--white-color);
+  background-color: var(--primary-color);
 }
 
 select {
-  inline-size: 100%;
   block-size: 3rem;
   font-size: var(--font-content-size);
-  padding-inline: 0.5rem;
-  margin-block-end: 1rem;
+  padding-inline: 1rem;
+  border-radius: 1rem;
+  border: none;
 }
 
-.date-container {
-  --dates-input-size: 100%;
-  --date-flex-direction: column;
-
-  @include medium-breakpoint {
-    --dates-input-size: 50%;
-    --date-flex-direction: row;
-  }
-
-  gap: 1rem;
-  inline-size: 100%;
-  display: flex;
-  flex-direction: var(--date-flex-direction);
-
-  & mat-form-field {
-    inline-size: var(--dates-input-size);
-  }
-}
-
-.dishes, .drinks {
+.dishes,
+.drinks {
   border: 2px solid var(--black-color);
   max-block-size: 20rem;
   overflow-y: auto;
@@ -57,54 +79,61 @@ select {
   margin-block-start: 1rem;
 }
 
-legend {
-  font-size: var(--font-content-size);
-  font-weight: 600;
-}
-
-::-webkit-scrollbar {
-  width: 12px;
-}
-
-::-webkit-scrollbar-track {
-  background-color: transparent;
-  border: 1.5px solid #7e7e7e;
-  border-radius: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #f1f1f1;
-  border: 2px solid var(--primary-color);
-  border-radius: 8px;
-}
-
-.dish-card, .drink-card {
+.menu-configuration {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  background-color: var(--gray-color);
+  padding: var(--configuration-padding);
+  border: none;
+  border-radius: 1rem;
+}
+
+.menu-configuration-content {
+  display: flex;
+  flex-direction: var(--configuration-flex-direction);
+  gap: var(--configuration-content-gap);
+}
+
+.input-field {
+  display: flex;
+  flex-direction: column;
   gap: 0.5rem;
-  padding: 0.5rem;
-  border-radius: var(--border-radius);
-  background-color: var(--color-white);
-}
-
-.add-button {
-  background-color: transparent;
-}
-
-.submit-button {
-  background-color: var(--primary-color);
-  color: var(--white-color);
-  border: none;
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
-  font-size: var(--font-content-size);
-  cursor: pointer;
-  margin-block-start: 1rem;
-}
-
-.add-button {
   inline-size: 100%;
-  border: none;
-  border-block-end: 1px solid var(--black-color);
-  cursor: pointer;
+
+  & label {
+    text-transform: uppercase;
+    color: var(--font-primary-color);
+    font-size: var(--font-small-size);
+  }
+
+  & .input {
+    block-size: 3rem;
+  }
+
+  & .date-picker {
+    inline-size: 100%;
+  }
+}
+
+legend {
+  font-size: var(--font-subtitle-size);
+  font-weight: 600;
+  float: left;
+  inline-size: 100%;
+  margin-block-end: var(--configuration-legend-margin-block-end);
+}
+
+::ng-deep .date-picker {
+  align-self: flex-start;
+
+  .mat-mdc-text-field-wrapper {
+    block-size: 3rem;
+  }
+
+  .mdc-text-field--filled {
+    border-radius: 1rem;
+  }
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
 }

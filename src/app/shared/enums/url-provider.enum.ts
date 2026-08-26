@@ -19,6 +19,7 @@ export const UrlProvider = {
   getAllMenus: '/v1/menu/all',
   getAllAvailableMenus: '/v1/menu/available',
   getMenu: '/v1/menu/info/${menuId}',
+  modifyMenu: '/v1/menu/modify',
   postOrder: '/v1/order/create/${bookingId}',
   getOrdersByBookingId: '/v1/order/booking/${bookingId}',
   getOrdersByDate: '/v1/order/date/${date}',

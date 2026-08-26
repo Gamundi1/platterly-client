@@ -1,11 +1,10 @@
 import { AsyncPipe, DatePipe, NgClass, NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, TemplateRef, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
-import { faArrowRight, faChair, faUserPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faUserPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { map, Subject } from 'rxjs';
 import { getBookingStatusColor, getBookingStatusText } from '../../../helpers/booking-status';
 import { isDateAfterOrBefore } from '../../../helpers/date.helper';
@@ -17,7 +16,7 @@ import { HttpHandlerService } from '../../../shared/services/http-handler.servic
 import { InvitationComponent } from '../../components/invitation/invitation.component';
 
 @Component({
-  imports: [AsyncPipe, NgTemplateOutlet, DatePipe, NgClass, MatExpansionModule, FaIconComponent],
+  imports: [AsyncPipe, NgTemplateOutlet, DatePipe, NgClass, FaIconComponent],
   templateUrl: './my-bookings-page.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './my-bookings-page.component.scss',

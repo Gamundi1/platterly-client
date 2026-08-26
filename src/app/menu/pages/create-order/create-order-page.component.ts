@@ -92,7 +92,10 @@ export class CreateOrderPageComponent implements OnInit {
       .pipe(
         catchError((error) => {
           this.matDialog.open(ErrorModalComponent, {
-            data: this.getErrorMessage(error.error.code),
+            data: {
+              title: error.error.label,
+              message: error.error.message,
+            },
           });
           throw error;
         }),
@@ -176,27 +179,5 @@ export class CreateOrderPageComponent implements OnInit {
 
   protected viewCart(): void {
     this.matDialog.open(this.cartModal()!);
-  }
-
-  private getErrorMessage(errorCode: string): { title: string; message: string } {
-    switch (errorCode) {
-      case 'BOOKING_NOT_FOUND':
-        return {
-          title: 'Reserva no encontrada',
-          message: 'No se ha podido encontrar la reserva para la que quieres crear el pedido.',
-        };
-      case 'USER_NOT_IN_BOOKING':
-        return {
-          title: 'No eres parte de esta reserva',
-          message:
-            'Lo sentimos, no puedes acceder a los detalles de esta reserva porque no formas parte de la misma.',
-        };
-      default:
-        return {
-          title: 'Error al crear el pedido',
-          message:
-            'Ha ocurrido un error al intentar crear el pedido. Por favor, inténtalo de nuevo más tarde.',
-        };
-    }
   }
 }

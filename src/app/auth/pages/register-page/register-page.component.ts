@@ -35,7 +35,7 @@ export class RegisterPage implements OnInit {
     required(model.surname);
     required(model.email);
     required(model.password);
-    minLength(model.password, 8);
+    minLength(model.password, 12);
     disabled(model.name, { when: () => this.authService.getUserDetails()?.name !== undefined });
   });
 
@@ -60,7 +60,7 @@ export class RegisterPage implements OnInit {
       this.authService
         .register(user)
         .pipe(
-          catchError((error) => {
+          catchError(() => {
             this.showErrorModal();
             return [];
           }),

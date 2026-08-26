@@ -8,7 +8,11 @@ import { HttpHandlerService } from '../../../../../shared/services/http-handler.
 export class ProductsService {
   private readonly httpHandlerService = inject(HttpHandlerService);
 
-  getAllAvailableDish(): Observable<Dish[]> {
+  getAllAvailableDishes(): Observable<Dish[]> {
     return this.httpHandlerService.getRequest(UrlProvider.getDishes);
+  }
+
+  getAllAvailabledrinks(): Observable<Dish[]> {
+    return this.httpHandlerService.getRequest(UrlProvider.getDrinks);
   }
 }

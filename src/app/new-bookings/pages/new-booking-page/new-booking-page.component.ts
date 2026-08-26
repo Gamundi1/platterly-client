@@ -16,7 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faCalendar, faClock, faCompass, faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faCheck, faCircleCheck, faUsers, faUtensils } from '@fortawesome/free-solid-svg-icons';
-import { map, Observable } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
 import { AuthService } from '../../../auth/services/auth.service';
 import { UrlProvider } from '../../../shared/enums/url-provider.enum';
 import { HttpHandlerService } from '../../../shared/services/http-handler.service';
@@ -30,6 +30,7 @@ import { DateTime } from 'luxon';
 import { CompleteAccountModalComponent } from '../../components/complete-account-modal/complete-account-modal.component';
 import { UserRole } from '../../../shared/interfaces/user.interface';
 import { BookingConfirmedHostComponent } from '../../components/booking-confirmed-host/booking-confirmed-host.component';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 interface NewBookingFormInterface {
   guests: string;
@@ -119,11 +120,14 @@ export class NewBookingPageComponent {
         ),
       );
 
-    this.availableTables$ = this.httpHandlerService.getRequest<Table[]>(
-      UrlProvider.getAvailableTables,
-      {
-        date: this.bookingForm.date().value().toISODate()!.slice(0, 10),
-      },
+    this.availableTables$ = toObservable(
+      computed(() => this.bookingForm().value().date),
+    ).pipe(
+      switchMap((date) =>
+        this.httpHandlerService.getRequest<Table[]>(UrlProvider.getAvailableTables, {
+          date: date.toISODate()!.slice(0, 10),
+        }),
+      ),
     );
   }
 

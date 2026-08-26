@@ -18,12 +18,14 @@
 
   .hero-content {
     --hero-content-align-items: flex-start;
+    --hero-content-inset-block-start: 5rem;
 
     @include medium-breakpoint {
       --hero-content-align-items: center;
+      --hero-content-inset-block-start: 15rem;
     }
 
-    inset-block-start: 15rem;
+    inset-block-start: var(--hero-content-inset-block-start);
     inset-inline-start: 50%;
     transform: translateX(-50%);
     inline-size: 100%;
@@ -181,4 +183,11 @@ h2 {
     font-weight: bold;
     color: var(--primary-color);
   }
+}
+
+.check-bookings {
+  background-color: var(--black-color);
+  block-size: 20rem;
+  inline-size: 100dvw;
+  margin-inline-start: calc(50% - 50dvw);
 }

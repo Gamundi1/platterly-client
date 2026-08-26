@@ -1,0 +1,26 @@
+<fieldset>
+  <legend id="dishes-list-legend">
+    <span class="title">Selección de platos</span>
+    <span class="quantity">{{ dishes()?.length ?? 0 }} platos</span>
+  </legend>
+  <section class="dishes-list" aria-labelledby="dishes-list-legend">
+    @for (dish of dishes(); track dish.id) {
+      <div
+        tabindex="0"
+        class="dish"
+        aria-label="plato de {{ dish.name | transloco }}"
+        (click)="deleteDish(dish.id)"
+      >
+        @let image = dish.images[0] ?? '/assets/images/placeholder.png';
+        <div class="image-container">
+          <img [ngSrc]="image" [alt]="dish.name" fill />
+        </div>
+        <div class="dish-info">
+          <span class="name">{{ dish.name | transloco }}</span>
+          <span class="ingredients">{{ dish.ingredients | translateArray }}</span>
+        </div>
+      </div>
+    }
+  </section>
+  <button type="button" (click)="openAddProductModal()">add new dish</button>
+</fieldset>
