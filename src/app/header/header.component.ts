@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+  signal,
+  viewChildren,
+} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
@@ -17,6 +24,9 @@ import { CdkTrapFocus } from '@angular/cdk/a11y';
 export class HeaderComponent {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly links = viewChildren<ElementRef>('link');
+
+  protected readonly focusedIndex = signal(0);
 
   protected sideNavOpen = signal<boolean>(false);
 
@@ -95,8 +105,19 @@ export class HeaderComponent {
             label: 'Ver reservas',
           },
           {
-            link: '/enterprise/host/create-booking',
+            link: '/bookings',
             label: 'Crear reserva',
+          },
+        ];
+      case UserRole.ADMIN:
+        return [
+          {
+            link: '/home',
+            label: 'Inicio',
+          },
+          {
+            link: '/enterprise/admin',
+            label: 'Panel de administración',
           },
         ];
       default:
@@ -131,5 +152,36 @@ export class HeaderComponent {
 
   protected disableBackgroundScroll() {
     document.body.style.overflow = 'hidden';
+  }
+
+  protected manageKeyboardNavigation(event: KeyboardEvent) {
+    if (!this.links().length) {
+      return;
+    }
+
+    let nextIndex = this.focusedIndex();
+
+    switch (event.key) {
+      case 'ArrowRight':
+        nextIndex = (nextIndex + 1) % this.links().length;
+        break;
+
+      case 'ArrowLeft':
+        nextIndex = (nextIndex - 1 + this.links().length) % this.links().length;
+        break;
+
+      case 'Home':
+        event.preventDefault();
+        nextIndex = 0;
+        break;
+
+      case 'End':
+        event.preventDefault();
+        nextIndex = this.links().length - 1;
+        break;
+    }
+
+    this.focusedIndex.set(nextIndex);
+    this.links()[nextIndex].nativeElement.focus();
   }
 }

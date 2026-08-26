@@ -1,16 +1,26 @@
 <header>
-  <button
-    class="pt-hidden-tablet pt-hidden-desktop sidenav-toggle"
-    (click)="toggleSideNav()"
-  >
+  <button class="pt-hidden-tablet pt-hidden-desktop sidenav-toggle" (click)="toggleSideNav()">
     <mat-icon class="menu-icon">menu</mat-icon>
   </button>
   <h1>Platterly</h1>
 
-  <nav class="pt-hidden-mobile">
-    @for (link of headerMapByRole(); track $index) {
-      <a [routerLink]="link.link" [routerLinkActive]="'active'">{{ link.label }}</a>
-    }
+  <nav class="pt-hidden-mobile" aria-label="Navegación principal">
+    <ul role="menubar" (keydown)="manageKeyboardNavigation($event)">
+      @for (link of headerMapByRole(); track $index) {
+        <li role="none">
+          <a
+            #link
+            role="menuitem"
+            [routerLink]="link.link"
+            routerLinkActive="active"
+            #isActiveRoute="routerLinkActive"
+            [attr.aria-current]="isActiveRoute.isActive ? 'page' : null"
+            [tabIndex]="focusedIndex() === $index ? 0 : -1"
+            >{{ link.label }}</a
+          >
+        </li>
+      }
+    </ul>
   </nav>
 
   @if (!userDetails()) {
@@ -48,20 +58,24 @@
       <mat-icon>close</mat-icon>
     </button>
 
-    <nav class="mobile-nav">
-      <a routerLink="/home" (click)="closeSideNav()" [routerLinkActive]="'active'">Inicio</a>
-      <a routerLink="/menu" (click)="closeSideNav()" [routerLinkActive]="'active'"
-        >Nuestras Cartas</a
-      >
-      <a routerLink="/bookings" (click)="closeSideNav()" [routerLinkActive]="'active'"
-        >Reservar Mesa</a
-      >
-
-      @if (userDetails()) {
-        <a routerLink="/my-bookings" (click)="closeSideNav()" [routerLinkActive]="'active'">
-          Mis Reservas
-        </a>
-      }
+    <nav class="pt-hidden-mobile" aria-label="Navegación principal" class="mobile-nav">
+      <ul role="menubar" (keydown)="manageKeyboardNavigation($event)">
+        @for (link of headerMapByRole(); track $index) {
+          <li role="none">
+            <a
+              #link
+              role="menuitem"
+              [routerLink]="link.link"
+              routerLinkActive="active"
+              #isActiveRoute="routerLinkActive"
+              (click)="closeSideNav()"
+              [attr.aria-current]="isActiveRoute.isActive ? 'page' : null"
+              [tabIndex]="focusedIndex() === $index ? 0 : -1"
+              >{{ link.label }}</a
+            >
+          </li>
+        }
+      </ul>
     </nav>
 
     <div class="mobile-auth">

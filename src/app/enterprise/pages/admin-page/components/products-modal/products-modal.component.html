@@ -1,0 +1,32 @@
+<section class="products-modal">
+  <header>
+    <h2>Selecciona los productos</h2>
+    <p>Selecciona los productos que quieres añadir al menú</p>
+  </header>
+  <ng-container [ngTemplateOutlet]="dish"></ng-container>
+  <footer>
+    <button class="save" mat-button (click)="emitSelectedProducts()">Guardar</button>
+    <button class="cancel" mat-button mat-dialog-close>Cancelar</button>
+  </footer>
+</section>
+
+<ng-template #dish>
+  <div class="products-container">
+    @for (dish of dishes; track $index) {
+      @let isSelected = selectedProducts().some((product) => product.id === dish.id);
+      <div class="dish-card">
+        <button
+          class="toggle-dish"
+          [attr.aria-selected]="isSelected"
+          [attr.aria-label]="isSelected ? 'Quitar del menú' : 'Añadir al menú'"
+          (click)="toggleProductSelection(dish)"
+        ></button>
+        <div class="dish-info">
+          <h3>{{ dish.name | transloco }}</h3>
+          <p>{{ dish.ingredients | translateArray }}</p>
+        </div>
+        <p>{{ dish.price | currency: 'EUR' }}</p>
+      </div>
+    }
+  </div>
+</ng-template>

@@ -1,0 +1,20 @@
+<fieldset>
+  <legend id="drinks-list-legend">
+    <span class="title">Bebidas</span>
+  </legend>
+  <section class="drinks-list" aria-labelledby="drinks-list-legend">
+    @for (drink of drinks(); track drink.id) {
+      <div
+        tabindex="0"
+        class="drink"
+        aria-label="plato de {{ drink.name | transloco }}"
+        (click)="deleteDrink(drink.id)"
+      >
+        <div class="drink-info">
+          <span class="name">{{ drink.name | transloco }}</span>
+        </div>
+      </div>
+    }
+  </section>
+  <button type="button" (click)="openAddProductModal()">add new drink</button>
+</fieldset>

@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
+import { afterNextRender, ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
-import { NavigationStart, Router, RouterOutlet } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 import { AuthService } from './auth/services/auth.service';
 import { HeaderComponent } from './header/header.component';
@@ -24,10 +24,19 @@ export class App {
     this.router.events.pipe(filter((event) => event instanceof NavigationStart)).subscribe(() => {
       this.dialog.closeAll();
     });
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
+      this.focusPageTitle();
+    });
     this.socketService.connect();
 
     effect(() => {
       this.authService.getUserDetails();
     });
+  }
+
+  private focusPageTitle(): void {
+    const title = document.querySelector<HTMLElement>('h1');
+
+    title?.focus();
   }
 }

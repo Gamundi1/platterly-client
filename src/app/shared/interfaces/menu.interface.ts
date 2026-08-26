@@ -1,3 +1,10 @@
+export interface MenuType {
+  id: string;
+  name: string;
+  availableFrom: Date;
+  availableTo: Date;
+}
+
 export interface Menu {
   id: string;
   name: string;

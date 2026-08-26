@@ -1,20 +1,21 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   inject,
   input,
   OnInit,
   output,
   signal,
-  ChangeDetectionStrategy,
 } from '@angular/core';
-import { UrlProvider } from '../../enums/url-provider.enum';
-import { HttpHandlerService } from '../../services/http-handler.service';
-import { Dish, Menu } from '../../interfaces/menu.interface';
-import { AsyncPipe, CurrencyPipe, NgOptimizedImage } from '@angular/common';
-import { map, Observable } from 'rxjs';
-import { AllergenIconComponent } from '../allergen-icon/allergen-icon.component';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { map, Observable } from 'rxjs';
+import { UrlProvider } from '../../enums/url-provider.enum';
+import { Dish, Menu } from '../../interfaces/menu.interface';
+import { HttpHandlerService } from '../../services/http-handler.service';
+import { AllergenIconComponent } from '../allergen-icon/allergen-icon.component';
+import { TranslateArrayPipe } from "../../pipes/translate-array.pipe";
 
 interface MenuAside {
   name: string;
@@ -26,7 +27,7 @@ interface MenuAside {
   templateUrl: './menu-display.component.html',
   styleUrl: './menu-display.component.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
-  imports: [NgOptimizedImage, CurrencyPipe, AllergenIconComponent, TranslocoPipe],
+  imports: [NgOptimizedImage, CurrencyPipe, AllergenIconComponent, TranslocoPipe, TranslateArrayPipe],
 })
 export class MenuDisplayComponent implements OnInit {
   protected readonly httpHandlerService = inject(HttpHandlerService);

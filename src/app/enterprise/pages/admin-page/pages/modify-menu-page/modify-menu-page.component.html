@@ -1,36 +1,57 @@
 <section>
-  <h1>Modificar menú</h1>
-
-  @let menus = allMenusAvailable$ | async;
+  <header>
+    <p>administrar menú</p>
+    <h1>Editar carta</h1>
+    <button (click)="saveMenu()">Guardar</button>
+  </header>
 
   <form>
-    <select class="menu-select">
-        <option [value]=""></option>
-      @for (menu of menus; track menu.id) {
-        <option [value]="menu.id">{{ menu.name | transloco }}</option>
-      }
-    </select>
-    <div class="date-container">
-      <mat-form-field class="date-picker">
-        <input
-          matInput
-          [matDatepicker]="datePickerFrom"
-          [formField]="modifyMenuForm.availableFrom"
-        />
-        <mat-datepicker-toggle matSuffix [for]="datePickerFrom"></mat-datepicker-toggle>
-        <mat-datepicker #datePickerFrom></mat-datepicker>
-      </mat-form-field>
+    <fieldset class="menu-configuration">
+      <legend>Configuración del menú</legend>
+      <div class="menu-configuration-content">
+        <div class="input-field">
+          <label for="name">selección de menú</label>
+          <select id="name" class="menu-select" [formField]="modifyMenuForm.menuId">
+            @for (menu of availableMenus(); track menu.id) {
+              <option [value]="menu.id">{{ menu.name | transloco }}</option>
+            }
+          </select>
+        </div>
+        <div class="input-field">
+          <label for="from">disponibilidad (inicio)</label>
+          <mat-form-field class="date-picker">
+            <input
+              id="from"
+              matInput
+              [matDatepicker]="datePickerFrom"
+              [formField]="modifyMenuForm.availableFrom"
+            />
+            <mat-datepicker-toggle matSuffix [for]="datePickerFrom"></mat-datepicker-toggle>
+            <mat-datepicker #datePickerFrom></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="input-field">
+          <label for="to">disponibilidad (fin)</label>
+          <mat-form-field class="date-picker">
+            <input
+              id="to"
+              matInput
+              [min]="minDate"
+              [matDatepicker]="datePickerTo"
+              [formField]="modifyMenuForm.availableTo"
+            />
+            <mat-datepicker-toggle matSuffix [for]="datePickerTo"></mat-datepicker-toggle>
+            <mat-datepicker #datePickerTo></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+    </fieldset>
+    @if (menuInfo()?.products?.dishes) {
+      <dishes-list [(dishes)]="menuInfo()!.products.dishes"></dishes-list>
+    }
 
-      <mat-form-field class="date-picker">
-        <input
-          matInput
-          [min]="minDate"
-          [matDatepicker]="datePickerTo"
-          [formField]="modifyMenuForm.availableTo"
-        />
-        <mat-datepicker-toggle matSuffix [for]="datePickerTo"></mat-datepicker-toggle>
-        <mat-datepicker #datePickerTo></mat-datepicker>
-      </mat-form-field>
-    </div>
+    @if (menuInfo()?.products?.drinks) {
+      <drinks-list [(drinks)]="menuInfo()!.products.drinks"></drinks-list>
+    }
   </form>
 </section>

@@ -18,7 +18,8 @@ export const UrlProvider = {
   joinBooking: '/v1/booking/join',
   getAllMenus: '/v1/menu/all',
   getAllAvailableMenus: '/v1/menu/available',
-  getMenu: '/v1/menu/${menuId}',
+  getMenu: '/v1/menu/info/${menuId}',
+  modifyMenu: '/v1/menu/modify',
   postOrder: '/v1/order/create/${bookingId}',
   getOrdersByBookingId: '/v1/order/booking/${bookingId}',
   getOrdersByDate: '/v1/order/date/${date}',
@@ -27,4 +28,6 @@ export const UrlProvider = {
   getTotalPriceByBookingId: '/v1/order/total-price/${bookingId}',
   getUserOrdersTotalPrice: '/v1/order/retrieve/${bookingId}',
   getTranslations: '/v1/translations?language=${language}',
+  getDishes: '/v1/menu/dish',
+  getDrinks: '/v1/menu/drink',
 } as const;

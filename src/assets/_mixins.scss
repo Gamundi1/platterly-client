@@ -10,6 +10,12 @@
   }
 }
 
+@mixin small-breakpoint {
+  @media (min-width: 540px) {
+    @content;
+  }
+}
+
 @mixin medium-breakpoint {
   @media (min-width: 769px) {
     @content;

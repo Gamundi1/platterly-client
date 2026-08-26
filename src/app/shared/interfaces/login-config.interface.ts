@@ -11,4 +11,5 @@ export const DEFAULT_LOGIN_CONFIG = {
   subtitle: 'Inicia sesión con tu cuenta',
   loginButtonLabel: 'Acceder',
   cssVars: {},
+  successCallback: undefined,
 };

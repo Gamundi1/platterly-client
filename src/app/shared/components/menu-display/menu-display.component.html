@@ -7,7 +7,7 @@
         [aria-selected]="selectedMenuId() === menuAvailable.id"
         (click)="getMenuItems(menuAvailable.id)"
       >
-        {{ menuAvailable.name | transloco}}
+        {{ menuAvailable.name | transloco }}
       </button>
     }
   </div>
@@ -29,9 +29,9 @@
             <img [ngSrc]="dish.images[0]" alt="" fill />
           </div>
           <div class="dish-description">
-            <h3>{{ dish.name | transloco}}</h3>
+            <h3>{{ dish.name | transloco }}</h3>
             <p class="dish-ingredients">
-              {{ dish.ingredients.join(', ') }}
+              {{ dish.ingredients | translateArray }}
             </p>
           </div>
           <div class="dish-footer">

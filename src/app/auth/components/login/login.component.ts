@@ -1,17 +1,14 @@
 import {
-  AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
-  ElementRef,
   Inject,
   inject,
   OnDestroy,
-  Renderer2,
-  signal,
-  ChangeDetectionStrategy,
+  signal
 } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import { email, form, required } from '@angular/forms/signals';
 import { MAT_DIALOG_DATA, MatDialogClose } from '@angular/material/dialog';
+import { RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { catchError } from 'rxjs';
@@ -22,7 +19,6 @@ import {
 } from '../../../shared/interfaces/login-config.interface';
 import { LoginData } from '../../interfaces/login-data.interface';
 import { AuthService } from '../../services/auth.service';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -76,7 +72,7 @@ export class LoginComponent implements OnDestroy {
   }
 
   private manageLoginError(errorCode: string) {
-    if (errorCode === 'INVALID_CREDENTIALS' || errorCode === 'USER_NOT_FOUND') {
+    if (errorCode === 'INVALID_CREDENTIALS') {
       this.invalidCredentials.set(true);
     }
   }

@@ -18,28 +18,31 @@
   </div>
   <div class="separator"></div>
   <div class="top-layer">
-    <span class="restaurant-constant"><fa-icon [icon]="faToilet"></fa-icon></span>
-    <span class="restaurant-constant kitchen"><fa-icon [icon]="faKitchen"></fa-icon></span>
+    <span class="restaurant-constant">Baño</span>
+    <span class="restaurant-constant kitchen">Cocina</span>
   </div>
   <div
+    role="grid"
     class="table-map"
     aria-label="Mapa de mesas en el restaurante"
     [style.--inline-tracks]="inlineTrackCount()"
     [style.--block-tracks]="blockTrackCount()"
   >
     @for (table of tables(); track table.number) {
+      @let available = isTableAvailable(table);
       <button
+        [style.grid-column]="getInlineTrack(table)"
+        [style.grid-row]="getBlockTrack(table)"
+        [attr.data-tn]="table.number"
         #tableButton
         class="table"
         type="button"
-        [attr.data-tn]="table.number"
-        [style.grid-column]="getInlineTrack(table)"
-        [style.grid-row]="getBlockTrack(table)"
+        role="gridcell"
         [attr.aria-label]="'Mesa ' + table.number + ', capacidad ' + table.capacity"
         [attr.aria-selected]="table.number === currentSelectedTable()?.number"
-        [disabled]="!isTableAvailable(table)"
-        (click)="onTableClick(table)"
-        [tabindex]="table.number === currentSelectedTable()?.number ? 0 : -1"
+        [attr.aria-disabled]="!available"
+        (click)="available ? onTableClick(table) : null"
+        [tabindex]="table.number === focusedTable()?.number ? 0 : -1"
       >
         <fa-icon [icon]="faUser"></fa-icon>
         <span>

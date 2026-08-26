@@ -62,7 +62,7 @@ export class BookingPageComponent implements OnInit {
         .getRequest<Booking>(UrlProvider.getBooking, { bookingId })
         .pipe(
           catchError((error) => {
-            this.showErrorModal(error.error.code);
+            this.showErrorModal(error.error);
             throw error;
           }),
         )
@@ -167,27 +167,14 @@ export class BookingPageComponent implements OnInit {
     });
   }
 
-  private showErrorModal(code: string) {
-    if (code === 'BOOKING_NOT_FOUND') {
+  private showErrorModal(error: { code: string; label: string; message: string }) {
+    const { code, label, message } = error;
+
+    if (code) {
       this.matDialog.open(ErrorModalComponent, {
         data: {
-          title: 'Reserva no encontrada',
-          message: 'Lo sentimos, no hemos podido encontrar la reserva que estás buscando.',
-        },
-      });
-    } else if (code === 'USER_NOT_IN_BOOKING') {
-      this.matDialog.open(ErrorModalComponent, {
-        data: {
-          title: 'No eres parte de esta reserva',
-          message:
-            'Lo sentimos, no puedes acceder a los detalles de esta reserva porque no formas parte de la misma.',
-        },
-      });
-    } else {
-      this.matDialog.open(ErrorModalComponent, {
-        data: {
-          title: 'Error',
-          message: 'Ha ocurrido un error. Por favor, inténtalo de nuevo más tarde.',
+          title: label,
+          message: message,
         },
       });
     }
