@@ -1,30 +1,31 @@
 <section>
   <header>
     <p>{{ 'menu_admin' | transloco }}</p>
-    <h1>Editar carta</h1>
-    <button (click)="saveMenu()">Guardar</button>
+    <h1>{{ 'menu_create_title' | transloco }}</h1>
+    <button (click)="createMenu()">Crear</button>
   </header>
 
   <form>
     <fieldset class="menu-configuration">
-      <legend>{{ 'menu_configuration' | transloco }}</legend>
+      <legend>Configuración del menú</legend>
       <div class="menu-configuration-content">
         <div class="input-field">
-          <label for="name">{{ 'menu_selection' | transloco }}</label>
-          <select id="name" class="menu-select" [formField]="modifyMenuForm.menuId">
-            @for (menu of availableMenus(); track menu.id) {
-              <option [value]="menu.id">{{ menu.name | transloco }}</option>
-            }
-          </select>
+          <label>Identificador</label>
+          <input
+            id="identifier"
+            class="identifier"
+            placeholder="seasonal_menu"
+            [formField]="createMenuForm.name"
+          />
         </div>
         <div class="input-field">
-          <label for="from">{{ 'initial_disponibility' | transloco }}</label>
+          <label for="from">disponibilidad (inicio)</label>
           <mat-form-field class="date-picker">
             <input
               id="from"
               matInput
               [matDatepicker]="datePickerFrom"
-              [formField]="modifyMenuForm.availableFrom"
+              [formField]="createMenuForm.availableFrom"
             />
             <mat-datepicker-toggle matSuffix [for]="datePickerFrom"></mat-datepicker-toggle>
             <mat-datepicker #datePickerFrom></mat-datepicker>
@@ -38,7 +39,7 @@
               matInput
               [min]="minDate"
               [matDatepicker]="datePickerTo"
-              [formField]="modifyMenuForm.availableTo"
+              [formField]="createMenuForm.availableTo"
             />
             <mat-datepicker-toggle matSuffix [for]="datePickerTo"></mat-datepicker-toggle>
             <mat-datepicker #datePickerTo></mat-datepicker>
@@ -46,12 +47,8 @@
         </div>
       </div>
     </fieldset>
-    @if (menuInfo()?.products?.dishes) {
-      <dishes-list [(dishes)]="menuInfo()!.products.dishes"></dishes-list>
-    }
+    <dishes-list [(dishes)]="selectedDishes"></dishes-list>
 
-    @if (menuInfo()?.products?.drinks) {
-      <drinks-list [(drinks)]="menuInfo()!.products.drinks"></drinks-list>
-    }
+    <drinks-list [(drinks)]="selectedDrinks"></drinks-list>
   </form>
 </section>

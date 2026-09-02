@@ -1,1 +1,8 @@
+@use '@angular/material' as mat;
 
+label {
+  font-size: var(--font-small-size);
+  text-transform: uppercase;
+  color: var(--font-primary-color);
+  margin-block-end: 0.5rem;
+}

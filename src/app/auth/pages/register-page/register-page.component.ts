@@ -1,12 +1,13 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { disabled, form, minLength, required } from '@angular/forms/signals';
-import { InputComponent } from '../../../shared/components/input/input.component';
-import { AuthService } from '../../services/auth.service';
-import { User, UserRole } from '../../../shared/interfaces/user.interface';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs';
-import { ErrorModalComponent } from '../../../shared/components/error-modal/error-modal.component';
-import { MatDialog } from '@angular/material/dialog';
+import { InputComponent } from '../../../shared/components/input/input.component';
+import { User, UserRole } from '../../../shared/interfaces/user.interface';
+import { ErrorService } from '../../../shared/services/error.service';
+import { AuthService } from '../../services/auth.service';
+import { RegisterConfirmationComponent } from '../../components/register-confirmation/register-confirmation.component';
 
 @Component({
   selector: 'app-register-page',
@@ -20,6 +21,7 @@ export class RegisterPage implements OnInit {
   }
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly errorService = inject(ErrorService);
   private readonly matDialog = inject(MatDialog);
 
   registerModel = signal({
@@ -60,26 +62,20 @@ export class RegisterPage implements OnInit {
       this.authService
         .register(user)
         .pipe(
-          catchError(() => {
-            this.showErrorModal();
+          catchError((error) => {
+            this.errorService.showErrorModal(error.error, 'Entendido', () => {
+              this.errorService.closeErrorModal();
+            });
             return [];
           }),
         )
         .subscribe(() => {
-          this.router.navigate(['/home']);
+          this.matDialog.open(RegisterConfirmationComponent, {
+            disableClose: true,
+            panelClass: 'fullscreen',
+          });
         });
-    } else {
     }
-  }
-
-  private showErrorModal() {
-    this.matDialog.open(ErrorModalComponent, {
-      data: {
-        title: 'Error creando el usuario',
-        message:
-          'Ha ocurrido un error al crear el usuario. Por favor, revisa los datos e inténtalo de nuevo.',
-      },
-    });
   }
 
   private fillNameIfAvailable() {

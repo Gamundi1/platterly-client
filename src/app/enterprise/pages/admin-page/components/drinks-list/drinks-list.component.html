@@ -1,6 +1,6 @@
 <fieldset>
   <legend id="drinks-list-legend">
-    <span class="title">Bebidas</span>
+    <span class="title">{{ 'drinks_title' | transloco }}</span>
   </legend>
   <section class="drinks-list" aria-labelledby="drinks-list-legend">
     @for (drink of drinks(); track drink.id) {
@@ -10,11 +10,16 @@
         aria-label="plato de {{ drink.name | transloco }}"
         (click)="deleteDrink(drink.id)"
       >
-        <div class="drink-info">
-          <span class="name">{{ drink.name | transloco }}</span>
-        </div>
+        <span class="name">{{ drink.name | transloco }}</span>
+        <span class="alcoholic">{{
+          drink.isAlcoholic ? 'contains_alcohol' : ('does_not_contain_alcohol' | transloco)
+        }}</span>
+        <span class="price">{{ drink.price | currency: 'EUR' }}</span>
       </div>
     }
   </section>
-  <button type="button" (click)="openAddProductModal()">add new drink</button>
+  <button type="button" (click)="openAddProductModal()">
+    <mat-icon>add</mat-icon>
+    <span>Añadir bebida</span>
+  </button>
 </fieldset>

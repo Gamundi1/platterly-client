@@ -58,14 +58,6 @@ button {
   background-color: var(--primary-color);
 }
 
-select {
-  block-size: 3rem;
-  font-size: var(--font-content-size);
-  padding-inline: 1rem;
-  border-radius: 1rem;
-  border: none;
-}
-
 .dishes,
 .drinks {
   border: 2px solid var(--black-color);
@@ -106,13 +98,20 @@ select {
     font-size: var(--font-small-size);
   }
 
-  & .input {
+  & input {
     block-size: 3rem;
   }
 
   & .date-picker {
     inline-size: 100%;
   }
+}
+
+.identifier {
+  border-radius: 1rem;
+  border: none;
+  padding-inline: 1rem;
+  font-size: var(--font-small-size);
 }
 
 legend {
@@ -136,6 +135,10 @@ legend {
   .mat-mdc-form-field-subscript-wrapper {
     display: none;
   }
+}
+
+shared-input {
+  block-size: 3rem;
 }
 
 form {

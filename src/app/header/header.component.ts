@@ -76,7 +76,7 @@ export class HeaderComponent {
           },
           {
             link: '/enterprise/chef',
-            label: 'Comandas',
+            label: 'Pedidos',
           },
         ];
       case UserRole.WAITER:
@@ -87,7 +87,7 @@ export class HeaderComponent {
           },
           {
             link: '/enterprise/waiter',
-            label: 'Comandas',
+            label: 'Pedidos',
           },
           {
             link: '/enterprise/orders',

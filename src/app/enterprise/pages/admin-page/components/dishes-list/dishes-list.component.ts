@@ -1,4 +1,4 @@
-import { NgOptimizedImage } from '@angular/common';
+import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import { Component, inject, model } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { Dish } from '../../../../../shared/interfaces/menu.interface';
@@ -10,7 +10,7 @@ import { firstValueFrom, take } from 'rxjs';
 
 @Component({
   selector: 'dishes-list',
-  imports: [TranslocoPipe, NgOptimizedImage, TranslateArrayPipe],
+  imports: [TranslocoPipe, NgOptimizedImage, TranslateArrayPipe, CurrencyPipe],
   templateUrl: './dishes-list.component.html',
   styleUrl: './dishes-list.component.scss',
 })

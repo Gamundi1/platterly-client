@@ -20,6 +20,7 @@ export const UrlProvider = {
   getAllAvailableMenus: '/v1/menu/available',
   getMenu: '/v1/menu/info/${menuId}',
   modifyMenu: '/v1/menu/modify',
+  createMenu: '/v1/menu',
   postOrder: '/v1/order/create/${bookingId}',
   getOrdersByBookingId: '/v1/order/booking/${bookingId}',
   getOrdersByDate: '/v1/order/date/${date}',
@@ -30,4 +31,8 @@ export const UrlProvider = {
   getTranslations: '/v1/translations?language=${language}',
   getDishes: '/v1/menu/dish',
   getDrinks: '/v1/menu/drink',
+  getAllergens: '/v1/menu/allergen',
+  postIngredient: '/v1/menu/ingredient',
+  postDish: 'v1/menu/dish',
+  postDrink: 'v1/menu/drink',
 } as const;

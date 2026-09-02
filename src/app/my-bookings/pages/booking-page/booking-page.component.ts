@@ -25,6 +25,7 @@ import { UrlProvider } from '../../../shared/enums/url-provider.enum';
 import { HttpHandlerService } from '../../../shared/services/http-handler.service';
 import { SocketService } from '../../../socket/services/socket.service';
 import { Order } from '../../interfaces/order.interface';
+import { ErrorService } from '../../../shared/services/error.service';
 
 @Component({
   templateUrl: './booking-page.component.html',
@@ -46,6 +47,7 @@ export class BookingPageComponent implements OnInit {
   private readonly matDialog = inject(MatDialog);
   private readonly socketService = inject(SocketService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly errorService = inject(ErrorService);
 
   protected booking = signal<Booking | null>(null);
   protected orders = signal<Order[] | []>([]);
@@ -62,7 +64,7 @@ export class BookingPageComponent implements OnInit {
         .getRequest<Booking>(UrlProvider.getBooking, { bookingId })
         .pipe(
           catchError((error) => {
-            this.showErrorModal(error.error);
+            this.errorService.showErrorModal(error.error);
             throw error;
           }),
         )
@@ -165,18 +167,5 @@ export class BookingPageComponent implements OnInit {
         });
       }
     });
-  }
-
-  private showErrorModal(error: { code: string; label: string; message: string }) {
-    const { code, label, message } = error;
-
-    if (code) {
-      this.matDialog.open(ErrorModalComponent, {
-        data: {
-          title: label,
-          message: message,
-        },
-      });
-    }
   }
 }

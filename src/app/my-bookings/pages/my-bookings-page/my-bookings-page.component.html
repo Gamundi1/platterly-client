@@ -42,7 +42,9 @@
   <section class="my-coming-booking-content">
     <div class="booking-info">
       <div>
-        <p class="date">{{ booking.date | date: "d 'de' MMMM 'de' y" }}</p>
+        <p id="booking-date-{{ booking.id }}" class="date">
+          {{ booking.date | date: "d 'de' MMMM 'de' y" }}
+        </p>
         <p class="interval-guests">
           <span>{{ booking.hour.interval }}</span>
           <span class="dot"></span>
@@ -51,8 +53,8 @@
       </div>
       <div class="location">
         <span class="location-title">Ubicación</span>
-        <span class="table-number"
-          > Mesa {{ booking.table.number }}</span
+        <span class="table-number" id="booking-table-{{ booking.id }}">
+          Mesa {{ booking.table.number }}</span
         >
       </div>
     </div>
@@ -62,8 +64,14 @@
           <fa-icon [icon]="faCircleXMark"></fa-icon> Cancelar reserva
         </button>
       } @else {
-        <a class="redirect-booking" href="/my-bookings/{{ booking.id }}"
-          ><span>Ir a la reserva</span><fa-icon [icon]="faArrowRight"></fa-icon
+        <a
+          aria-labelledby="booking-link-{{ booking.id }} booking-date-{{
+            booking.id
+          }} booking-table-{{ booking.id }}"
+          class="redirect-booking"
+          href="/my-bookings/{{ booking.id }}"
+          ><span id="booking-link-{{ booking.id }}">Ir a la reserva</span
+          ><fa-icon [icon]="faArrowRight"></fa-icon
         ></a>
       }
     </div>

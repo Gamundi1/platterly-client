@@ -13,6 +13,7 @@ import { HttpHandlerService } from '../../../../../shared/services/http-handler.
 import { DishesList } from '../../components/dishes-list/dishes-list.component';
 import { ConfirmModifyComponent } from '../../components/confirm-modify/confirm-modify.component';
 import { DrinksList } from '../../components/drinks-list/drinks-list.component';
+import { ErrorService } from '../../../../../shared/services/error.service';
 
 interface ModifyMenuModel {
   menuId: string;
@@ -30,7 +31,7 @@ interface ModifyMenuModel {
     FormField,
     TranslocoPipe,
     DishesList,
-    DrinksList
+    DrinksList,
   ],
 })
 export class ModifyMenuPageComponent {
@@ -58,6 +59,7 @@ export class ModifyMenuPageComponent {
 
   private readonly httpHandlerService = inject(HttpHandlerService);
   private readonly matDialog = inject(MatDialog);
+  private readonly errorService = inject(ErrorService);
 
   readonly availableMenus = toSignal(
     this.httpHandlerService.getRequest<MenuType[]>(UrlProvider.getAllMenus),
@@ -86,6 +88,7 @@ export class ModifyMenuPageComponent {
   }
 
   async saveMenu() {
+    this.modifyMenuForm().markAsTouched();
     if (this.modifyMenuForm().valid()) {
       const dishes = this.menuInfo()!.products.dishes.map((dish) => dish.id);
       const drinks = this.menuInfo()!.products.drinks.map((drink) => drink.id);
@@ -98,13 +101,19 @@ export class ModifyMenuPageComponent {
         })
         .pipe(
           catchError((error) => {
-            console.error('Error saving menu:', error);
+            this.errorService.showErrorModal(error.error, 'Volver a intentar', () => {
+              this.errorService.closeErrorModal();
+            });
             throw error;
           }),
         )
         .subscribe(() => {
           this.matDialog.open(ConfirmModifyComponent, {
+            data: {
+              isModified: true,
+            },
             disableClose: true,
+            panelClass: 'fullscreen'
           });
         });
     }

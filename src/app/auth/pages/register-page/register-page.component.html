@@ -11,27 +11,32 @@
     <form (submit)="registerUser($event)">
       <shared-input
         label="Nombre"
+        placeHolder="Introduce tu nombre"
         [field]="registerForm.name"
         errorMessage="por favor introduce un nombre válido"
       ></shared-input>
       <shared-input
         label="Primer Apellido"
+        placeHolder="Introduce tu primer apellido"
         [field]="registerForm.surname"
         errorMessage="por favor introduce un primer apellido válido"
       ></shared-input>
       <shared-input
         label="Segundo Apellido"
+        placeHolder="Introduce tu segundo apellido"
         [field]="registerForm.secondSurname"
         errorMessage="por favor introduce un segundo apellido válido"
       ></shared-input>
       <shared-input
         label="Email"
+        placeHolder="Introduce tu email"
         type="email"
         [field]="registerForm.email"
         errorMessage="por favor introduce un email válido"
       ></shared-input>
       <shared-input
         label="Contraseña"
+        placeHolder="Introduce tu contraseña"
         type="password"
         [field]="registerForm.password"
         errorMessage="por favor introduce una contraseña válida (mínimo 12 caracteres)"
@@ -40,7 +45,7 @@
         <button type="submit">Crear cuenta</button>
         <p>
           ¿Ya tienes una cuenta?
-          <button class='redirect-login' (click)="openLogin()">Inicia sesión</button>
+          <button class="redirect-login" (click)="openLogin()">Inicia sesión</button>
         </p>
       </div>
     </form>

@@ -61,7 +61,7 @@ export class OrderManagementDirective implements OnInit {
 
   protected updateOrderStatus(order: Order, status: OrderStatus) {
     this.httpHandlerService
-      .postRequest(UrlProvider.updateOrderStatus, undefined, {
+      .putRequest(UrlProvider.updateOrderStatus, undefined, {
         orderId: order.id,
         status: status,
       })
