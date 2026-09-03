@@ -16,7 +16,13 @@ export class OrderManagementDirective implements OnInit {
   protected orders = signal<Order[] | []>([]);
 
   get readyOrders() {
-    return this.orders().filter((order) => order.status === OrderStatus.READY);
+    return this.orders()
+      .filter((order) => order.status === OrderStatus.READY)
+      .sort((a, b) => {
+        const dateA = new Date(a.deliveredAt!).getTime();
+        const dateB = new Date(b.deliveredAt!).getTime();
+        return dateA - dateB;
+      });
   }
 
   get alreadyDeliveredOrders() {
@@ -25,16 +31,28 @@ export class OrderManagementDirective implements OnInit {
       .sort((a, b) => {
         const dateA = new Date(a.deliveredAt!).getTime();
         const dateB = new Date(b.deliveredAt!).getTime();
-        return dateA - dateB;
+        return dateB - dateA;
       });
   }
 
   get preparingOrders() {
-    return this.orders().filter((order) => order.status === OrderStatus.IN_PROGRESS);
+    return this.orders()
+      .filter((order) => order.status === OrderStatus.IN_PROGRESS)
+      .sort((a, b) => {
+        const dateA = new Date(a.deliveredAt!).getTime();
+        const dateB = new Date(b.deliveredAt!).getTime();
+        return dateA - dateB;
+      });
   }
 
   get scheduledOrders() {
-    return this.orders().filter((order) => order.status === OrderStatus.SCHEDULED);
+    return this.orders()
+      .filter((order) => order.status === OrderStatus.SCHEDULED)
+      .sort((a, b) => {
+        const dateA = new Date(a.deliveredAt!).getTime();
+        const dateB = new Date(b.deliveredAt!).getTime();
+        return dateA - dateB;
+      });
   }
 
   ngOnInit(): void {

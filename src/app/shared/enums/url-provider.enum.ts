@@ -29,10 +29,12 @@ export const UrlProvider = {
   getTotalPriceByBookingId: '/v1/order/total-price/${bookingId}',
   getUserOrdersTotalPrice: '/v1/order/retrieve/${bookingId}',
   getTranslations: '/v1/translations?language=${language}',
+  cleanTable: '/v1/table/clean/${tableNumber}',
   getDishes: '/v1/menu/dish',
   getDrinks: '/v1/menu/drink',
   getAllergens: '/v1/menu/allergen',
   postIngredient: '/v1/menu/ingredient',
   postDish: 'v1/menu/dish',
   postDrink: 'v1/menu/drink',
+  payOrders: '/v1/order/pay',
 } as const;

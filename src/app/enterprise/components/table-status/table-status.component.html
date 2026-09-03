@@ -1,21 +1,10 @@
 <section>
-  <div class="legend">
-    <div class="legend-item">
-      <div class="legend-color" [style.--legend-option-color]="'var(--secondary-color)'"></div>
-      <span class="legend-text">No Disponible</span>
+  @if (tableUpdated()) {
+    <div class="ok-status">
+      <span>Mesa actualizada correctamente!</span>
     </div>
-    <div class="legend-item">
-      <div
-        class="legend-color"
-        [style.--legend-option-color]="'oklch(from var(--secondary-color) 0.6 c h)'"
-      ></div>
-      <span class="legend-text">Disponible</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-color"></div>
-      <span class="legend-text">Seleccionada</span>
-    </div>
-  </div>
+  }
+  <h3>Pulsa sobre una mesa para marcarla como limpia</h3>
   <div class="separator"></div>
   <div class="top-layer">
     <span class="restaurant-constant">Baño</span>
@@ -33,7 +22,6 @@
     @for (row of tableRows(); track row.row) {
       <div role="row" class="table-row" [attr.aria-rowindex]="row.row">
         @for (table of row.tables; track table.number) {
-          @let available = isTableAvailable(table);
           <button
             role="gridcell"
             class="table"
@@ -42,16 +30,14 @@
             [attr.data-tn]="table.number"
             #tableButton
             type="button"
-            [attr.aria-label]="'Mesa ' + table.number + ', capacidad ' + table.capacity"
-            [attr.aria-selected]="table.number === currentSelectedTable()?.number"
-            [attr.aria-disabled]="!available"
-            (click)="available ? onTableClick(table) : null"
+            [attr.aria-label]="'Mesa ' + table.number + ', estado ' + table.status"
+            (click)="onTableClick(table)"
             (focus)="focusedTable.set(table)"
             [tabindex]="isTableFocusable(table) ? 0 : -1"
+            [attr.aria-disabled]="isTableDisabled(table)"
           >
-            <fa-icon [icon]="faUser"></fa-icon>
             <span>
-              {{ table.capacity }}
+              {{ table.number }}
             </span>
           </button>
         }
@@ -59,9 +45,4 @@
     }
   </div>
   <span class="restaurant-constant">entrada</span>
-  @if (!selectedHour()) {
-    <div class="overlay">
-      <span>Selecciona un horario para ver las mesas disponibles</span>
-    </div>
-  }
 </section>

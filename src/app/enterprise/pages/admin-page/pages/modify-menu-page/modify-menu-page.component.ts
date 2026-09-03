@@ -101,7 +101,7 @@ export class ModifyMenuPageComponent {
         })
         .pipe(
           catchError((error) => {
-            this.errorService.showErrorModal(error.error, 'Volver a intentar', () => {
+            this.errorService.showErrorModal(error.error, 'button_retry', () => {
               this.errorService.closeErrorModal();
             });
             throw error;

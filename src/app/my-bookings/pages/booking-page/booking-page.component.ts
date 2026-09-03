@@ -1,13 +1,11 @@
 import { CurrencyPipe, NgClass, NgOptimizedImage } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   inject,
   OnInit,
   signal,
-  ChangeDetectionStrategy,
-  viewChild,
-  TemplateRef,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,14 +16,15 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { catchError, map } from 'rxjs';
 import { getBookingStatusColor, getBookingStatusText } from '../../../helpers/booking-status';
 import { Booking } from '../../../new-bookings/interfaces/booking.interface';
-import { ErrorModalComponent } from '../../../shared/components/error-modal/error-modal.component';
-import { OrderCardComponent } from '../../components/order-card/order-card.component';
 import { BookingStatus } from '../../../shared/enums/booking-status.enum';
 import { UrlProvider } from '../../../shared/enums/url-provider.enum';
+import { ErrorService } from '../../../shared/services/error.service';
 import { HttpHandlerService } from '../../../shared/services/http-handler.service';
 import { SocketService } from '../../../socket/services/socket.service';
+import { OrderCardComponent } from '../../components/order-card/order-card.component';
+import { PricesModalComponent } from '../../components/prices-modal/prices-modal.component';
 import { Order } from '../../interfaces/order.interface';
-import { ErrorService } from '../../../shared/services/error.service';
+import { Price } from '../../interfaces/price.interface';
 
 @Component({
   templateUrl: './booking-page.component.html',
@@ -51,7 +50,6 @@ export class BookingPageComponent implements OnInit {
 
   protected booking = signal<Booking | null>(null);
   protected orders = signal<Order[] | []>([]);
-  private readonly priceModal = viewChild<TemplateRef<any>>('showPrices');
 
   protected faPlus = faPlus;
 
@@ -100,33 +98,51 @@ export class BookingPageComponent implements OnInit {
 
   protected retrieveTotalPrice(): void {
     this.httpHandlerService
-      .getRequest<{ totalPrice: number }>(UrlProvider.getTotalPriceByBookingId, {
+      .getRequest<Price>(UrlProvider.getTotalPriceByBookingId, {
         bookingId: this.booking()!.id,
       })
+      .pipe(
+        catchError((error) => {
+          this.errorService.showErrorModal(error.error, 'understood_button', () =>
+            this.errorService.closeErrorModal(),
+          );
+          throw error;
+        }),
+      )
       .subscribe((response) => {
-        this.matDialog.open(this.priceModal()!, {
+        this.matDialog.open(PricesModalComponent, {
           data: {
-            response: response.totalPrice,
+            totalPrice: response.totalPrice,
+            ordersUnpaid: response.ordersUnpaid,
           },
+          panelClass: 'fullscreen',
         });
       });
   }
 
   protected retrieveUserOrdersTotalPrice(): void {
     this.httpHandlerService
-      .getRequest<{ totalPrice: number }>(UrlProvider.getUserOrdersTotalPrice, {
+      .getRequest<Price>(UrlProvider.getUserOrdersTotalPrice, {
         bookingId: this.booking()!.id,
       })
+      .pipe(
+        catchError((error) => {
+          this.errorService.showErrorModal(error.error, 'understood_button', () =>
+            this.errorService.closeErrorModal(),
+          );
+          throw error;
+        }),
+      )
       .subscribe((response) => {
-        this.matDialog.open(this.priceModal()!, {
+        this.matDialog.open(PricesModalComponent, {
           data: {
-            price: response.totalPrice,
+            totalPrice: response.totalPrice,
+            ordersUnpaid: response.ordersUnpaid,
           },
+          panelClass: 'fullscreen',
         });
       });
   }
-
-  protected payOrders(): void {}
 
   private fetchOrderItems() {
     this.httpHandlerService
@@ -158,6 +174,7 @@ export class BookingPageComponent implements OnInit {
       });
 
     this.socketService.onOrderUpdate().subscribe((updatedOrder) => {
+      console.log(updatedOrder);
       const index = this.orders().findIndex((o) => o.id === updatedOrder.id);
       if (index !== -1) {
         this.orders.update((currentOrders) => {

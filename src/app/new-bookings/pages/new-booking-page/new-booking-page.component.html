@@ -19,9 +19,9 @@
     <form class="booking-information" (submit)="onSubmitForm($event)">
       <fieldset>
         <legend><fa-icon [icon]="faUsers"></fa-icon> Grupo y horario</legend>
-        <div class="date-guest-selector">
-          <span class="title">Selecciona el número de asistentes</span>
-          <div id="guests-selector" role="radiogroup">
+        <div class="date-guest-selector"  role="radiogroup" aria-labelledby="guest-title">
+          <span id="guest-title" class="title">Selecciona el número de asistentes</span>
+          <div id="guests-selector">
             @for (guest of guests | keyvalue; track guest.key) {
               <label for="guests-{{ guest.key }}">
                 <input
@@ -48,8 +48,8 @@
             <mat-datepicker #datePicker></mat-datepicker>
           </mat-form-field>
         </div>
-        <div class="hour-guest-selector">
-          <span class="title">Selecciona la hora</span>
+        <div class="hour-guest-selector" role="radiogroup" aria-labelledby="hour-title">
+          <span class="title" id="hour-title">Selecciona la hora</span>
           @let availableHours = availableHours$ | async;
           <div>
             @for (availableHour of availableHours; track availableHour.id; let i = $index) {

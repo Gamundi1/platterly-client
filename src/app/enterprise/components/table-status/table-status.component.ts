@@ -4,42 +4,45 @@ import {
   computed,
   effect,
   ElementRef,
+  inject,
   input,
+  OnInit,
   output,
   signal,
   viewChildren,
 } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faKitchenSet, faRestroom, faUser } from '@fortawesome/free-solid-svg-icons';
-import { Table } from '../../interfaces/table.interface';
+import { Table, TableStatus } from '../../../new-bookings/interfaces/table.interface';
+import { HttpHandlerService } from '../../../shared/services/http-handler.service';
+import { UrlProvider } from '../../../shared/enums/url-provider.enum';
+import { delay, tap } from 'rxjs';
 
 @Component({
-  selector: 'booking-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss'],
+  selector: 'booking-status-table',
+  templateUrl: './table-status.component.html',
+  styleUrls: ['./table-status.component.scss'],
   changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FaIconComponent],
   host: {
     '(keydown)': 'keyboardInteraction($event)',
   },
 })
-export class TableComponent {
-  public tables = input.required<Table[]>();
-  public guests = input.required<number>();
-  public selectedHour = input.required<string>();
-  public selectedTable = output<number>();
+export class TableStatusComponent implements OnInit {
+  public tables = signal<Table[] | []>([]);
 
-  currentSelectedTable = signal<Table | null>(null);
+  private readonly httpHandlerService = inject(HttpHandlerService);
+
+  tableUpdated = signal(false);
+
   focusedTable = signal<Table | null>(null);
 
   protected faToilet = faRestroom;
   protected faKitchen = faKitchenSet;
   protected faUser = faUser;
 
-  constructor() {
-    effect(() => {
-      this.verifyCurrentTableAvailability(this.selectedHour(), this.tables());
-    });
+  ngOnInit(): void {
+    this.getTables();
   }
 
   protected readonly minInlinePosition = computed(() => {
@@ -99,14 +102,19 @@ export class TableComponent {
     return table.blockPosition! - this.minBlockPosition() + 1;
   }
 
-  protected isTableAvailable(table: Table): boolean {
-    return table.capacity >= this.guests() && table.availableHours.includes(this.selectedHour());
-  }
-
   protected onTableClick(table: Table): void {
     this.focusedTable.set(table);
-    this.currentSelectedTable.set(table);
-    this.selectedTable.emit(table.number);
+    this.httpHandlerService
+      .putRequest(UrlProvider.cleanTable, { tableNumber: table.number })
+      .pipe(
+        tap(() => {
+          this.tableUpdated.set(true);
+          this.getTables();
+        }),
+        delay(5000),
+        tap(() => this.tableUpdated.set(false)),
+      )
+      .subscribe();
   }
 
   private focusNextTableButton(direction: 'up' | 'down' | 'left' | 'right' | 'home' | 'end') {
@@ -158,19 +166,6 @@ export class TableComponent {
     );
   }
 
-  private verifyCurrentTableAvailability(selectedHour: string, tables: Table[]) {
-    if (!this.currentSelectedTable()) return;
-    const newTable = tables.find((table) => table.number === this.currentSelectedTable()!.number);
-
-    if (!newTable || !this.isTableAvailable(newTable) || !selectedHour) {
-      this.currentSelectedTable.set(null);
-      this.selectedTable.emit(0);
-      return;
-    }
-
-    this.currentSelectedTable.set(newTable);
-  }
-
   protected keyboardInteraction(event: KeyboardEvent) {
     switch (event.key) {
       case 'ArrowUp':
@@ -202,9 +197,22 @@ export class TableComponent {
     }
   }
 
+  protected isTableDisabled(table: Table): boolean {
+    return table.status !== TableStatus.NEEDS_CLEANING;
+  }
+
   protected isTableFocusable(table: Table): boolean {
-    if (!this.selectedHour()) return false;
     if (!this.focusedTable()) return table.number === this.tables()[0].number;
     return table.number === this.focusedTable()?.number;
+  }
+
+  private getTables() {
+    this.httpHandlerService
+      .getRequest<Table[]>(UrlProvider.getAvailableTables, {
+        date: new Date().toLocaleString(),
+      })
+      .subscribe((tables) => {
+        this.tables.set(tables);
+      });
   }
 }

@@ -1,0 +1,21 @@
+<section class="booking-incentive">
+  <small>Una invitación</small>
+  <h3>Únete a nosotros</h3>
+  <p>
+    Solo tienes que rellenar el formulario a continuación y podrás disfrutar de las ventajas de ser
+    parte de nuestra comunidad.
+  </p>
+  <form>
+    <mat-form-field class="date-picker booking-incentive-date">
+      <input
+        matInput
+        [min]="minDate"
+        [matDatepicker]="datePicker"
+        [formField]="bookingIncentiveForm.date"
+        [placeholder]="'date.select' | transloco"
+      />
+      <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+      <mat-datepicker #datePicker></mat-datepicker>
+    </mat-form-field>
+  </form>
+</section>

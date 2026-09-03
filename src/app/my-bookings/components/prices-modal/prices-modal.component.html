@@ -1,0 +1,35 @@
+<div class="price-modal">
+  <div class="price-header">
+    <h3>{{ 'price_title' | transloco }}</h3>
+    <button mat-dialog-close>
+      <fa-icon [icon]="faClose"></fa-icon>
+    </button>
+  </div>
+  <hr />
+  <div class="order-price">
+    <span>{{ 'price_subtotal' | transloco }}</span>
+    <span class="price">{{ data.totalPrice | currency: 'EUR' }}</span>
+    <span>{{ 'price_shipping' | transloco }}</span>
+    <span class="price">{{ data.totalPrice * 0.1 | currency: 'EUR' }}</span>
+    <h4>{{ 'price_total' | transloco }}</h4>
+    <h4>{{ data.totalPrice * 1.1 | currency: 'EUR' }}</h4>
+  </div>
+  <div class="price-action">
+    <small>{{ 'price_agreement' | transloco }}</small>
+    <button (click)="payOrders()">
+      @if (!isLoading()) {
+        <span>{{ 'price_pay' | transloco }}</span>
+      } @else {
+        @if (isLoading()) {
+          <div class="button-overlay">
+            <mat-progress-spinner
+              class="new-booking-progress"
+              diameter="20"
+              mode="indeterminate"
+            ></mat-progress-spinner>
+          </div>
+        }
+      }
+    </button>
+  </div>
+</div>

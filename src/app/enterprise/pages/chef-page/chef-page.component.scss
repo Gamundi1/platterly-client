@@ -1,29 +1,32 @@
-h3 {
-  color: var(--font-primary-color);
-  font-size: 1.2rem;
-  font-family: 'Manrope';
-  font-style: italic;
-}
-
 :host {
   display: block;
   container-type: inline-size;
 }
 
-article {
-  display: block;
+h3 {
+  --color: var(--primary-color);
+
+  color: var(--color);
+  border-bottom: 2px solid var(--color);
+  font-size: var(--font-small-size);
+  font-family: 'Manrope';
+  font-style: italic;
 }
 
-.new-order-button {
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
+p {
+  text-transform: uppercase;
+  font-size: var(--font-small-size);
+}
+
+h1 {
+  color: var(--font-primary-color);
+  font-size: var(--font-title-size);
+  font-family: 'Noto Serif';
+  font-weight: 600;
+}
+
+article {
+  display: block;
 }
 
 .order-columns {

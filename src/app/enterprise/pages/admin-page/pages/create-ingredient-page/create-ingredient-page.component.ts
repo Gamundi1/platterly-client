@@ -1,16 +1,17 @@
-import { Component, inject, model, signal } from '@angular/core';
-import { InputComponent } from '../../../../../shared/components/input/input.component';
-import { form, required } from '@angular/forms/signals';
-import { HttpHandlerService } from '../../../../../shared/services/http-handler.service';
-import { Observable } from 'rxjs/internal/Observable';
-import { Allergen } from '../../../../../shared/interfaces/menu.interface';
-import { UrlProvider } from '../../../../../shared/enums/url-provider.enum';
 import { AsyncPipe } from '@angular/common';
-import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
-import { catchError, take } from 'rxjs';
+import { Component, inject, signal } from '@angular/core';
+import { form, required } from '@angular/forms/signals';
+import { MatCheckbox } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
-import { ErrorModalComponent } from '../../../../../shared/components/error-modal/error-modal.component';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { catchError, take } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
+import { ErrorModalComponent } from '../../../../../shared/components/error-modal/error-modal.component';
+import { InputComponent } from '../../../../../shared/components/input/input.component';
+import { UrlProvider } from '../../../../../shared/enums/url-provider.enum';
+import { Allergen } from '../../../../../shared/interfaces/menu.interface';
+import { HttpHandlerService } from '../../../../../shared/services/http-handler.service';
+import { ErrorService } from '../../../../../shared/services/error.service';
 
 interface CreateIngredientModel {
   name: string;
@@ -26,6 +27,7 @@ interface CreateIngredientModel {
 export class CreateIngredientPageComponent {
   private readonly httpHandlerService = inject(HttpHandlerService);
   private readonly matDialog = inject(MatDialog);
+  private readonly errorService = inject(ErrorService);
 
   availableAllergens$: Observable<Allergen[]>;
 
@@ -72,12 +74,8 @@ export class CreateIngredientPageComponent {
       })
       .pipe(
         catchError((error) => {
-          this.matDialog.open(ErrorModalComponent, {
-            data: {
-              title: error.title,
-              message: error.message,
-              buttonLabel: 'Volver a intentar'
-            },
+          this.errorService.showErrorModal(error.error, 'button_retry', () => {
+            this.errorService.closeErrorModal();
           });
           return [];
         }),

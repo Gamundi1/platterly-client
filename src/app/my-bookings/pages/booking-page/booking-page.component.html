@@ -53,13 +53,3 @@
     }
   </section>
 </article>
-
-<ng-template #showPrices let-price>
-  <div class="price-modal">
-    <h2>Precio total</h2>
-    <p>Estarás pagando:</p>
-    <strong>{{ price.response | currency: 'EUR' }}</strong>
-    <small>Pulsa pagar si estás de acuerdo</small>
-    <button (click)="payOrders()">Pagar</button>
-  </div>
-</ng-template>

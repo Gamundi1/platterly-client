@@ -13,6 +13,20 @@
     align-items: center;
     flex-direction: column;
     gap: 1rem;
+
+    .error-title {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-block: 0.5rem;
+    }
+  }
+
+  p {
+    text-align: center;
+    font-size: 1rem;
+    margin-block: 0.5rem;
+    color: var(--font-primary-color)
   }
 
   fa-icon {
@@ -39,6 +53,7 @@
     text-align: center;
     border-radius: 0.5rem;
     line-height: 2rem;
+    cursor: pointer;
   }
 
   fa-icon {
