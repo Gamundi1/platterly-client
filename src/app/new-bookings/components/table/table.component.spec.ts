@@ -35,14 +35,6 @@ describe('TableComponent', () => {
       availableHours: ['12:00', '14:00', '15:00'],
       status: TableStatus.NEEDS_CLEANING,
     },
-    {
-      number: 4,
-      capacity: 2,
-      inlinePosition: 1,
-      blockPosition: 2,
-      availableHours: ['13:00', '14:00'],
-      status: TableStatus.BLOCKED,
-    },
   ];
 
   beforeEach(async () => {
@@ -239,58 +231,6 @@ describe('TableComponent', () => {
       component.selectedTable.emit(0);
 
       expect(emittedValues).toEqual([1, 0]);
-    });
-  });
-
-  describe('ngOnChanges Lifecycle', () => {
-    it('should clear selection when selected table becomes unavailable due to capacity', () => {
-      component['onTableClick'](mockTables[0]);
-      expect(component.currentSelectedTable()).toBeTruthy();
-
-      fixture.componentRef.setInput('guests', 4);
-      component.ngOnChanges();
-
-      expect(component.currentSelectedTable()).toBeNull();
-    });
-
-    it('should emit 0 when clearing selection due to capacity change', () => {
-      const emittedValues: number[] = [];
-      component.selectedTable.subscribe((tableNumber: number) => {
-        emittedValues.push(tableNumber);
-      });
-
-      component['onTableClick'](mockTables[0]);
-      fixture.componentRef.setInput('guests', 4);
-      component.ngOnChanges();
-
-      expect(emittedValues[emittedValues.length - 1]).toBe(0);
-    });
-
-    it('should clear selection when selected table becomes unavailable due to hour change', () => {
-      component['onTableClick'](mockTables[0]);
-      expect(component.currentSelectedTable()).toBeTruthy();
-
-      fixture.componentRef.setInput('selectedHour', '16:00');
-      component.ngOnChanges();
-
-      expect(component.currentSelectedTable()).toBeNull();
-    });
-
-    it('should keep selection if table remains available', () => {
-      component['onTableClick'](mockTables[2]);
-      const selectedTableBefore = component.currentSelectedTable();
-
-      fixture.componentRef.setInput('selectedHour', '14:00');
-      component.ngOnChanges();
-
-      expect(component.currentSelectedTable()).toEqual(selectedTableBefore);
-    });
-
-    it('should handle null currentSelectedTable gracefully', () => {
-      component.currentSelectedTable.set(null);
-      expect(() => {
-        component.ngOnChanges();
-      }).not.toThrow();
     });
   });
 

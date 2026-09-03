@@ -1,0 +1,65 @@
+@use 'index.scss' as *;
+
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-inline: 1rem;
+  padding-block: 2rem;
+}
+
+.icon-container {
+  block-size: 2rem;
+  align-content: center;
+  border-radius: 1rem;
+  background-color: #c5e7d6;
+  padding-inline: 0.6rem;
+
+  fa-icon {
+    color: oklch(from var(--secondary-color) 0.5 c h);
+  }
+}
+
+p {
+  text-align: center;
+  margin-block: 0.5rem;
+}
+
+.actions-group {
+  --action-bg-color: var(--secondary-color);
+  --action-text-color: var(--white-color);
+  --action-inline-size: 100%;
+  --action-container-direction: column;
+
+  @include medium-breakpoint {
+    --action-inline-size: 50%;
+    --action-container-direction: row;
+  }
+
+  display: flex;
+  flex-direction: var(--action-container-direction);
+  inline-size: 100%;
+  gap: 1rem;
+}
+
+a,
+button {
+  block-size: 2.5rem;
+  border: none;
+  inline-size: var(--action-inline-size);
+  border-radius: 0.5rem;
+  text-transform: uppercase;
+  background-color: var(--action-bg-color);
+  color: var(--action-text-color);
+  text-align: center;
+}
+
+button {
+  cursor: pointer;
+  --action-bg-color: var(--primary-color);
+}
+
+a {
+  text-decoration: none;
+  line-height: 2.5rem;
+}

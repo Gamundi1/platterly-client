@@ -1,0 +1,48 @@
+<section>
+  @if (tableUpdated()) {
+    <div class="ok-status">
+      <span>Mesa actualizada correctamente!</span>
+    </div>
+  }
+  <h3>Pulsa sobre una mesa para marcarla como limpia</h3>
+  <div class="separator"></div>
+  <div class="top-layer">
+    <span class="restaurant-constant">Baño</span>
+    <span class="restaurant-constant kitchen">Cocina</span>
+  </div>
+  <div
+    role="grid"
+    class="table-map"
+    aria-label="Mapa de mesas en el restaurante"
+    [attr.aria-rowcount]="blockTrackCount()"
+    [attr.aria-colcount]="inlineTrackCount()"
+    [style.--inline-tracks]="inlineTrackCount()"
+    [style.--block-tracks]="blockTrackCount()"
+  >
+    @for (row of tableRows(); track row.row) {
+      <div role="row" class="table-row" [attr.aria-rowindex]="row.row">
+        @for (table of row.tables; track table.number) {
+          <button
+            role="gridcell"
+            class="table"
+            [style.grid-column]="getInlineTrack(table)"
+            [style.grid-row]="getBlockTrack(table)"
+            [attr.data-tn]="table.number"
+            #tableButton
+            type="button"
+            [attr.aria-label]="'Mesa ' + table.number + ', estado ' + table.status"
+            (click)="onTableClick(table)"
+            (focus)="focusedTable.set(table)"
+            [tabindex]="isTableFocusable(table) ? 0 : -1"
+            [attr.aria-disabled]="isTableDisabled(table)"
+          >
+            <span>
+              {{ table.number }}
+            </span>
+          </button>
+        }
+      </div>
+    }
+  </div>
+  <span class="restaurant-constant">entrada</span>
+</section>

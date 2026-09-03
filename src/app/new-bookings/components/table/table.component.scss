@@ -39,17 +39,19 @@ section {
 .table-map {
   --cell-size: clamp(3rem, 8cqi, 4.5rem);
 
-  display: grid;
-  grid-template-columns: repeat(var(--inline-tracks), minmax(var(--cell-size), 1fr));
-  grid-template-rows: repeat(var(--block-tracks), minmax(var(--cell-size), 1fr));
-  gap: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   padding-block: 1rem;
+}
+
+.table-row {
+  display: flex;
+  justify-content: space-between;
 }
 
 .table {
   --table-size: 2.5rem;
-  align-self: center;
-  justify-self: center;
   font-size: 1rem;
 
   display: flex;

@@ -137,3 +137,29 @@ legend {
     display: none;
   }
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  @include medium-breakpoint {
+    display: grid;
+    grid-template-columns: 1fr 18rem;
+    grid-template-rows: min-content 1fr;
+    grid-template-areas:
+      'menu-configuration menu-configuration'
+      'dishes drinks';
+  }
+
+  fieldset {
+    grid-area: menu-configuration;
+  }
+
+  dishes-list {
+    grid-area: dishes;
+  }
+
+  drinks-list {
+    grid-area: drinks;
+  }
+}

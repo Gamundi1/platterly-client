@@ -1,0 +1,66 @@
+.price-modal {
+  padding-inline: 1rem;
+  padding-block: 2rem;
+}
+
+.order-price {
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  gap: 1rem;
+
+  span {
+    color: var(--font-primary-color);
+  }
+
+  .price {
+    inline-size: min-content;
+    justify-self: flex-end;
+  }
+  h4 {
+    font-size: 1.25rem;
+  }
+}
+
+.button-overlay {
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.price-action {
+  display: flex;
+  flex-direction: column;
+
+  button {
+    inline-size: 100%;
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-family: 'Manrope';
+    font-weight: bold;
+    cursor: pointer;
+  }
+}
+
+.price-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & h3 {
+    font-family: 'Noto Serif';
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  & button {
+    background-color: transparent;
+    font-size: 1.2rem;
+    color: var(--font-primary-color);
+    border: none;
+    cursor: pointer;
+  }
+}

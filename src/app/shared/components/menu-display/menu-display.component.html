@@ -1,5 +1,5 @@
 <aside aria-labelledby="menu-categories">
-  <h3 id="menu-categories">Categorías de menús</h3>
+  <h3 id="menu-categories">{{ 'menu_categories' | transloco }}</h3>
 
   <div class="menu-horizontal-scroll">
     @for (menuAvailable of menuAvailables(); track menuAvailable.id) {
@@ -18,8 +18,7 @@
   @if (currentMenu) {
     <h2>{{ currentMenu.name | transloco }}</h2>
     <p class="menu-subtitle">
-      Todos nuestros platos se hacen bajo demanda para evitar desperdicios, garantizando la frescura
-      y calidad.
+      {{ 'menu_title_description' | transloco }}
     </p>
     <div class="dishes-container">
       @for (dish of currentMenu.products.dishes; track dish.id) {

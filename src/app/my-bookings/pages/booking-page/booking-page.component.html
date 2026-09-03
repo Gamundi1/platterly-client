@@ -47,19 +47,9 @@
       >
         <img ngSrc="images/my-bookings/create-order.webp" fill alt="" />
         <div class="add-symbol"><fa-icon [icon]="faPlus"></fa-icon></div>
-        <span>Nueva comanda</span>
+        <span>Nuevo pedido</span>
         <p>Explora nuestras mejores ofertas semanales</p>
       </a>
     }
   </section>
 </article>
-
-<ng-template #showPrices let-price>
-  <div class="price-modal">
-    <h2>Precio total</h2>
-    <p>Estarás pagando:</p>
-    <strong>{{ price.response | currency: 'EUR' }}</strong>
-    <small>Pulsa pagar si estás de acuerdo</small>
-    <button (click)="payOrders()">Pagar</button>
-  </div>
-</ng-template>

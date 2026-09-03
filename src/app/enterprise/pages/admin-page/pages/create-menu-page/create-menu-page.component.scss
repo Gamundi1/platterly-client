@@ -1,0 +1,168 @@
+@use 'index.scss' as *;
+
+:host {
+  inline-size: 100%;
+}
+
+section {
+  --configuration-flex-direction: column;
+  --configuration-padding: 0.625rem;
+  --configuration-content-gap: 1rem;
+  --configuration-legend-margin-block-end: 1.5rem;
+
+  @include medium-breakpoint {
+    --configuration-flex-direction: row;
+    --configuration-padding: 3rem;
+    --configuration-content-gap: 1.625rem;
+    --configuration-legend-margin-block-end: 2.25rem;
+  }
+
+  font-family: 'Manrope';
+  inline-size: 100%;
+  max-inline-size: 52rem;
+  margin-inline: auto;
+}
+
+header {
+  display: grid;
+  margin-block: 2rem;
+  grid-template-columns: 1fr 7rem;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    'p button'
+    'h1 button';
+}
+
+p {
+  font-size: var(--font-small-size);
+  text-transform: uppercase;
+  color: var(--font-primary-color);
+  grid-area: p;
+}
+
+h1 {
+  font-size: var(--font-title-size);
+  font-weight: normal;
+  margin-block: 0;
+  line-height: 1;
+  grid-area: h1;
+}
+
+button {
+  grid-area: button;
+  align-self: flex-end;
+  block-size: 2.5rem;
+  border: none;
+  border-radius: 1.2rem;
+  color: var(--white-color);
+  background-color: var(--primary-color);
+}
+
+.dishes,
+.drinks {
+  border: 2px solid var(--black-color);
+  max-block-size: 20rem;
+  overflow-y: auto;
+  border-radius: 0.5rem;
+  padding-inline: 0.5rem;
+}
+
+.drinks {
+  margin-block-start: 1rem;
+}
+
+.menu-configuration {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--gray-color);
+  padding: var(--configuration-padding);
+  border: none;
+  border-radius: 1rem;
+}
+
+.menu-configuration-content {
+  display: flex;
+  flex-direction: var(--configuration-flex-direction);
+  gap: var(--configuration-content-gap);
+}
+
+.input-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  inline-size: 100%;
+
+  & label {
+    text-transform: uppercase;
+    color: var(--font-primary-color);
+    font-size: var(--font-small-size);
+  }
+
+  & input {
+    block-size: 3rem;
+  }
+
+  & .date-picker {
+    inline-size: 100%;
+  }
+}
+
+.identifier {
+  border-radius: 1rem;
+  border: none;
+  padding-inline: 1rem;
+  font-size: var(--font-small-size);
+}
+
+legend {
+  font-size: var(--font-subtitle-size);
+  font-weight: 600;
+  float: left;
+  inline-size: 100%;
+  margin-block-end: var(--configuration-legend-margin-block-end);
+}
+
+::ng-deep .date-picker {
+  align-self: flex-start;
+
+  .mat-mdc-text-field-wrapper {
+    block-size: 3rem;
+  }
+
+  .mdc-text-field--filled {
+    border-radius: 1rem;
+  }
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+}
+
+shared-input {
+  block-size: 3rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  @include medium-breakpoint {
+    display: grid;
+    grid-template-columns: 1fr 18rem;
+    grid-template-rows: min-content 1fr;
+    grid-template-areas:
+      'menu-configuration menu-configuration'
+      'dishes drinks';
+  }
+
+  fieldset {
+    grid-area: menu-configuration;
+  }
+
+  dishes-list {
+    grid-area: dishes;
+  }
+
+  drinks-list {
+    grid-area: drinks;
+  }
+}

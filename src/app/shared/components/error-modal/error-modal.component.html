@@ -1,8 +1,14 @@
 <section class="error-modal">
-  <div mat-dialog-title>
+  <div mat-dialog-title class="error-header">
     <fa-icon [icon]="faTriangleExclamation"></fa-icon>
     <h4 class="error-title">{{ message.title | transloco }}</h4>
   </div>
   <p mat-dialog-content>{{ message.message | transloco }}</p>
-  <a routerLink="/home">Página principal</a>
+  @if (message.buttonCallback) {
+    <button (click)="message.buttonCallback()">{{ message.actionLabel | transloco }}</button>
+  } @else {
+    <a routerLink="/home">{{
+      (message.actionLabel ? message.actionLabel : 'Página principal') | transloco
+    }}</a>
+  }
 </section>

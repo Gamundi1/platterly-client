@@ -25,7 +25,7 @@
           <h3>{{ dish.name | transloco }}</h3>
           <p>{{ dish.ingredients | translateArray }}</p>
         </div>
-        <p>{{ dish.price | currency: 'EUR' }}</p>
+        <p class="price">{{ dish.price | currency: 'EUR' }}</p>
       </div>
     }
   </div>

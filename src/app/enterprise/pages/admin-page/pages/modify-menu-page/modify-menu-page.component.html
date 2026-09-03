@@ -1,16 +1,16 @@
 <section>
   <header>
-    <p>administrar menú</p>
+    <p>{{ 'menu_admin' | transloco }}</p>
     <h1>Editar carta</h1>
     <button (click)="saveMenu()">Guardar</button>
   </header>
 
   <form>
     <fieldset class="menu-configuration">
-      <legend>Configuración del menú</legend>
+      <legend>{{ 'menu_configuration' | transloco }}</legend>
       <div class="menu-configuration-content">
         <div class="input-field">
-          <label for="name">selección de menú</label>
+          <label for="name">{{ 'menu_selection' | transloco }}</label>
           <select id="name" class="menu-select" [formField]="modifyMenuForm.menuId">
             @for (menu of availableMenus(); track menu.id) {
               <option [value]="menu.id">{{ menu.name | transloco }}</option>
@@ -18,7 +18,7 @@
           </select>
         </div>
         <div class="input-field">
-          <label for="from">disponibilidad (inicio)</label>
+          <label for="from">{{ 'initial_disponibility' | transloco }}</label>
           <mat-form-field class="date-picker">
             <input
               id="from"

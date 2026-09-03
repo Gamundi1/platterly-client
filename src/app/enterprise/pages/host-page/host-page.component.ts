@@ -30,7 +30,7 @@ import { RouterLink } from '@angular/router';
     NgTemplateOutlet,
     NgTemplateOutlet,
     NgClass,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './host-page.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,

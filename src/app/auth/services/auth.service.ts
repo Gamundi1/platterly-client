@@ -13,7 +13,9 @@ export class AuthService {
   private jwtTokens = signal<JwtTokens | null>(null);
   private loginConfig = signal<LoginConfig>(DEFAULT_LOGIN_CONFIG);
   private userDetails = signal<User | null>(null);
+  private authInitialized = signal(false);
   public readonly loginConfiguration = this.loginConfig.asReadonly();
+  public readonly isAuthInitialized = this.authInitialized.asReadonly();
 
   private readonly httpHandlerService = inject(HttpHandlerService);
   private readonly matDialog = inject(MatDialog);
@@ -23,8 +25,17 @@ export class AuthService {
   constructor() {
     effect(() => {
       if (this.jwtTokens()) {
-        this.httpHandlerService.getRequest<User>(UrlProvider.user).subscribe((user) => {
-          this.userDetails.set(user);
+        this.httpHandlerService.getRequest<User>(UrlProvider.user).subscribe({
+          next: (user) => {
+            this.userDetails.set(user);
+            this.authInitialized.set(true);
+          },
+          error: () => {
+            this.jwtTokens.set(null);
+            this.userDetails.set(null);
+            this.authInitialized.set(true);
+            localStorage.removeItem('access-token');
+          },
         });
       }
     });
@@ -35,6 +46,8 @@ export class AuthService {
       this.jwtTokens.set({
         accessToken,
       });
+    } else {
+      this.authInitialized.set(true);
     }
   }
 
@@ -60,15 +73,13 @@ export class AuthService {
   }
 
   register(user: User) {
-    return this.httpHandlerService
-      .postRequest<{ 'access-token': string }>(UrlProvider.register, undefined, {
+    return this.httpHandlerService.postRequest<{ 'access-token': string }>(
+      UrlProvider.register,
+      undefined,
+      {
         ...user,
-      })
-      .pipe(
-        tap((response) => {
-          this.saveTokens(response);
-        }),
-      );
+      },
+    );
   }
 
   hasAnyRole(roles: UserRole[]): boolean {

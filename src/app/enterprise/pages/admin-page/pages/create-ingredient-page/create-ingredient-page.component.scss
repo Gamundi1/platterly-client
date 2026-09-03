@@ -1,0 +1,40 @@
+header {
+  display: grid;
+  margin-block: 2rem;
+  grid-template-columns: 1fr 7rem;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    'p button'
+    'h1 button';
+}
+
+p {
+  font-size: var(--font-small-size);
+  text-transform: uppercase;
+  color: var(--font-primary-color);
+  grid-area: p;
+}
+
+h1 {
+  font-size: var(--font-title-size);
+  font-weight: normal;
+  margin-block: 0;
+  line-height: 1;
+  grid-area: h1;
+}
+
+button {
+  grid-area: button;
+  align-self: flex-end;
+  block-size: 2.5rem;
+  border: none;
+  border-radius: 1.2rem;
+  color: var(--white-color);
+  background-color: var(--primary-color);
+}
+
+fieldset {
+  ul {
+    list-style-type: none;
+  }
+}

@@ -1,0 +1,39 @@
+<section>
+  <header>
+    <p>{{ 'menu_admin' | transloco }}</p>
+    <h1>Crear ingrediente</h1>
+    <button (click)="saveIngredient()">Crear</button>
+  </header>
+  <form>
+    <shared-input
+      [field]="createIngredientForm.name"
+      label="Identificador"
+      placeHolder="Introduce un identificador para el nombre"
+      errorMessage="El identificador es obligatorio"
+    ></shared-input>
+
+    <shared-input
+      [field]="createIngredientForm.description"
+      label="Descripción"
+      placeHolder="Introduce un identificador para la descripción"
+      errorMessage="La descripción es obligatoria"
+    >
+    </shared-input>
+    @let allergens = availableAllergens$ | async;
+    <fieldset>
+      <legend>Selecciona los alérgenos</legend>
+      <ul>
+        @for (allergen of allergens; track allergen) {
+          <li>
+            <mat-checkbox
+              [checked]="isChecked(allergen.name)"
+              (change)="update($event.checked, allergen.name)"
+            >
+              {{ allergen.name }}
+            </mat-checkbox>
+          </li>
+        }
+      </ul>
+    </fieldset>
+  </form>
+</section>

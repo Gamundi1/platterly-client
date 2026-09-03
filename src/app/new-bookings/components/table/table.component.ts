@@ -5,7 +5,6 @@ import {
   effect,
   ElementRef,
   input,
-  OnChanges,
   output,
   signal,
   viewChildren,
@@ -67,6 +66,21 @@ export class TableComponent {
     return tables.length ? Math.max(...tables.map((table) => table.blockPosition!)) : 1;
   });
 
+  protected readonly tableRows = computed(() => {
+    const tables = this.tables();
+
+    return Array.from({ length: this.blockTrackCount() }, (_, index) => {
+      const row = index + 1;
+
+      return {
+        row,
+        tables: tables
+          .filter((table) => this.getBlockTrack(table) === row)
+          .sort((a, b) => this.getInlineTrack(a) - this.getInlineTrack(b)),
+      };
+    });
+  });
+
   protected readonly inlineTrackCount = computed(
     () => this.maxInlinePosition() - this.minInlinePosition() + 1,
   );
@@ -95,7 +109,7 @@ export class TableComponent {
     this.selectedTable.emit(table.number);
   }
 
-  private focusNextTableButton(direction: 'up' | 'down' | 'left' | 'right') {
+  private focusNextTableButton(direction: 'up' | 'down' | 'left' | 'right' | 'home' | 'end') {
     const currentTable = this.focusedTable();
     let nextTable: Table | undefined;
     const blockPosition = currentTable?.blockPosition || 0;
@@ -115,6 +129,12 @@ export class TableComponent {
 
     if (direction === 'right') {
       nextTable = this.findNextAvailableTable('inlinePosition', inlinePosition + 1);
+    }
+    if (direction === 'home') {
+      nextTable = this.findNextAvailableTable('inlinePosition', this.minInlinePosition());
+    }
+    if (direction === 'end') {
+      nextTable = this.findNextAvailableTable('inlinePosition', this.maxInlinePosition());
     }
     if (!nextTable) return;
     this.focusTableNumber(nextTable);
@@ -171,6 +191,20 @@ export class TableComponent {
         event.preventDefault();
         this.focusNextTableButton('right');
         break;
+      case 'Home':
+        event.preventDefault();
+        this.focusNextTableButton('home');
+        break;
+      case 'End':
+        event.preventDefault();
+        this.focusNextTableButton('end');
+        break;
     }
+  }
+
+  protected isTableFocusable(table: Table): boolean {
+    if (!this.selectedHour()) return false;
+    if (!this.focusedTable()) return table.number === this.tables()[0].number;
+    return table.number === this.focusedTable()?.number;
   }
 }

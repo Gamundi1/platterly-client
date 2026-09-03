@@ -1,4 +1,8 @@
 <article>
+  <div class="header">
+    <h1>Panel de Cocinero</h1>
+    <p>Revisa los pedidos actuales y actualiza su estado</p>
+  </div>
   <div class="order-columns">
     <div class="order-column">
       <h3>Pendientes</h3>
@@ -13,7 +17,7 @@
       </div>
     </div>
     <div class="order-column">
-      <h3>En preparación</h3>
+      <h3 [style.--color]="'var(--secondary-color)'">En preparación</h3>
       <div class="order-container">
         @for (order of preparingOrders; track order.id) {
           <enterprise-order-item
@@ -25,7 +29,7 @@
       </div>
     </div>
     <div class="order-column">
-      <h3>Listas para servir</h3>
+      <h3 [style.--color]="'var(--info-color)'">Listas para servir</h3>
       <div class="order-container">
         @for (order of readyOrders; track order.id) {
           <enterprise-order-item [order]="order"> </enterprise-order-item>
@@ -33,7 +37,7 @@
       </div>
     </div>
     <div class="order-column">
-      <h3>Servidas</h3>
+      <h3 [style.--color]="'var(--black-color)'">Servidas</h3>
       <div class="order-container">
         @for (order of alreadyDeliveredOrders; track order.id) {
           <enterprise-order-item [order]="order"></enterprise-order-item>

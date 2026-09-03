@@ -12,15 +12,17 @@ fieldset {
 
   padding: 0;
   border: none;
+  display: flex;
+  flex-direction: column;
 }
 
 legend {
-
   display: flex;
   inline-size: 100%;
   justify-content: space-between;
   align-items: center;
   margin-block-end: 2rem;
+  float: left;
 
   & .title {
     font-size: var(--font-subtitle-size);
@@ -39,18 +41,9 @@ legend {
   }
 }
 
-.image-container {
-  position: relative;
-  inline-size: 10rem;
-  display: var(--image-container-display);
-
-  & img {
-    block-size: 100%;
-    inline-size: 100%;
-    object-fit: cover;
-    border-end-start-radius: 0.5rem;
-    border-start-start-radius: 0.5rem;
-  }
+img {
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .dishes-list {
@@ -58,7 +51,6 @@ legend {
   flex-direction: column;
   gap: var(--dishes-list-gap);
 
-  block-size: 17rem;
   max-block-size: 17rem;
 
   overflow-y: auto;
@@ -73,6 +65,8 @@ legend {
 
   cursor: pointer;
   display: flex;
+  align-items: center;
+  padding-inline: 0.5rem;
   block-size: var(--dish-card-block-size);
   flex-shrink: 0;
   border: 1px solid var(--dish-border-color);
@@ -83,6 +77,7 @@ legend {
 
 .dish-info {
   display: flex;
+  flex-grow: 1;
   block-size: 100%;
   justify-content: center;
   flex-direction: column;
@@ -112,8 +107,14 @@ button {
   color: var(--primary-color);
   text-transform: uppercase;
   background-color: transparent;
-  border: 3px dashed var(--primary-color);
+  border: 3px dashed;
+  border-color: #dcc1b9;
   border-radius: 0.5rem;
   cursor: pointer;
   margin-block-start: var(--dishes-list-gap);
+}
+
+.price {
+  color: var(--primary-color);
+  font-weight: 600;
 }

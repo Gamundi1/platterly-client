@@ -3,12 +3,13 @@ import { ChangeDetectionStrategy, Component, ElementRef, Signal, viewChild } fro
 import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { ServicesGridComponent } from '../../components/services-grid/services-grid.component';
+import { BookingIncentiveComponent } from "../../components/booking-incentive/booking-incentive.component";
 
 @Component({
   templateUrl: './home-page.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './home-page.component.scss',
-  imports: [NgOptimizedImage, RouterLink, MatIcon, ServicesGridComponent],
+  imports: [NgOptimizedImage, RouterLink, MatIcon, ServicesGridComponent, BookingIncentiveComponent],
 })
 export class HomePageComponent {
   private summaryServices: Signal<ElementRef | undefined> = viewChild('servicesSummary');

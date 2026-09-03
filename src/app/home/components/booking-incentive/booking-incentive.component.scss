@@ -1,0 +1,47 @@
+:host {
+  display: block;
+  block-size: 100%;
+}
+
+.booking-incentive {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-inline: 1rem;
+  padding-block: 2rem;
+  justify-content: space-between;
+  block-size: 100%;
+}
+
+small {
+  color: var(--primary-color);
+  text-transform: uppercase;
+}
+
+h3 {
+  color: var(--white-color);
+  font-size: var(--font-title-size);
+  margin-block: 0;
+}
+
+p {
+  color: var(--white-color);
+  font-size: var(--font-text-size);
+}
+
+form {
+  display: flex;
+  backdrop-filter: blur(2.4px) saturate(148%);
+  -webkit-backdrop-filter: blur(2.4px) saturate(148%);
+  background-color: rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  border: 1px solid rgba(209, 213, 219, 0.174);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  align-items: center;
+}
+
+::ng-deep .booking-incentive-date {
+  --mat-form-field-filled-container-color: transparent;
+  --mat-form-field-filled-input-text-color: var(--white-color);
+  --mat-datepicker-toggle-icon-color: var(--primary-color);
+}

@@ -1,0 +1,54 @@
+<section>
+  <header>
+    <p>{{ 'menu_admin' | transloco }}</p>
+    <h1>{{ 'menu_create_title' | transloco }}</h1>
+    <button (click)="createMenu()">Crear</button>
+  </header>
+
+  <form>
+    <fieldset class="menu-configuration">
+      <legend>Configuración del menú</legend>
+      <div class="menu-configuration-content">
+        <div class="input-field">
+          <label>Identificador</label>
+          <input
+            id="identifier"
+            class="identifier"
+            placeholder="seasonal_menu"
+            [formField]="createMenuForm.name"
+          />
+        </div>
+        <div class="input-field">
+          <label for="from">disponibilidad (inicio)</label>
+          <mat-form-field class="date-picker">
+            <input
+              id="from"
+              matInput
+              [matDatepicker]="datePickerFrom"
+              [formField]="createMenuForm.availableFrom"
+            />
+            <mat-datepicker-toggle matSuffix [for]="datePickerFrom"></mat-datepicker-toggle>
+            <mat-datepicker #datePickerFrom></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="input-field">
+          <label for="to">disponibilidad (fin)</label>
+          <mat-form-field class="date-picker">
+            <input
+              id="to"
+              matInput
+              [min]="minDate"
+              [matDatepicker]="datePickerTo"
+              [formField]="createMenuForm.availableTo"
+            />
+            <mat-datepicker-toggle matSuffix [for]="datePickerTo"></mat-datepicker-toggle>
+            <mat-datepicker #datePickerTo></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+    </fieldset>
+    <dishes-list [(dishes)]="selectedDishes"></dishes-list>
+
+    <drinks-list [(drinks)]="selectedDrinks"></drinks-list>
+  </form>
+</section>

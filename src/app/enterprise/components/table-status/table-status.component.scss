@@ -1,0 +1,91 @@
+:host {
+  display: block;
+  container-type: inline-size;
+}
+
+section {
+  --table-map-border-radius: 0.5rem;
+  background: var(--white-color);
+  border-radius: var(--table-map-border-radius);
+  border: 1px solid var(--black-color);
+  padding-inline: 1rem;
+  padding-block: 1rem;
+  position: relative;
+}
+
+.table-map {
+  --cell-size: clamp(3rem, 8cqi, 4.5rem);
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-block: 1rem;
+}
+
+.table-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.table {
+  --table-size: 2.5rem;
+  font-size: 1rem;
+
+  inline-size: var(--table-size);
+  block-size: 1.8rem;
+  background-color: var(--warning-color);
+  border-radius: 0.25rem;
+  border: none;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 3px solid var(--black-color);
+    outline-offset: 4px;
+  }
+
+  &[aria-disabled='true'] {
+    background-color: var(--secondary-color);
+    cursor: not-allowed;
+  }
+}
+
+.top-layer {
+  display: flex;
+  gap: 1rem;
+  inline-size: 100%;
+}
+
+.restaurant-constant {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 0.5rem;
+  min-inline-size: 4rem;
+  min-block-size: 2rem;
+
+  border: 1px solid var(--black-color);
+  border-radius: var(--table-map-border-radius);
+
+  &.kitchen {
+    flex: 1;
+  }
+}
+
+.separator {
+  inline-size: 100%;
+  block-size: 1px;
+  border-block: 1px dashed var(--secondary-color);
+  margin-block: 1rem;
+
+  @container (min-width: 400px) {
+    display: none;
+  }
+}
+
+.ok-status {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  color: var(--success-color);
+  background-color: oklch(from var(--font-success-color) 0.9 0.1 120);
+  font-size: var(--font-text-size);
+}
