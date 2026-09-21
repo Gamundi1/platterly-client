@@ -1,21 +1,18 @@
 import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { MatTooltip } from '@angular/material/tooltip';
 import { Allergen } from '../../interfaces/menu.interface';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'allergen-icon',
   templateUrl: './allergen-icon.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  imports: [MatTooltip],
+  imports: [MatTooltip, TranslocoPipe],
 })
 export class AllergenIconComponent {
   public allergen = input.required<Allergen>();
 
-  icons: Record<string, string> = {
-    egg: '/images/menus/allergens/egg.svg',
-  };
-
   getIconPath(): string {
-    return this.icons[this.allergen().icon];
+    return `/images/menus/allergens/${this.allergen().icon}.svg`;
   }
 }

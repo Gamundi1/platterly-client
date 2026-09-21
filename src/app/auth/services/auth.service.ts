@@ -1,6 +1,6 @@
 import { effect, inject, Injectable, signal } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { tap } from 'rxjs';
+import { firstValueFrom, Observable, tap } from 'rxjs';
 import { UrlProvider } from '../../shared/enums/url-provider.enum';
 import { DEFAULT_LOGIN_CONFIG, LoginConfig } from '../../shared/interfaces/login-config.interface';
 import { HttpHandlerService } from '../../shared/services/http-handler.service';
@@ -51,11 +51,13 @@ export class AuthService {
     }
   }
 
-  login(email: string, password: string) {
+  login(email: string, password: string, isProvisionalUser = false, id?: string) {
     return this.httpHandlerService
       .postRequest<{ 'access-token': string }>(UrlProvider.login, undefined, {
         email,
         password,
+        isProvisionalUser,
+        id,
       })
       .pipe(
         tap((response) => {
@@ -73,13 +75,15 @@ export class AuthService {
   }
 
   register(user: User) {
-    return this.httpHandlerService.postRequest<{ 'access-token': string }>(
-      UrlProvider.register,
-      undefined,
-      {
-        ...user,
-      },
-    );
+    return this.httpHandlerService.postRequest<{ id: string }>(UrlProvider.register, undefined, {
+      ...user,
+    });
+  }
+
+  async registerAndLogin(user: User) {
+    const userId = await firstValueFrom(this.register(user));
+    const loggedUser = await firstValueFrom(this.login(user.email!, user.password!, true, userId.id));
+    return loggedUser;
   }
 
   hasAnyRole(roles: UserRole[]): boolean {

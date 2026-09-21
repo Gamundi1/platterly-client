@@ -1,0 +1,26 @@
+<section>
+    <h3>Resumen de la reserva</h3>
+    <div class="summary-item">
+        <mat-icon class="summary-icon">event</mat-icon>
+        <div class="summary-info">
+            <span class="label">{{ 'date' | transloco }}</span>
+            <span class="description"> {{ dateSelected().toJSDate()| date: "EEEE d 'de' MMMM" }}</span>
+        </div>
+    </div>
+    <div class="summary-item">
+        @let hour = hourSelected() ?? ('non_selected_value' | transloco);
+        <mat-icon class="summary-icon">schedule</mat-icon>
+        <div class="summary-info">
+            <span class="label">{{ 'hour' | transloco }}</span>
+            <span class="description">{{ hour }}</span>
+        </div>
+    </div>
+    <div class="summary-item">
+        @let tableNumber = tableSelected() === 0 ? ('non_selected_value' | transloco) : tableSelected();
+        <mat-icon class="summary-icon">person</mat-icon>
+        <div class="summary-info">
+            <span class="label">{{ 'table' | transloco }}</span>
+            <span class="description">{{ tableNumber }}</span>
+        </div>
+    </div>
+</section>

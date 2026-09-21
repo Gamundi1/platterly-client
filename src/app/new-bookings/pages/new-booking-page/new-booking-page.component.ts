@@ -31,6 +31,10 @@ import { CompleteAccountModalComponent } from '../../components/complete-account
 import { UserRole } from '../../../shared/interfaces/user.interface';
 import { BookingConfirmedHostComponent } from '../../components/booking-confirmed-host/booking-confirmed-host.component';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
+import { BookingSummaryComponent } from '../../components/booking-summary/booking-summary.component';
+import { isDateAfterOrBefore } from '../../../helpers/date.helper';
+import { TimeInterval } from '../../../shared/enums/time-interval.enum';
 
 interface NewBookingFormInterface {
   guests: string;
@@ -52,6 +56,7 @@ interface NewBookingFormInterface {
     MatInputModule,
     MatDatepickerModule,
     MatProgressSpinner,
+    BookingSummaryComponent,
   ],
   templateUrl: './new-booking-page.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -96,6 +101,7 @@ export class NewBookingPageComponent {
   private readonly httpHandlerService = inject(HttpHandlerService);
   private readonly authService = inject(AuthService);
   private readonly matDialog = inject(MatDialog);
+  private readonly activatedRoute = inject(ActivatedRoute);
 
   protected linkCopied = signal(false);
   protected booking = signal({});
@@ -107,28 +113,32 @@ export class NewBookingPageComponent {
   });
 
   constructor() {
-    this.availableHours$ = this.httpHandlerService
-      .getRequest<AvailableHour[]>(UrlProvider.getAvailableHours)
-      .pipe(
-        map((hours) =>
-          hours.map((hour) => {
-            return {
-              ...hour,
-              interval: hour.interval.split('-')[0].trim(),
-            };
-          }),
-        ),
-      );
+    this.availableHours$ = this.httpHandlerService.getRequest<AvailableHour[]>(
+      UrlProvider.getAvailableHours,
+    );
 
-    this.availableTables$ = toObservable(
-      computed(() => this.bookingForm().value().date),
-    ).pipe(
+    this.availableTables$ = toObservable(computed(() => this.bookingForm().value().date)).pipe(
       switchMap((date) =>
         this.httpHandlerService.getRequest<Table[]>(UrlProvider.getAvailableTables, {
           date: date.toISODate()!.slice(0, 10),
         }),
       ),
     );
+
+    const queryParams = this.activatedRoute.snapshot.queryParamMap;
+    const dateParam = queryParams.get('date');
+    const guestsParam = queryParams.get('guests');
+    if (dateParam && guestsParam) {
+      const date = new Date(dateParam);
+      if (this.minDate > date) {
+        return;
+      }
+      this.bookingModel.update((model) => ({
+        ...model,
+        date: DateTime.fromISO(dateParam),
+        guests: guestsParam,
+      }));
+    }
   }
 
   onTableSelected(tableNumber: number): void {
@@ -163,6 +173,11 @@ export class NewBookingPageComponent {
     }
 
     this.createBooking();
+  }
+
+  protected isHourAvailable(hour: AvailableHour): boolean {
+    const interval = isDateAfterOrBefore(this.bookingForm().value().date.toJSDate(), hour);
+    return interval === TimeInterval.AFTER;
   }
 
   private createBooking() {

@@ -12,10 +12,11 @@ import {
 import { TranslocoPipe } from '@jsverse/transloco';
 import { map, Observable } from 'rxjs';
 import { UrlProvider } from '../../enums/url-provider.enum';
-import { Dish, Menu } from '../../interfaces/menu.interface';
+import { Dish, Drink, Menu } from '../../interfaces/menu.interface';
 import { HttpHandlerService } from '../../services/http-handler.service';
 import { AllergenIconComponent } from '../allergen-icon/allergen-icon.component';
 import { TranslateArrayPipe } from "../../pipes/translate-array.pipe";
+import { MatIcon } from '@angular/material/icon';
 
 interface MenuAside {
   name: string;
@@ -27,7 +28,7 @@ interface MenuAside {
   templateUrl: './menu-display.component.html',
   styleUrl: './menu-display.component.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
-  imports: [NgOptimizedImage, CurrencyPipe, AllergenIconComponent, TranslocoPipe, TranslateArrayPipe],
+  imports: [NgOptimizedImage, CurrencyPipe, AllergenIconComponent, TranslocoPipe, TranslateArrayPipe, MatIcon],
 })
 export class MenuDisplayComponent implements OnInit {
   protected readonly httpHandlerService = inject(HttpHandlerService);
@@ -35,6 +36,7 @@ export class MenuDisplayComponent implements OnInit {
 
   public showAddButton = input<boolean>(false);
   public selectedDish = output<Dish>();
+  public selectedDrink = output<Drink>();
 
   protected menuAvailables = signal<MenuAside[]>([]);
   protected menus: Record<string, Menu> = {};

@@ -22,7 +22,7 @@ import { catchError, map, Observable } from 'rxjs';
 import { ErrorModalComponent } from '../../../shared/components/error-modal/error-modal.component';
 import { MenuDisplayComponent } from '../../../shared/components/menu-display/menu-display.component';
 import { UrlProvider } from '../../../shared/enums/url-provider.enum';
-import { Dish } from '../../../shared/interfaces/menu.interface';
+import { Dish, Drink } from '../../../shared/interfaces/menu.interface';
 import { HttpHandlerService } from '../../../shared/services/http-handler.service';
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
 import { MatIcon } from '@angular/material/icon';
@@ -30,7 +30,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { TranslocoPipe } from '@jsverse/transloco';
 
 interface OrderItem {
-  dish: Dish;
+  product: Dish | Drink;
   quantity: number;
 }
 
@@ -51,7 +51,7 @@ interface OrderItem {
     NgTemplateOutlet,
     MatIcon,
     AsyncPipe,
-    TranslocoPipe
+    TranslocoPipe,
   ],
 })
 export class CreateOrderPageComponent implements OnInit {
@@ -104,40 +104,55 @@ export class CreateOrderPageComponent implements OnInit {
   }
 
   protected selectedDish(dish: Dish): void {
-    if (this.orderItems().some((item) => item.dish.id === dish.id)) {
+    if (this.orderItems().some((item) => item.product.id === dish.id)) {
       this.orderItems.update((items) =>
         items.map((item) => {
-          if (item.dish.id === dish.id) {
+          if (item.product.id === dish.id) {
             return { ...item, quantity: item.quantity + 1 };
           }
           return item;
         }),
       );
     } else {
-      this.orderItems.update((items) => [...items, { dish, quantity: 1 }]);
+      this.orderItems.update((items) => [...items, { product: dish, quantity: 1 }]);
     }
   }
 
-  protected removeDish(dish: Dish): void {
-    const orderItem = this.orderItems().find((item) => item.dish.id === dish.id);
+  protected selectedDrink(drink: Drink): void {
+    if (this.orderItems().some((item) => item.product.id === drink.id)) {
+      this.orderItems.update((items) =>
+        items.map((item) => {
+          if (item.product.id === drink.id) {
+            return { ...item, quantity: item.quantity + 1 };
+          }
+          return item;
+        }),
+      );
+    } else {
+      this.orderItems.update((items) => [...items, { product: drink, quantity: 1 }]);
+    }
+  }
+
+  protected removeDish(id: string): void {
+    const orderItem = this.orderItems().find((item) => item.product.id === id);
 
     if (orderItem && orderItem.quantity > 1) {
       this.orderItems.update((items) =>
         items.map((item) => {
-          if (item.dish.id === dish.id) {
+          if (item.product.id === id) {
             return { ...item, quantity: item.quantity - 1 };
           }
           return item;
         }),
       );
     } else {
-      this.orderItems.update((items) => items.filter((item) => item.dish.id !== dish.id));
+      this.orderItems.update((items) => items.filter((item) => item.product.id !== id));
     }
   }
 
   protected getTotalPrice(): number {
     const total = this.orderItems().reduce(
-      (total, product) => total + Number(product.dish.price) * product.quantity,
+      (total, product) => total + Number(product.product.price) * product.quantity,
       0,
     );
     return total;
@@ -165,7 +180,7 @@ export class CreateOrderPageComponent implements OnInit {
         },
         {
           products: this.orderItems().map((item) => ({
-            productId: item.dish.id,
+            productId: item.product.id,
             quantity: item.quantity,
           })),
         },

@@ -34,6 +34,22 @@
   inline-size: 100%;
 }
 
+.booking-incentive-guests {
+  @include mat.form-field-overrides(
+    (
+      container-text-font: 'Manrope',
+      container-text-size: 0.8rem,
+      filled-container-shape: 1rem,
+      filled-container-color: var(--white-color),
+      filled-active-indicator-color: transparent,
+      filled-focus-active-indicator-color: var(--white-color),
+      filled-error-focus-label-text-color: transparent,
+      filled-hover-active-indicator-color: transparent,
+      container-height: 3rem,
+    )
+  );
+}
+
 :root {
   @include mat.datepicker-overrides(
     (
@@ -42,6 +58,14 @@
       calendar-date-selected-state-background-color: var(--primary-color),
       calendar-date-today-outline-color: var(--primary-color),
       calendar-date-today-selected-state-outline-color: var(--primary-color),
+      toggle-active-state-icon-color: var(--primary-color),
+    )
+  );
+
+  @include mat.select-overrides(
+    (
+      enabled-arrow-color: var(--white-color),
+      focused-arrow-color: var(--white-color),
     )
   );
 
@@ -50,12 +74,21 @@
   }
 }
 
+.summary-icon {
+  @include mat.icon-overrides(
+    (
+      color: var(--primary-color),
+    )
+  );
+}
+
 .date-picker {
   @include mat.form-field-overrides(
     (
       filled-container-color: var(--white-color),
       outlined-label-text-size: 0.8rem,
       container-text-font: 'Manrope',
+      filled-focus-active-indicator-color: var(--white-color),
       filled-active-indicator-color: transparent,
     )
   );

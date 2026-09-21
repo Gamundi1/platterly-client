@@ -1,0 +1,43 @@
+<section>
+  <header>
+    <p>{{ 'menu_admin' | transloco }}</p>
+    <h1>{{ 'menu_create_title' | transloco }}</h1>
+    <button (click)="createDish()">Crear</button>
+  </header>
+  <form>
+    <shared-input
+      [field]="createProductForm.name"
+      label="Identificador"
+      placeHolder="Introduce un identificador único"
+      errorMessage="El identificador es obligatorio"
+    >
+    </shared-input>
+    <shared-input
+      [field]="createProductForm.price"
+      type="number"
+      label="Precio ( EUR )"
+      placeHolder="Introduce el precio total en euros"
+      errormessage="El precio es obligatorio"
+    >
+    </shared-input>
+
+    <shared-input
+      [field]="createProductForm.cookTime"
+      type="number"
+      label="Tiempo de preparación (minutos)"
+      placeHolder="Introduce el tiempo de preparación"
+      errormessage="El tiempo de preparación es obligatorio"
+    >
+    </shared-input>
+
+    <shared-input
+      [field]="createProductForm.images"
+      label="Imagen (URL)"
+      placeHolder="Introduce la url de la imagen"
+      errormessage="La url es obligatoria"
+    >
+    </shared-input>
+
+    
+  </form>
+</section>

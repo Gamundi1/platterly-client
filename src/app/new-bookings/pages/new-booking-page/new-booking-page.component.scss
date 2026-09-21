@@ -55,11 +55,9 @@ h3 {
 
   & .title {
     margin-block-start: 1rem;
-  }
-
-  span {
     grid-row: 1 / 2;
   }
+
 
   @include large-device {
     display: grid;
@@ -89,6 +87,10 @@ h3 {
   padding-block: var(--booking-info-padding);
   border-radius: inherit;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table-selector {
+  margin-block-start: 5rem;
 }
 
 #guests-selector {
@@ -135,10 +137,6 @@ input[type='radio'] {
   & + .guest-value {
     padding-inline: 0.8rem;
   }
-
-  &.hour-selector[aria-selected='true'] {
-    background-color: var(--primary-color);
-  }
 }
 
 .hour {
@@ -182,6 +180,12 @@ input[type='radio'] {
     &:has(.hour-selector[aria-selected='true']) {
       background-color: var(--primary-color);
       color: var(--white-color);
+    }
+
+    &:has(.hour-selector[aria-disabled='true']) {
+      border: 1px dashed #DCC1B9;
+      opacity: 0.5;
+      cursor: not-allowed;
     }
 
     &:has(.hour-selector:focus-visible) {
@@ -362,7 +366,11 @@ booking-table {
   align-self: flex-start;
 
   &.mat-mdc-form-field {
-    max-inline-size: 20rem;
+    inline-size: 100%;
+
+    @include medium-breakpoint {
+      max-inline-size: 20rem;
+    }
   }
 
   .mdc-text-field--filled {

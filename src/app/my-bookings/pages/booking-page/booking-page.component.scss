@@ -1,13 +1,22 @@
 @use 'index.scss' as *;
 
 :host {
+
+  --header-flex-direction: column;
+
+  @include medium-breakpoint {
+    --header-flex-direction: row;
+  }
+
   display: block;
   margin-block: 2rem;
 }
 
 header {
   display: flex;
+  gap: 2rem;
   justify-content: space-between;
+  flex-direction: var(--header-flex-direction);
 }
 
 h2 {
@@ -133,6 +142,7 @@ h1 {
   align-items: flex-end;
   gap: 0.25rem;
   padding-inline: 1rem;
+  padding-block: 0.5rem;
   background: var(--gray-color);
   border-radius: 0.5rem;
 

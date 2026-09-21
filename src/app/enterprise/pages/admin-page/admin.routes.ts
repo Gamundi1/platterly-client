@@ -19,10 +19,10 @@ export const ADMIN_ROUTES = [
       ),
   },
   {
-    path: 'create-product',
+    path: 'create-dish',
     loadComponent: () =>
-      import('./pages/create-product-page/create-product-page.component').then(
-        (m) => m.CreateProductPageComponent,
+      import('./pages/create-dish-page/create-dish-page.component').then(
+        (m) => m.CreateDishPageComponent,
       ),
   },
   {

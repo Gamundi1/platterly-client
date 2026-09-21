@@ -87,7 +87,7 @@ export class InvitationPageComponent implements OnInit {
         name: this.bookingForm().value().name,
         role: UserRole.USER,
       };
-      await firstValueFrom(this.authService.register(user));
+      await this.authService.registerAndLogin(user);
       this.sendJoinRequest();
     } else {
       this.sendJoinRequest();

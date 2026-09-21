@@ -14,9 +14,10 @@ import { TimeInterval } from '../../../shared/enums/time-interval.enum';
 import { UrlProvider } from '../../../shared/enums/url-provider.enum';
 import { HttpHandlerService } from '../../../shared/services/http-handler.service';
 import { InvitationComponent } from '../../components/invitation/invitation.component';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
-  imports: [AsyncPipe, NgTemplateOutlet, DatePipe, NgClass, FaIconComponent],
+  imports: [AsyncPipe, NgTemplateOutlet, DatePipe, NgClass, FaIconComponent, TranslocoPipe],
   templateUrl: './my-bookings-page.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './my-bookings-page.component.scss',
@@ -134,6 +135,8 @@ export class MyBookingsPage {
         { bookingId: booking.id },
         { status: BookingStatus.CANCELLED },
       )
-      .subscribe();
+      .subscribe(() => {
+        this.getUserBookings();
+      });
   }
 }
