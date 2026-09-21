@@ -2,7 +2,7 @@
   ><mat-icon>chevron_left</mat-icon>Volver a la reserva</a
 >
 <article class="create-order-container">
-  <menu-display (selectedDish)="selectedDish($event)" [showAddButton]="true"></menu-display>
+  <menu-display (selectedDish)="selectedDish($event)" (selectedDrink)="selectedDrink($event)" [showAddButton]="true"></menu-display>
 
   @if (!(isMobile$ | async)) {
     <ng-template [ngTemplateOutlet]="cart"></ng-template>
@@ -20,10 +20,10 @@
     <h2 mat-dialog-title>Por favor, verifica tu pedido</h2>
     <div mat-dialog-content>
       <div class="order-products">
-        @for (orderItem of orderItems(); track orderItem.dish.id) {
+        @for (orderItem of orderItems(); track orderItem.product.id) {
           <div class="order-product">
-            <span>{{ orderItem.quantity }} x ({{ orderItem.dish.name | transloco }})</span>
-            <span>{{ orderItem.quantity * orderItem.dish.price | currency: 'EUR' }}</span>
+            <span>{{ orderItem.quantity }} x ({{ orderItem.product.name | transloco }})</span>
+            <span>{{ orderItem.quantity * orderItem.product.price | currency: 'EUR' }}</span>
           </div>
         }
       </div>
@@ -41,18 +41,18 @@
       <h2>Tu carrito</h2>
     </header>
     <div class="order-items">
-      @for (orderItem of orderItems(); track orderItem.dish.id) {
+      @for (orderItem of orderItems(); track orderItem.product.id) {
         <div class="order-item">
           <div class="order-item-header">
-            <h3>{{ orderItem.dish.name | transloco }}</h3>
-            <button (click)="removeDish(orderItem.dish)">
+            <h3>{{ orderItem.product.name | transloco }}</h3>
+            <button (click)="removeDish(orderItem.product.id)">
               <mat-icon>close</mat-icon>
             </button>
           </div>
           <div class="order-item-details">
             <span>{{ orderItem.quantity }}</span>
-            <p>{{ orderItem.dish.price | currency: orderItem.dish.priceUnits }}</p>
-            <span>{{ orderItem.quantity * orderItem.dish.price | currency: 'EUR' }}</span>
+            <p>{{ orderItem.product.price | currency: orderItem.product.priceUnits }}</p>
+            <span>{{ orderItem.quantity * orderItem.product.price | currency: 'EUR' }}</span>
           </div>
         </div>
       }

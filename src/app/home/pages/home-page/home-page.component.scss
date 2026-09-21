@@ -187,7 +187,8 @@ h2 {
 
 .check-bookings {
   background-color: var(--black-color);
-  block-size: 20rem;
+  block-size: 24rem;
   inline-size: 100dvw;
   margin-inline-start: calc(50% - 50dvw);
+  margin-block-start: 1rem;
 }

@@ -25,6 +25,7 @@ import { OrderCardComponent } from '../../components/order-card/order-card.compo
 import { PricesModalComponent } from '../../components/prices-modal/prices-modal.component';
 import { Order } from '../../interfaces/order.interface';
 import { Price } from '../../interfaces/price.interface';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   templateUrl: './booking-page.component.html',
@@ -38,6 +39,7 @@ import { Price } from '../../interfaces/price.interface';
     OrderCardComponent,
     MatIconModule,
     CurrencyPipe,
+    TranslocoPipe
   ],
 })
 export class BookingPageComponent implements OnInit {

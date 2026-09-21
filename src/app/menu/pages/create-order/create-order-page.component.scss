@@ -1,3 +1,5 @@
+@use 'index.scss' as *;
+
 :host {
   display: block;
   margin-block-start: 2rem;
@@ -23,6 +25,10 @@
   padding-inline: 1.5rem;
   padding-block: 2rem;
   border-radius: 0.5rem;
+
+  @include medium-breakpoint {
+    margin-block-start: 7rem;
+  }
 
   header {
     display: flex;

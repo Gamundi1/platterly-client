@@ -1,63 +1,71 @@
-<aside aria-labelledby="menu-categories">
-  <h3 id="menu-categories">{{ 'menu_categories' | transloco }}</h3>
+<h1>{{ showAddButton() ? 'Crea tu pedido' : 'Nuestras cartas' }}</h1>
+<p class="ingredients-incentive">Con los mejores ingredientes</p>
+<article>
+  <aside aria-labelledby="menu-categories">
+    <h3 id="menu-categories">{{ 'menu_categories' | transloco }}</h3>
 
-  <div class="menu-horizontal-scroll">
-    @for (menuAvailable of menuAvailables(); track menuAvailable.id) {
-      <button
-        [aria-selected]="selectedMenuId() === menuAvailable.id"
-        (click)="getMenuItems(menuAvailable.id)"
-      >
-        {{ menuAvailable.name | transloco }}
-      </button>
-    }
-  </div>
-</aside>
-<section>
-  <p class="ingredients-incentive">Con los mejores ingredientes</p>
-  @let currentMenu = menus[selectedMenuId() || ''];
-  @if (currentMenu) {
-    <h2>{{ currentMenu.name | transloco }}</h2>
-    <p class="menu-subtitle">
-      {{ 'menu_title_description' | transloco }}
-    </p>
-    <div class="dishes-container">
-      @for (dish of currentMenu.products.dishes; track dish.id) {
-        <div class="dish-card">
-          <div class="image-container">
-            <span>{{ dish.price | currency: dish.priceUnits }}</span>
-            <img [ngSrc]="dish.images[0]" alt="" fill />
-          </div>
-          <div class="dish-description">
-            <h3>{{ dish.name | transloco }}</h3>
-            <p class="dish-ingredients">
-              {{ dish.ingredients | translateArray }}
-            </p>
-          </div>
-          <div class="dish-footer">
-            <div class="allergens-container">
-              @for (allergen of dish.allergens; track $index) {
-                <allergen-icon [allergen]="allergen"></allergen-icon>
-              }
-            </div>
-            @if (showAddButton()) {
-              <button (click)="selectedDish.emit(dish)" class="add-button">
-                Añadir al carrito
-              </button>
-            }
-          </div>
-        </div>
+    <div class="menu-horizontal-scroll">
+      @for (menuAvailable of menuAvailables(); track menuAvailable.id) {
+        <button
+          [aria-selected]="selectedMenuId() === menuAvailable.id"
+          (click)="getMenuItems(menuAvailable.id)"
+        >
+          {{ menuAvailable.name | transloco }}
+        </button>
       }
     </div>
-    @if (currentMenu.products.drinks.length > 0) {
-      <div class="drinks-container">
-        <h4>Bebidas</h4>
-        @for (drink of currentMenu.products.drinks; track drink.id) {
-          <div class="drink-card">
-            <span>{{ drink.name }}</span>
-            <span>{{ drink.price | currency: drink.priceUnits }}</span>
+  </aside>
+  <section>
+    @let currentMenu = menus[selectedMenuId() || ''];
+    @if (currentMenu) {
+      <h2>{{ currentMenu.name | transloco }}</h2>
+      <p class="menu-subtitle">
+        {{ 'menu_title_description' | transloco }}
+      </p>
+      <div class="dishes-container">
+        @for (dish of currentMenu.products.dishes; track dish.id) {
+          <div class="dish-card">
+            <div class="image-container">
+              <span>{{ dish.price | currency: dish.priceUnits }}</span>
+              <img [ngSrc]="dish.images[0]" alt="" fill />
+            </div>
+            <div class="dish-description">
+              <h3>{{ dish.name | transloco }}</h3>
+              <p class="dish-ingredients">
+                {{ dish.ingredients | translateArray }}
+              </p>
+            </div>
+            <div class="dish-footer">
+              <div class="allergens-container">
+                @for (allergen of dish.allergens; track $index) {
+                  <allergen-icon [allergen]="allergen"></allergen-icon>
+                }
+              </div>
+              @if (showAddButton()) {
+                <button (click)="selectedDish.emit(dish)" class="add-button">
+                  Añadir al carrito
+                </button>
+              }
+            </div>
           </div>
         }
       </div>
+      @if (currentMenu.products.drinks.length > 0) {
+        <div class="drinks-container">
+          <h4>{{ 'drinks' | transloco }}</h4>
+          @for (drink of currentMenu.products.drinks; track drink.id) {
+            <div class="drink-card">
+              @if (showAddButton()) {
+                <button (click)="selectedDrink.emit(drink)" class="add-drink">
+                  <mat-icon>add_shopping_cart</mat-icon>
+                </button>
+              }
+              <span>{{ drink.name }}</span>
+              <span>{{ drink.price | currency: drink.priceUnits }}</span>
+            </div>
+          }
+        </div>
+      }
     }
-  }
-</section>
+  </section>
+</article>

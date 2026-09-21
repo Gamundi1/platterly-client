@@ -2,28 +2,23 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  effect,
   ElementRef,
   inject,
-  input,
   OnInit,
-  output,
   signal,
-  viewChildren,
+  viewChildren
 } from '@angular/core';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faKitchenSet, faRestroom, faUser } from '@fortawesome/free-solid-svg-icons';
-import { Table, TableStatus } from '../../../new-bookings/interfaces/table.interface';
-import { HttpHandlerService } from '../../../shared/services/http-handler.service';
-import { UrlProvider } from '../../../shared/enums/url-provider.enum';
 import { delay, tap } from 'rxjs';
+import { Table, TableStatus } from '../../../new-bookings/interfaces/table.interface';
+import { UrlProvider } from '../../../shared/enums/url-provider.enum';
+import { HttpHandlerService } from '../../../shared/services/http-handler.service';
 
 @Component({
   selector: 'booking-status-table',
   templateUrl: './table-status.component.html',
   styleUrls: ['./table-status.component.scss'],
   changeDetection: ChangeDetectionStrategy.Eager,
-  imports: [FaIconComponent],
   host: {
     '(keydown)': 'keyboardInteraction($event)',
   },
@@ -209,7 +204,7 @@ export class TableStatusComponent implements OnInit {
   private getTables() {
     this.httpHandlerService
       .getRequest<Table[]>(UrlProvider.getAvailableTables, {
-        date: new Date().toLocaleString(),
+        date: new Date().toISOString(),
       })
       .subscribe((tables) => {
         this.tables.set(tables);

@@ -1,3 +1,5 @@
+@use 'mixins.scss' as *;
+
 :host {
   display: block;
   block-size: 100%;
@@ -30,18 +32,63 @@ p {
 }
 
 form {
+  --form-display-direction: column;
+  --separator-inline-size: 5rem;
+  --separator-block-size: 1px;
+
+  @include medium-breakpoint {
+    --form-display-direction: row;
+    --separator-inline-size: 1px;
+    --separator-block-size: 2rem;
+  }
+
   display: flex;
+  flex-direction: var(--form-display-direction);
   backdrop-filter: blur(2.4px) saturate(148%);
   -webkit-backdrop-filter: blur(2.4px) saturate(148%);
   background-color: rgba(255, 255, 255, 0.14);
-  border-radius: 12px;
+  border-radius: 2.5rem;
   border: 1px solid rgba(209, 213, 219, 0.174);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   align-items: center;
+  padding-inline: 1rem;
+  padding-block: 0.5rem;
+  gap: 0.5rem;
 }
 
-::ng-deep .booking-incentive-date {
-  --mat-form-field-filled-container-color: transparent;
-  --mat-form-field-filled-input-text-color: var(--white-color);
-  --mat-datepicker-toggle-icon-color: var(--primary-color);
+button {
+  --button-background-color: var(--primary-color);
+  --button-text-color: var(--white-color);
+
+  background-color: var(--button-background-color);
+  color: var(--button-text-color);
+  border: none;
+  border-radius: 1rem;
+  padding-inline: 1rem;
+  padding-block: 0.5rem;
+  cursor: pointer;
+}
+
+.separator {
+  inline-size: var(--separator-inline-size);
+  block-size: var(--separator-block-size);
+  background-color: var(--white-color);
+}
+
+::ng-deep {
+  .booking-incentive-date {
+    --mat-form-field-filled-container-color: transparent;
+    --mat-form-field-filled-input-text-color: var(--white-color);
+    --mat-datepicker-toggle-icon-color: var(--primary-color);
+  }
+
+  .booking-incentive-guests {
+    --mat-form-field-filled-container-color: transparent;
+    --mat-select-enabled-trigger-text-color: var(--white-color);
+    --mat-select-trigger-text-color: var(--white-color);
+  }
+
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
 }

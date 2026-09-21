@@ -1,3 +1,4 @@
+@let availableHours = availableHours$ | async;
 <article class="new-booking-container">
   <h1 tabindex="-1">
     @if (isHost()) {
@@ -19,7 +20,7 @@
     <form class="booking-information" (submit)="onSubmitForm($event)">
       <fieldset>
         <legend><fa-icon [icon]="faUsers"></fa-icon> Grupo y horario</legend>
-        <div class="date-guest-selector"  role="radiogroup" aria-labelledby="guest-title">
+        <div class="date-guest-selector" role="radiogroup" aria-labelledby="guest-title">
           <span id="guest-title" class="title">Selecciona el número de asistentes</span>
           <div id="guests-selector">
             @for (guest of guests | keyvalue; track guest.key) {
@@ -36,9 +37,10 @@
               </label>
             }
           </div>
-          <span class="title">Selecciona el día</span>
+          <label for="date-picker" class="title">Selecciona el día</label>
           <mat-form-field class="date-picker">
             <input
+              id="date-picker"
               matInput
               [min]="minDate"
               [matDatepicker]="datePicker"
@@ -50,19 +52,19 @@
         </div>
         <div class="hour-guest-selector" role="radiogroup" aria-labelledby="hour-title">
           <span class="title" id="hour-title">Selecciona la hora</span>
-          @let availableHours = availableHours$ | async;
           <div>
             @for (availableHour of availableHours; track availableHour.id; let i = $index) {
               <label for="hour-{{ i }}" class="hour">
                 <input
                   id="hour-{{ i }}"
                   class="hour-selector"
+                  [attr.aria-disabled]="!isHourAvailable(availableHour)"
                   type="radio"
                   value="{{ availableHour.id }}"
                   [attr.aria-selected]="availableHour.id === bookingForm().value().availableHoursId"
                   [formField]="bookingForm.availableHoursId"
                 />
-                <span>{{ availableHour.interval }}</span>
+                <span>{{ availableHour.interval.split('-')[0].trim() }}</span>
               </label>
             }
           </div>
@@ -72,16 +74,16 @@
           </div>
         </div>
       </fieldset>
-      <fieldset>
+      <fieldset class="table-selector">
         <legend><fa-icon [icon]="faMap"></fa-icon>Mapa del restaurante</legend>
         @let availableTables = availableTables$ | async;
         @if (availableTables && availableTables?.length > 0) {
-        <booking-table
-          [tables]="availableTables"
-          [guests]="+bookingForm().value().guests"
-          [selectedHour]="bookingForm().value().availableHoursId"
-          (selectedTable)="onTableSelected($event)"
-        ></booking-table>
+          <booking-table
+            [tables]="availableTables"
+            [guests]="+bookingForm().value().guests"
+            [selectedHour]="bookingForm().value().availableHoursId"
+            (selectedTable)="onTableSelected($event)"
+          ></booking-table>
         }
       </fieldset>
       <div class="submit-section-desktop">
@@ -103,7 +105,15 @@
     <div class="image-container">
       <img priority fill ngSrc="images/new-booking/booking-incentive.webp" alt="" />
     </div>
-    <section class="booking-summary"></section>
+    <section class="booking-summary">
+      @let hourSelected =
+        availableHours?.find((hour) => hour.id === bookingForm().value().availableHoursId);
+      <booking-summary
+        [dateSelected]="bookingForm().value().date"
+        [tableSelected]="bookingForm().value().tableNumber"
+        [hourSelected]="hourSelected?.interval"
+      ></booking-summary>
+    </section>
     <div class="submit-section-mobile">
       <p>Por favor revisa todos los datos de la reserva antes de confirmar.</p>
       <button [disabled]="!bookingForm().valid()" (click)="onSubmitForm($event)">

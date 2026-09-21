@@ -1,6 +1,19 @@
 @use 'index.scss' as *;
 
-:host {
+h1 {
+  font-size: var(--font-title-size);
+}
+
+.ingredients-incentive {
+  color: var(--primary-color);
+  font-weight: bold;
+  text-transform: uppercase;
+  font-family: 'Manrope';
+  font-size: 0.75rem;
+  margin-block-end: 0;
+}
+
+article {
   --menu-display-inline-size: 100%;
   --menu-display-flex-direction: column;
   --categories-selector-flex-direction: row;
@@ -65,15 +78,6 @@ aside {
 
 section {
   flex: 1;
-
-  & .ingredients-incentive {
-    color: var(--primary-color);
-    font-weight: bold;
-    text-transform: uppercase;
-    font-family: 'Manrope';
-    font-size: 0.75rem;
-    margin-block-end: 0;
-  }
 
   & .menu-subtitle {
     font-size: 1rem;

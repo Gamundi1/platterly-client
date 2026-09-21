@@ -5,7 +5,7 @@
     Solo tienes que rellenar el formulario a continuación y podrás disfrutar de las ventajas de ser
     parte de nuestra comunidad.
   </p>
-  <form>
+  <form (submit)="onFormSubmit($event)">
     <mat-form-field class="date-picker booking-incentive-date">
       <input
         matInput
@@ -17,5 +17,14 @@
       <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
       <mat-datepicker #datePicker></mat-datepicker>
     </mat-form-field>
+    <div class="separator"></div>
+    <mat-form-field class="booking-incentive-guests">
+      <mat-select [formField]="bookingIncentiveForm.guests">
+        @for (guest of guests; track guest) {
+          <mat-option [value]="guest.value">{{ guest.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <button type="submit">Reservar mesa</button>
   </form>
 </section>

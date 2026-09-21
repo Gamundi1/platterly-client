@@ -34,7 +34,7 @@ export const UrlProvider = {
   getDrinks: '/v1/menu/drink',
   getAllergens: '/v1/menu/allergen',
   postIngredient: '/v1/menu/ingredient',
-  postDish: 'v1/menu/dish',
-  postDrink: 'v1/menu/drink',
+  postDish: '/v1/menu/dish',
+  postDrink: '/v1/menu/drink',
   payOrders: '/v1/order/pay',
 } as const;

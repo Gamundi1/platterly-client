@@ -1,3 +1,5 @@
+@use 'index.scss' as *;
+
 mat-grid-tile {
     border-radius: 0.5rem;
     box-shadow: 1px 1px 5px oklch(from black l c h / 25%);
