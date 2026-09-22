@@ -90,6 +90,7 @@ h2 {
   font-size: 2.5rem;
   margin-block-end: 1.5rem;
   margin-block-start: 1rem;
+  line-height: 1;
 }
 
 h3 {
@@ -176,6 +177,10 @@ h3 {
   cursor: pointer;
 }
 
+.name-container {
+  flex: 1;
+}
+
 .drinks-container {
   padding-inline: 1rem;
   padding-block: 1rem;
@@ -196,5 +201,6 @@ h3 {
     display: flex;
     justify-content: space-between;
     margin-block: 0.5rem;
+    gap: 0.5rem;
   }
 }
