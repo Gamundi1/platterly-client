@@ -3,6 +3,11 @@
   display: block;
 }
 
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
 ::ng-deep .booking-tabs {
   .mat-mdc-tab-header {
     margin-block-end: 1.5rem;
@@ -115,7 +120,18 @@
   background-color: var(--primary-color);
   color: var(--white-color);
   border: none;
-  border-radius: 1.5rem;
+  border-start-start-radius: 0.5rem;
+  border-start-end-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.cancel-button {
+  background-color: var(--white-color);
+  color: var(--black-color);
+  border: 1px solid var(--black-color);
+  border-end-start-radius: 0.5rem;
+  border-end-end-radius: 0.5rem;
   padding: 0.5rem 1rem;
   cursor: pointer;
 }

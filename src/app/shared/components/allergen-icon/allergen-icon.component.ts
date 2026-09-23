@@ -11,6 +11,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 })
 export class AllergenIconComponent {
   public allergen = input.required<Allergen>();
+  public size = input<number>(25);
 
   getIconPath(): string {
     return `/images/menus/allergens/${this.allergen().icon}.svg`;

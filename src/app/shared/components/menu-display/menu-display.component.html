@@ -60,11 +60,13 @@
                   <mat-icon>add_shopping_cart</mat-icon>
                 </button>
               }
-              <span>{{ drink.name | transloco }}</span>
-              <div class="name-container">
-                @for (allergen of drink.allergens; track $index) {
-                  <allergen-icon [allergen]="allergen"></allergen-icon>
-                }
+              <div class="name-allergens">
+                <span>{{ drink.name | transloco }}</span>
+                <div class="name-container">
+                  @for (allergen of drink.allergens; track $index) {
+                    <allergen-icon [size]="18" [allergen]="allergen"></allergen-icon>
+                  }
+                </div>
               </div>
               <span>{{ drink.price | currency: drink.priceUnits }}</span>
             </div>

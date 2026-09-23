@@ -18,11 +18,17 @@ article {
   --menu-display-flex-direction: column;
   --categories-selector-flex-direction: row;
   --categories-selector-inline-size: 100%;
+  --name-allergens-flex-direction: column;
+  --name-allergens-align-items: flex-start;
+  --name-allergens-gap: 0;
 
   @include medium-breakpoint {
     --menu-display-flex-direction: row;
+    --name-allergens-flex-direction: row;
     --categories-selector-flex-direction: column;
     --categories-selector-inline-size: 12rem;
+    --name-allergens-align-items: center;
+    --name-allergens-gap: 0.5rem;
   }
 
   display: flex;
@@ -86,6 +92,18 @@ section {
   }
 }
 
+.add-drink {
+  border: none;
+  font-family: 'Manrope';
+  background-color: transparent;
+  cursor: pointer;
+
+  mat-icon {
+    vertical-align: middle;
+    margin-inline-start: 0.5rem;
+  }
+}
+
 h2 {
   font-size: 2.5rem;
   margin-block-end: 1.5rem;
@@ -97,6 +115,14 @@ h3 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
   text-wrap: wrap;
+}
+
+.name-allergens {
+  display: flex;
+  flex: 1;
+  flex-direction: var(--name-allergens-flex-direction);
+  gap: var(--name-allergens-gap);
+  align-items: var(--name-allergens-align-items);
 }
 
 .dishes-container {
